@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1093494525688",
+    "project_id": "ekopal-ee39a",
+    "storage_bucket": "ekopal-ee39a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1093494525688:android:e06e956841bbc4cdcd750d",
+        "android_client_info": {
+          "package_name": "com.example.ekopal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1IMrVNMmoMUFeJqQdRWJ02JYtOWhD18A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
