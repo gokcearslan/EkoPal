@@ -40,7 +40,7 @@ class FireAuth {
     }
     return user;
   }
-
+/////// Buraya bakilmasi lazim
   static Future<User?>signInUsingEmailPassword({
     required String email,
     required String password,
