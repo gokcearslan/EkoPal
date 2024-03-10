@@ -45,8 +45,8 @@ class ImageService{
       user=await FireAuth.refreshUser(user);
       FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-      await firestore.collection('Kullanıcılar').doc(user!.uid).update({
-        'profileresmi': _base64Image,
+      await firestore.collection('users').doc(user!.uid).update({
+        'base64Image': _base64Image,
       });
       return true;
     } catch (e) {
@@ -61,7 +61,7 @@ class ImageService{
       DocumentSnapshot snapshot =
       await firestore.collection('users').doc(userId).get();
       if (snapshot.exists) {
-        String? base64Image = snapshot['profileresmi'];
+        String? base64Image = snapshot['base64Image'];
         return base64Image;
       } else {
         return null;

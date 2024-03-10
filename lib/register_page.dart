@@ -25,14 +25,33 @@ class _RegisterPageState extends State<RegisterPage> {
   bool _isProcessing = false;
 
   Future<void> register() async {
-    String email = _emailTextController.text;
-    String password = _passwordTextController.text;
-    final auth = FirebaseAuth.instance;
-    UserCredential userCredential =
-    await auth.createUserWithEmailAndPassword(email: email, password: password);
+    if (_registerFormKey.currentState!.validate()) {
+      setState(() {
+        _isProcessing = true;
+      });
 
-    User? user = userCredential.user;
-    String uid = user?.uid ?? "";
+      User? user = await FireAuth.registerUsingEmailPassword(
+        name: _nameTextController.text,
+        email: _emailTextController.text,
+        password: _passwordTextController.text,
+      );
+
+      setState(() {
+        _isProcessing = false;
+      });
+
+      if (user != null) {
+        // Navigate to the home page or any other page after successful registration
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (context) => HomePage(),
+          ),
+          ModalRoute.withName('/'),
+        );
+      } else {
+
+      }
+    }
   }
 
   @override
@@ -45,9 +64,20 @@ class _RegisterPageState extends State<RegisterPage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Kaydol',style: TextStyle(color: bej)),
-          backgroundColor: koyuSomon,
-          iconTheme: IconThemeData(color: bej),
+          title: Text(
+            'Kaydol',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 30,
+            ),
+          ),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.white, size: 30),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          backgroundColor: kahve,
         ),
         body: Container(
           child: Padding(
@@ -127,44 +157,20 @@ class _RegisterPageState extends State<RegisterPage> {
                           children: [
                             Expanded(
                               child: ElevatedButton(
-                                onPressed: () async {
-                                  setState(() {
-                                    _isProcessing = true;
-                                  });
-
-                                  if (_registerFormKey.currentState!.validate()) {
-                                    User? user = await FireAuth.registerUsingEmailPassword(
-                                      name: _nameTextController.text,
-                                      email: _emailTextController.text,
-                                      password: _passwordTextController.text,
-                                    );
-
-                                    setState(() {
-                                      _isProcessing = false;
-                                    });
-
-                                    if (user != null) {
-                                      Navigator.of(context).pushAndRemoveUntil(
-                                        MaterialPageRoute(
-                                          builder: (context) => HomePage(),
-                                        ),
-                                        ModalRoute.withName('/'),
-                                      );
-                                    }
-                                  }
-                                },
+                                onPressed: register,
                                 child: Text(
                                   'Kaydol ve Giriş yap',
                                   style: TextStyle(color: bej),
                                 ),
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: koyuSomon,
+                                  backgroundColor: kahve,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20),
                                   ),
                                 ),
                               ),
                             ),
+
                           ],
                         )
                       ],

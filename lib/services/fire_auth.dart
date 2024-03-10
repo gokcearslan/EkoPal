@@ -25,15 +25,15 @@ class FireAuth {
         'name': name,
         'email': email,
         'password': password,
-        'formcount': 0,
+       // 'formcount': 0,
         'base64Image': "",
       });
 
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        print('Weak Password');
+        print('Zayıf Şifre');
       } else if (e.code == 'email-already-in-use') {
-        print('This mail already in use.');
+        print('Bu mail zaten kullanılıyor');
       }
     }catch(e){
       print(e);
@@ -54,9 +54,9 @@ class FireAuth {
       user = userCredential.user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        print('there is no such a user');
+        print('Böyle bir kullanıcı bulunmamaktadır');
       } else if (e.code == 'wrong-password') {
-        print('Wrong Password!');
+        print('Yanlış Şifre!');
       }
     }catch(e){
       print(e);

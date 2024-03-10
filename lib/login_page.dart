@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:ekopal/HomePage.dart';
 import 'package:ekopal/colors.dart';
 import 'package:ekopal/register_page.dart';
+import 'package:ekopal/reset_password_page.dart'; // Import the reset password page
 import 'package:ekopal/services/fire_auth.dart';
 import 'package:ekopal/validator.dart';
 
@@ -78,14 +79,31 @@ class _LoginPageState extends State<LoginPage> {
         _focusPassword.unfocus();
       },
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: kahve,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            color: Colors.white, // Change the color of the back button
+          ),
+          title: Text(
+            'Giriş Yap',
+            style: TextStyle(
+              color: Colors.white, // Change the color of the title text
+            ),
+          ),
+        ),
         body: FutureBuilder(
           future: _initializeFirebase(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               return Stack(
                 children: [
+                  //uygulamanın logosu koyulacak
                   Image.network(
-                    'https://i.pinimg.com/564x/1d/74/3b/1d743bb41490128be1b2a0edc8a3e000.jpg',
+                    'https://i.pinimg.com/564x/98/48/3e/98483e01c683158eac0e1153f5c38908.jpg',
                     fit: BoxFit.cover,
                     height: MediaQuery.of(context).size.height * 0.4, // Adjust the height as needed
                   ),
@@ -114,7 +132,7 @@ class _LoginPageState extends State<LoginPage> {
                                   filled: true,
                                   errorBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0),
-                                    borderSide: BorderSide(color:koyuSomon),
+                                    borderSide: BorderSide(color:kahve),
                                   ),
                                 ),
                               ),
@@ -136,7 +154,7 @@ class _LoginPageState extends State<LoginPage> {
                                   filled: true,
                                   errorBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0),
-                                    borderSide: BorderSide(color: koyuSomon),
+                                    borderSide: BorderSide(color: kahve),
                                   ),
                                 ),
                               ),
@@ -172,7 +190,7 @@ class _LoginPageState extends State<LoginPage> {
                                       },
                                       child: Text('Giriş', style: TextStyle(color:bej)), // Change text color
                                       style: ElevatedButton.styleFrom(
-                                        backgroundColor: koyuSomon,
+                                        backgroundColor: kahve,
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(20),
                                         ),
@@ -189,9 +207,9 @@ class _LoginPageState extends State<LoginPage> {
                                           ),
                                         );
                                       },
-                                      child: Text('Kaydol', style: TextStyle(color: bej)), // Change text color
+                                      child: Text('Kaydol', style: TextStyle(color: bej)),
                                       style: ElevatedButton.styleFrom(
-                                        backgroundColor: koyuSomon,
+                                        backgroundColor: kahve,
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(20),
                                         ),
@@ -199,6 +217,23 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                   ),
                                 ],
+                              ),
+                              SizedBox(height: 8.0),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => ResetPasswordPage(),
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  'Şifremi Unuttum',
+                                  style: TextStyle(
+                                    color: Colors.red, // Set text color to red
+                                    decoration: TextDecoration.underline, // Add underline
+                                  ),
+                                ),
                               ),
                             ],
                           ),
