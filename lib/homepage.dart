@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:ekopal/login_page.dart';
 import 'package:ekopal/colors.dart';
 import 'package:ekopal/profile_page.dart';
-import 'announcements.dart'; // Import the profile page
+import 'announcements.dart';
+import 'create_page.dart'; // Import the profile page
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -113,7 +114,7 @@ class _HomePageState extends State<HomePage> {
                 title: Text('Advertisements'),
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder:
-                      (context)=>FancyPage()));
+                      (context) => FancyPage()));
                   // Add navigation logic here
                 },
               ),
@@ -121,22 +122,30 @@ class _HomePageState extends State<HomePage> {
                 title: Text('Announcements'),
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder:
-                      (context)=>AnnouncementsPage()));
-
-
+                      (context) => AnnouncementsPage()));
                 },
               ),
               ListTile(
                 title: Text('Events'),
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder:
-                      //!! gitmek istediğin
-                  // sayfa adını FancyPage() yerine yaz
-                      (context)=>FancyPage()));
+                      (context) => FancyPage()));
                   // Add navigation logic here
                 },
               ),
-              // Add more ListTiles for additional drawer items
+              ListTile(
+                title: Row(
+                  children: [
+                    Icon(Icons.add),
+                    SizedBox(width: 10),
+                    Text('Create'),
+                  ],
+                ),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder:
+                      (context) => CreatePage()));
+                },
+              ),
             ],
           ),
         ),
@@ -172,3 +181,4 @@ class HomePageContent extends StatelessWidget {
     );
   }
 }
+
