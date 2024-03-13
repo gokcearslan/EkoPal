@@ -90,21 +90,7 @@ class _HomePageState extends State<HomePage> {
       ),
       backgroundColor: Colors.white,
       body: _widgetOptions.elementAt(_selectedIndex),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Ana Sayfa',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profil',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue,
-        onTap: _onItemTapped,
-      ),
+
       drawer: Container(
         color: Colors.white, // Set the background color of the container
         child: Drawer(
@@ -171,6 +157,15 @@ class HomePageContent extends StatelessWidget {
               _HomePageState().signOutAndNavigateToLogin(); // Calling the sign out method from the state class
             },
             child: Text('Çıkış'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ProfilePage()),
+              );
+            },
+            child: Text('Profil'),
           ),
         ],
       ),
