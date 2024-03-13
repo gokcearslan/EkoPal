@@ -1,8 +1,10 @@
+import 'package:ekopal/advertisements.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ekopal/login_page.dart';
 import 'package:ekopal/colors.dart';
-import 'package:ekopal/profile_page.dart'; // Import the profile page
+import 'package:ekopal/profile_page.dart';
+import 'announcements.dart'; // Import the profile page
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -61,18 +63,29 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(45), //appbar'ın kapladığı alan
+        preferredSize: Size.fromHeight(45),
         child: AppBar(
           title: Text(
             'EkoPal',
             style: TextStyle(
               color: Colors.white,
-              fontWeight: FontWeight.w400, //  Appbar yazı kalınlığı
+              fontWeight: FontWeight.w400,
               fontSize: 40,
             ),
           ),
           centerTitle: true,
           backgroundColor: kahve,
+          // Modify the drawer icon color here
+          leading: Builder(
+            builder: (BuildContext context) {
+              return IconButton(
+                icon: const Icon(Icons.menu, color: Colors.white), // Set your desired color here
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                },
+              );
+            },
+          ),
         ),
       ),
       backgroundColor: Colors.white,
@@ -91,6 +104,56 @@ class _HomePageState extends State<HomePage> {
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.blue,
         onTap: _onItemTapped,
+      ),
+      drawer: Container(
+        color: Colors.white, // Set the background color of the container
+        child: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                decoration: BoxDecoration(
+                  color: kahve,
+                ),
+                child: Text(
+                  'Drawer Header',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                  ),
+                ),
+              ),
+              ListTile(
+                title: Text('Advertisements'),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder:
+                      (context)=>FancyPage()));
+                  // Add navigation logic here
+                },
+              ),
+              ListTile(
+                title: Text('Announcements'),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder:
+                      (context)=>AnnouncementsPage()));
+
+
+                },
+              ),
+              ListTile(
+                title: Text('Events'),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder:
+                      //!! gitmek istediğin
+                  // sayfa adını FancyPage() yerine yaz
+                      (context)=>FancyPage()));
+                  // Add navigation logic here
+                },
+              ),
+              // Add more ListTiles for additional drawer items
+            ],
+          ),
+        ),
       ),
     );
   }
