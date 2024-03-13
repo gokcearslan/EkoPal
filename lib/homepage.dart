@@ -5,7 +5,7 @@ import 'package:ekopal/login_page.dart';
 import 'package:ekopal/colors.dart';
 import 'package:ekopal/profile_page.dart';
 import 'announcements.dart';
-import 'create_page.dart'; // Import the profile page
+import 'create_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
