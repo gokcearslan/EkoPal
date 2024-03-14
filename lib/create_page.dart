@@ -1,3 +1,4 @@
+import 'package:ekopal/services/announcement_model.dart';
 import 'package:ekopal/services/event_model.dart';
 import 'package:ekopal/services/firebase_service.dart';
 import 'package:flutter/material.dart';
@@ -69,17 +70,69 @@ class _CreatePageState extends State<CreatePage> {
   }
 }
 
-class IlanWidget extends StatelessWidget {
+
+///////////
+
+class IlanWidget extends StatefulWidget {
+  @override
+  _IlanWidgetState createState() => _IlanWidgetState();
+}
+class _IlanWidgetState extends State<IlanWidget> {
+  TextEditingController _announcementNameController = TextEditingController();
+  TextEditingController _announcementTypeController = TextEditingController();
+  TextEditingController _announcementDetailsController = TextEditingController();
+
+  void _clearTextFields() {
+    _announcementNameController.clear();
+    _announcementTypeController.clear();
+    _announcementDetailsController.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text(
-        'İlan sayfası',
-        style: TextStyle(fontSize: 24),
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TextFormField(
+            controller: _announcementNameController,
+            decoration: InputDecoration(labelText: 'İlan başlığı'),
+          ),
+          TextFormField(
+            controller: _announcementTypeController,
+            decoration: InputDecoration(labelText: 'İlan türü'),
+          ),
+          TextFormField(
+            controller: _announcementDetailsController,
+            decoration: InputDecoration(labelText: 'İlan detayları'),
+          ),
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
+              // Create an instance of Event using the entered data
+              Announcement a = Announcement(
+                announcementName: _announcementNameController.text,
+                announcementType: _announcementTypeController.text,
+                announcementDetails: _announcementDetailsController.text,
+
+              );
+
+              // Save the event to Firebase
+              AnnouncementService().addAnnouncement(a);
+
+              // Clear the text fields
+              _clearTextFields();
+            },
+            child: Text('İlan Oluştur'),
+          ),
+        ],
       ),
     );
   }
 }
+
+////////
 
 class DuyuruWidget extends StatelessWidget {
   @override
