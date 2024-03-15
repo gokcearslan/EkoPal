@@ -82,10 +82,18 @@ class _IlanWidgetState extends State<IlanWidget> {
   TextEditingController _announcementTypeController = TextEditingController();
   TextEditingController _announcementDetailsController = TextEditingController();
 
+  List<String> annct_types = ['Ev', 'Kitap', 'Proje','İş','Staj'];
+  String? _selectedType;
+
   void _clearTextFields() {
     _announcementNameController.clear();
     _announcementTypeController.clear();
     _announcementDetailsController.clear();
+    // tür için clear eklenecek - altta eklendi
+    setState(() {
+      _selectedType = null;
+    });
+
   }
 
   @override
@@ -99,29 +107,49 @@ class _IlanWidgetState extends State<IlanWidget> {
             controller: _announcementNameController,
             decoration: InputDecoration(labelText: 'İlan başlığı'),
           ),
-          TextFormField(
-            controller: _announcementTypeController,
-            decoration: InputDecoration(labelText: 'İlan türü'),
-          ),
+
           TextFormField(
             controller: _announcementDetailsController,
             decoration: InputDecoration(labelText: 'İlan detayları'),
           ),
+          DropdownButton<String>(
+            hint: Text('İlan türünü seçiniz'),
+            value: _selectedType,
+            onChanged: (String? newValue) {
+              if(newValue != null) {
+                setState(() {
+                  _selectedType = newValue;
+                });
+              }
+            },
+            items: annct_types.map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+          ),
           SizedBox(height: 20),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
+            if (_selectedType != null) {
               // Create an instance of Event using the entered data
-              Announcement a = Announcement(
+                Announcement a = Announcement(
                 announcementName: _announcementNameController.text,
-                announcementType: _announcementTypeController.text,
+                announcementType: _selectedType,
                 announcementDetails: _announcementDetailsController.text,
 
               );
-
-              // Save the event to Firebase
+              // Save to Firebase
               AnnouncementService().addAnnouncement(a);
+              // Clear the selected gender
+              setState(() {
+                _selectedType = null;
+              });
+            } else {
+              print('Please select a gender.');
 
-              // Clear the text fields
+            }
               _clearTextFields();
             },
             child: Text('İlan Oluştur'),

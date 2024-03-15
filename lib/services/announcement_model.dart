@@ -1,7 +1,8 @@
 class Announcement {
   final String announcementName;
-  final String announcementType;
+  final String? announcementType;
   final String announcementDetails;
+
 
   Announcement({
     required this.announcementName,
