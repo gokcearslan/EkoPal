@@ -108,9 +108,13 @@ class _IlanWidgetState extends State<IlanWidget> {
             decoration: InputDecoration(labelText: 'İlan başlığı'),
           ),
 
-          TextFormField(
-            controller: _announcementDetailsController,
-            decoration: InputDecoration(labelText: 'İlan detayları'),
+          Container(
+            child: TextFormField(
+              controller: _announcementDetailsController,
+              decoration: InputDecoration(labelText: 'İlan detayları'),
+              maxLines: null,
+              keyboardType: TextInputType.multiline,
+            ),
           ),
           DropdownButton<String>(
             hint: Text('İlan türünü seçiniz'),
@@ -133,7 +137,6 @@ class _IlanWidgetState extends State<IlanWidget> {
           ElevatedButton(
             onPressed: () async {
             if (_selectedType != null) {
-              // Create an instance of Event using the entered data
                 Announcement a = Announcement(
                 announcementName: _announcementNameController.text,
                 announcementType: _selectedType,
@@ -147,7 +150,7 @@ class _IlanWidgetState extends State<IlanWidget> {
                 _selectedType = null;
               });
             } else {
-              print('Please select a gender.');
+              print('Lütfen bir ilan türü seçiniz.');
 
             }
               _clearTextFields();
