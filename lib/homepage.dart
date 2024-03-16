@@ -103,7 +103,7 @@ class _HomePageState extends State<HomePage> {
                   color: kahve,
                 ),
                 child: Text(
-                  'Drawer Header',
+                  'Kategoriler',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 24,
@@ -111,7 +111,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               ListTile(
-                title: Text('Advertisements'),
+                title: Text('İlanlar'),
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder:
                       (context) => FancyPage()));
@@ -119,14 +119,14 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
               ListTile(
-                title: Text('Announcements'),
+                title: Text('Duyurular'),
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder:
                       (context) => AnnouncementsPage()));
                 },
               ),
               ListTile(
-                title: Text('Events'),
+                title: Text('Etkinlikler'),
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder:
                       (context) => FancyPage()));
@@ -138,7 +138,7 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Icon(Icons.add),
                     SizedBox(width: 10),
-                    Text('Create'),
+                    Text('Oluştur'),
                   ],
                 ),
                 onTap: () {

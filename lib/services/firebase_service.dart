@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ekopal/services/event_model.dart';
 
-import 'announcement_model.dart'; // Adjust the import path as needed
+import 'announcement_model.dart';
+import 'duyuru_model.dart'; // Adjust the import path as needed
 
 class EventService {
   final CollectionReference events =
@@ -36,4 +37,21 @@ class AnnouncementService {
         .catchError((error) => print('Failed to add announcement: $error'));
   }
 }
+
+class DuyuruService {
+  final CollectionReference duyurular =
+  FirebaseFirestore.instance.collection('duyurular');
+
+  Future<void> addDuyuru(Duyuru duyuru) {
+    return duyurular
+        .add({
+      'duyuruName': duyuru.duyuruName,
+      'duyuruType': duyuru.duyuruType,
+      'duyuruDetails': duyuru.duyuruDetails,
+    })
+        .then((value) => print('Duyuru added to Firestore'))
+        .catchError((error) => print('Failed to add duyuru: $error'));
+  }
+}
+
 

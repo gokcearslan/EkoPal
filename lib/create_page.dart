@@ -1,4 +1,5 @@
 import 'package:ekopal/services/announcement_model.dart';
+import 'package:ekopal/services/duyuru_model.dart';
 import 'package:ekopal/services/event_model.dart';
 import 'package:ekopal/services/firebase_service.dart';
 import 'package:flutter/material.dart';
@@ -85,6 +86,7 @@ class _IlanWidgetState extends State<IlanWidget> {
   List<String> annct_types = ['Ev', 'Kitap', 'Proje','İş','Staj'];
   String? _selectedType;
 
+
   void _clearTextFields() {
     _announcementNameController.clear();
     _announcementTypeController.clear();
@@ -93,7 +95,6 @@ class _IlanWidgetState extends State<IlanWidget> {
     setState(() {
       _selectedType = null;
     });
-
   }
 
   @override
@@ -151,9 +152,26 @@ class _IlanWidgetState extends State<IlanWidget> {
               });
             } else {
               print('Lütfen bir ilan türü seçiniz.');
-
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('Hata'),
+                    content: Text('Lütfen bir ilan türü seçiniz.'),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text('Tamam'),
+                      ),
+                    ],
+                  );
+                },
+              );
             }
-              _clearTextFields();
+
+            _clearTextFields();
             },
             child: Text('İlan Oluştur'),
           ),
@@ -164,7 +182,7 @@ class _IlanWidgetState extends State<IlanWidget> {
 }
 
 ////////
-
+/*
 class DuyuruWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -177,6 +195,8 @@ class DuyuruWidget extends StatelessWidget {
   }
 }
 
+
+ */
 class EtkinlikWidget extends StatefulWidget {
   @override
   _EtkinlikWidgetState createState() => _EtkinlikWidgetState();
@@ -243,6 +263,67 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
               _clearTextFields();
             },
             child: Text('Etkinlik Oluştur'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+///
+class DuyuruWidget extends StatefulWidget {
+  @override
+  _DuyuruWidgetState createState() => _DuyuruWidgetState();
+}
+
+class _DuyuruWidgetState extends State<DuyuruWidget> {
+  TextEditingController _DuyuruNameController = TextEditingController();
+  TextEditingController _duyuruDetailsController = TextEditingController();
+  TextEditingController _duyuruTypeController = TextEditingController();
+
+
+  void _clearTextFields() {
+    _DuyuruNameController.clear();
+    _duyuruDetailsController.clear();
+    _duyuruTypeController.clear();
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TextFormField(
+            controller: _DuyuruNameController,
+            decoration: InputDecoration(labelText: 'Duyuru Başlığı'),
+          ),
+          TextFormField(
+            controller: _duyuruDetailsController,
+            decoration: InputDecoration(labelText: 'Duyuru İçeriği'),
+          ),
+          TextFormField(
+            controller: _duyuruTypeController,
+            decoration: InputDecoration(labelText: 'Duyuru Türü'),
+          ),
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
+              // Create an instance of "duyuru"
+              Duyuru duyuru = Duyuru(
+                duyuruName: _DuyuruNameController.text,
+                duyuruDetails: _duyuruDetailsController.text,
+                duyuruType: _duyuruTypeController.text,
+              );
+
+              // Save the "duyuru" to Firebase
+              DuyuruService().addDuyuru(duyuru);
+
+              _clearTextFields();
+            },
+            child: Text('Duyuru Oluştur'),
           ),
         ],
       ),
