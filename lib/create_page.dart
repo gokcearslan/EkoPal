@@ -3,6 +3,7 @@ import 'package:ekopal/services/duyuru_model.dart';
 import 'package:ekopal/services/event_model.dart';
 import 'package:ekopal/services/firebase_service.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class CreatePage extends StatefulWidget {
   @override
@@ -197,6 +198,9 @@ class DuyuruWidget extends StatelessWidget {
 
 
  */
+
+///
+
 class EtkinlikWidget extends StatefulWidget {
   @override
   _EtkinlikWidgetState createState() => _EtkinlikWidgetState();
@@ -217,6 +221,43 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
     _additionalInfoController.clear();
   }
 
+  Future<void> _selectDateAndTime(BuildContext context) async {
+    final DateTime now = DateTime.now();
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: now,
+      firstDate: now,
+      lastDate: DateTime(2101),
+    );
+
+    if (pickedDate != null) {
+      final TimeOfDay? pickedTime = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay(hour: now.hour, minute: now.minute),
+      );
+
+      if (pickedTime != null) {
+        final DateTime pickedDateTime = DateTime(
+          pickedDate.year,
+          pickedDate.month,
+          pickedDate.day,
+          pickedTime.hour,
+          pickedTime.minute,
+        );
+
+        if (pickedDateTime.isAfter(now)) {
+          setState(() {
+            _eventDateController.text = DateFormat('yyyy-MM-dd – HH:mm').format(pickedDateTime);
+          });
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Geçmiş Tarihler için etkinlik oluşturulamaz!.')),
+          );
+        }
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -231,6 +272,8 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
           TextFormField(
             controller: _eventDateController,
             decoration: InputDecoration(labelText: 'Etkinlik Tarihi'),
+            readOnly: true,
+            onTap: () => _selectDateAndTime(context),
           ),
           TextFormField(
             controller: _organizerController,
@@ -247,7 +290,7 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
           SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
-              // Create an instance of Event using the entered data
+
               Event event = Event(
                 eventName: _eventNameController.text,
                 eventDate: _eventDateController.text,
@@ -256,10 +299,7 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
                 additionalInfo: _additionalInfoController.text,
               );
 
-              // Save the event to Firebase
               EventService().addEvent(event);
-
-              // Clear the text fields
               _clearTextFields();
             },
             child: Text('Etkinlik Oluştur'),
@@ -269,6 +309,7 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
     );
   }
 }
+
 
 ///
 class DuyuruWidget extends StatefulWidget {
