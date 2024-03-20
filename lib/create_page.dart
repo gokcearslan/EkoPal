@@ -115,6 +115,7 @@ class _IlanWidgetState extends State<IlanWidget> {
               controller: _announcementDetailsController,
               decoration: InputDecoration(labelText: 'İlan detayları'),
               maxLines: null,
+              minLines: 3,
               keyboardType: TextInputType.multiline,
             ),
           ),

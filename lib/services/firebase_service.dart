@@ -20,6 +20,24 @@ class EventService {
         .then((value) => print('Event added to Firestore'))
         .catchError((error) => print('Failed to add event: $error'));
   }
+  Future<List<Event>> getEvents() async {
+    try {
+      QuerySnapshot querySnapshot = await events.get();
+      List<Event> eventList = querySnapshot.docs.map((doc) {
+        return Event(
+          eventName: doc['eventName'],
+          eventDate: doc['eventDate'],
+          organizer: doc['organizer'],
+          location: doc['location'],
+          additionalInfo: doc['additionalInfo'],
+        );
+      }).toList();
+      return eventList;
+    } catch (e) {
+      print("Error fetching events: $e");
+      return [];
+    }
+  }
 }
 
 class AnnouncementService {

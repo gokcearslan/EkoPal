@@ -6,6 +6,7 @@ import 'package:ekopal/colors.dart';
 import 'package:ekopal/profile_page.dart';
 import 'announcements.dart';
 import 'create_page.dart';
+import 'events_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -129,7 +130,7 @@ class _HomePageState extends State<HomePage> {
                 title: Text('Etkinlikler'),
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder:
-                      (context) => FancyPage()));
+                      (context) => EventsPage()));
                   // Add navigation logic here
                 },
               ),
@@ -163,7 +164,7 @@ class HomePageContent extends StatelessWidget {
         children: [
           ElevatedButton(
             onPressed: () {
-              _HomePageState().signOutAndNavigateToLogin(); // Calling the sign out method from the state class
+              _HomePageState().signOutAndNavigateToLogin();
             },
             child: Text('Çıkış'),
           ),
