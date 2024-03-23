@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ekopal/services/event_model.dart';
+import 'package:ekopal/services/post_model.dart';
 
 import 'announcement_model.dart';
 import 'duyuru_model.dart'; // Adjust the import path as needed
@@ -73,3 +74,17 @@ class DuyuruService {
 }
 
 
+
+class PostService {
+  final CollectionReference posts = FirebaseFirestore.instance.collection('posts');
+
+  Future<void> addPost(Post post) {
+    return posts
+        .add({
+      'id': post.id,
+      'PostContent': post.PostContent,
+    })
+        .then((value) => print('Post added to Firestore'))
+        .catchError((error) => print('Failed to add post: $error'));
+  }
+}

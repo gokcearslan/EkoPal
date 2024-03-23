@@ -1,4 +1,5 @@
 import 'package:ekopal/advertisements.dart';
+import 'package:ekopal/post_create_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ekopal/login_page.dart';
@@ -145,6 +146,19 @@ class _HomePageState extends State<HomePage> {
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder:
                       (context) => CreatePage()));
+                },
+              ),
+              ListTile(
+                title: Row(
+                  children: [
+                    Icon(Icons.add),
+                    SizedBox(width: 10),
+                    Text('Post Oluştur'),
+                  ],
+                ),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder:
+                      (context) => PostCreationPage()));
                 },
               ),
             ],
