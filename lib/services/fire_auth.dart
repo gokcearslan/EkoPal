@@ -24,7 +24,7 @@ class FireAuth {
       await FirebaseFirestore.instance.collection('users').doc(user!.uid).set({
         'name': name,
         'email': email,
-        'password': password,
+        //'password': password,
        // 'formcount': 0,
         'base64Image': "",
       });

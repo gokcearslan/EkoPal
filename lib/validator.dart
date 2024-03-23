@@ -12,14 +12,20 @@ class Validator {
     if (email == null) {
       return null;
     }
-    RegExp emailRegExp = RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
+
+    //@std.ieu.edu.tr   @std.izmirekonomi.edu.tr  @ieu.edu.tr @izmirekonomi.edu.tr
+    RegExp emailRegExp = RegExp(
+        r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@(std\.ieu\.edu\.tr|std\.izmirekonomi\.edu\.tr|ieu\.edu\.tr|izmirekonomi\.edu\.tr)$"
+    );
+
     if (email.isEmpty) {
-      return 'Mail adresi boş kalamaz,lütfen mail adresinizi giriniz';
-    } else if(!emailRegExp.hasMatch(email)){
-      return 'Geçersiz mail adresi!';
+      return 'Mail adresi boş kalamaz, lütfen mail adresinizi giriniz';
+    } else if (!emailRegExp.hasMatch(email)) {
+      return 'Geçersiz mail adresi! Lütfen std.ieu.edu.tr, std.izmirekonomi.edu.tr, ieu.edu.tr, veya izmirekonomi.edu.tr uzantılı bir mail adresi giriniz.';
     }
     return null;
   }
+
 
   static String? validatePassword({required String password}) {
     if (password == null) {
