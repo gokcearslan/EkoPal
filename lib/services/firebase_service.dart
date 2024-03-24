@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ekopal/services/event_model.dart';
 import 'package:ekopal/services/post_model.dart';
 
-import 'announcement_model.dart';
-import 'duyuru_model.dart'; // Adjust the import path as needed
+import 'advertisement_model.dart';
+import 'duyuru_model.dart';
 
 class EventService {
   final CollectionReference events =
@@ -41,19 +41,19 @@ class EventService {
   }
 }
 
-class AnnouncementService {
-  final CollectionReference announcements =
-  FirebaseFirestore.instance.collection('announcements');
+class AdvertisementService {
+  final CollectionReference advertisements =
+  FirebaseFirestore.instance.collection('advertisements');
 
-  Future<void> addAnnouncement(Announcement announcement) {
-    return announcements
+  Future<void> addAdvertisement(Advertisement advertisement) {
+    return advertisements
         .add({
-      'announcementName': announcement.announcementName,
-      'announcementType': announcement.announcementType,
-      'announcementDetails': announcement.announcementDetails,
+      'advertisementName': advertisement.advertisementName,
+      'advertisementType': advertisement.advertisementType,
+      'advertisementDetails': advertisement.advertisementDetails,
     })
-        .then((value) => print('Announcement added to Firestore'))
-        .catchError((error) => print('Failed to add announcement: $error'));
+        .then((value) => print('Advertisement added to Firestore'))
+        .catchError((error) => print('Failed to add advertisement: $error'));
   }
 }
 

@@ -1,4 +1,4 @@
-import 'package:ekopal/services/announcement_model.dart';
+import 'package:ekopal/services/advertisement_model.dart';
 import 'package:ekopal/services/duyuru_model.dart';
 import 'package:ekopal/services/event_model.dart';
 import 'package:ekopal/services/firebase_service.dart';
@@ -80,18 +80,17 @@ class IlanWidget extends StatefulWidget {
   _IlanWidgetState createState() => _IlanWidgetState();
 }
 class _IlanWidgetState extends State<IlanWidget> {
-  TextEditingController _announcementNameController = TextEditingController();
-  TextEditingController _announcementTypeController = TextEditingController();
-  TextEditingController _announcementDetailsController = TextEditingController();
+  TextEditingController _advertisementNameController = TextEditingController();
+  TextEditingController _advertisementTypeController = TextEditingController();
+  TextEditingController _advertisementDetailsController = TextEditingController();
 
-  List<String> annct_types = ['Ev', 'Kitap', 'Proje','İş','Staj'];
+  List<String> ad_types = ['Ev', 'Kitap', 'Proje', 'İş', 'Staj'];
   String? _selectedType;
 
-
   void _clearTextFields() {
-    _announcementNameController.clear();
-    _announcementTypeController.clear();
-    _announcementDetailsController.clear();
+    _advertisementNameController.clear();
+    _advertisementTypeController.clear();
+    _advertisementDetailsController.clear();
     // tür için clear eklenecek - altta eklendi
     setState(() {
       _selectedType = null;
@@ -106,13 +105,13 @@ class _IlanWidgetState extends State<IlanWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextFormField(
-            controller: _announcementNameController,
+            controller: _advertisementNameController,
             decoration: InputDecoration(labelText: 'İlan başlığı'),
           ),
 
           Container(
             child: TextFormField(
-              controller: _announcementDetailsController,
+              controller: _advertisementDetailsController,
               decoration: InputDecoration(labelText: 'İlan detayları'),
               maxLines: null,
               minLines: 3,
@@ -129,7 +128,7 @@ class _IlanWidgetState extends State<IlanWidget> {
                 });
               }
             },
-            items: annct_types.map<DropdownMenuItem<String>>((String value) {
+            items: ad_types.map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,
                 child: Text(value),
@@ -139,15 +138,14 @@ class _IlanWidgetState extends State<IlanWidget> {
           SizedBox(height: 20),
           ElevatedButton(
             onPressed: () async {
-            if (_selectedType != null) {
-                Announcement a = Announcement(
-                announcementName: _announcementNameController.text,
-                announcementType: _selectedType,
-                announcementDetails: _announcementDetailsController.text,
-
-              );
-              // Save to Firebase
-              AnnouncementService().addAnnouncement(a);
+              if (_selectedType != null) {
+                Advertisement a = Advertisement(
+                  advertisementName: _advertisementNameController.text,
+                  advertisementType: _selectedType,
+                  advertisementDetails: _advertisementDetailsController.text,
+                );
+                // Save to Firebase
+                AdvertisementService().addAdvertisement(a);
               // Clear the selected gender
               setState(() {
                 _selectedType = null;
@@ -183,24 +181,6 @@ class _IlanWidgetState extends State<IlanWidget> {
   }
 }
 
-////////
-/*
-class DuyuruWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Text(
-        'Duyuru Sayfası',
-        style: TextStyle(fontSize: 24),
-      ),
-    );
-  }
-}
-
-
- */
-
-///
 
 class EtkinlikWidget extends StatefulWidget {
   @override
