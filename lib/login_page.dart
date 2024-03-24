@@ -35,38 +35,33 @@ class _LoginPageState extends State<LoginPage> {
   bool _isProcessing = false;
 
   Future<void> login() async {
-    // Manually validate email and password
-    String? emailError = Validator.validateEmail(email: _emailTextController.text);
-    String? passwordError = Validator.validatePassword(password: _passwordTextController.text);
-
-    // Check for email validation error
-    if (emailError != null) {
-      _showErrorDialog(emailError);
-      return;
-    }
-
-    // Check for password validation error
-    if (passwordError != null) {
-      _showErrorDialog(passwordError);
-      return;
-    }
-
-    // If no validation errors, proceed with Firebase authentication
+    // Indicate that the login process is starting
     setState(() => _isProcessing = true);
+
     try {
+      // Attempt to sign in with the provided email and password
       final auth = FirebaseAuth.instance;
-      await auth.signInWithEmailAndPassword(
+      UserCredential userCredential = await auth.signInWithEmailAndPassword(
         email: _emailTextController.text.trim(),
         password: _passwordTextController.text.trim(),
       );
-      // Navigate to HomePage or handle successful login as needed
+
+      // Check if the sign-in was successful
+      if (userCredential.user != null) {
+        // If login is successful, navigate to the HomePage
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => HomePage()),
+        );
+      }
     } catch (e) {
-      // Handle Firebase authentication errors
-      _showErrorDialog("Authentication failed. Please try again.");
+      // If there's an error during the login process, show it in a dialog
+      _showErrorDialog("Login failed. Please try again.");
     } finally {
+      // Reset the processing state
       setState(() => _isProcessing = false);
     }
   }
+
 
   void _showErrorDialog(String message) {
     showDialog(
