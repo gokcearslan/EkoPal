@@ -13,24 +13,14 @@ class CardExamplesApp extends StatefulWidget {
 class _CardExamplesAppState extends State<CardExamplesApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: ddsdsd(),
-    );
-  }
-}
-
-class ddsdsd extends StatelessWidget {
-  const ddsdsd({Key? key});
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('İlanlar',style: TextStyle(fontSize: 24)),
+        title: const Text('İlanlar', style: TextStyle(fontSize: 24)),
       ),
       body: ListView(
         children: [
           Card.filled(child: _SampleCard()),
+          Card.outlined(child: _SampleCard()),
           Card.filled(child: _SampleCard()),
         ],
       ),
