@@ -65,7 +65,7 @@ class ChangePasswordPage extends StatelessWidget {
                   _changePassword(context);
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: kahve,
+                  backgroundColor: kahve,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),

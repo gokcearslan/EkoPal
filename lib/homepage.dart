@@ -116,7 +116,7 @@ class _HomePageState extends State<HomePage> {
                 title: Text('İlanlar'),
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder:
-                      (context) => FancyPage()));
+                      (context) => CardExamplesApp()));
                   // Add navigation logic here
                 },
               ),

@@ -1,90 +1,89 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
+import 'advertisement_details_page.dart';
 
-class MyFancyApp extends StatelessWidget {
+class CardExamplesApp extends StatefulWidget {
+  const CardExamplesApp({Key? key}) : super(key: key);
+
+  @override
+  _CardExamplesAppState createState() => _CardExamplesAppState();
+}
+
+class _CardExamplesAppState extends State<CardExamplesApp> {
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent, // Set status bar color to transparent
-    ));
     return MaterialApp(
-      home: FancyPage(),
+      home: ddsdsd(),
     );
   }
 }
 
-class FancyPage extends StatefulWidget {
-  @override
-  _FancyPageState createState() => _FancyPageState();
-}
-
-class _FancyPageState extends State<FancyPage> {
-  double _width = 200;
-  double _height = 200;
-  Color _color = Colors.blue;
-  BorderRadiusGeometry _borderRadius = BorderRadius.circular(8);
-
-  void _randomize() {
-    setState(() {
-      // Generate random values for the animated container
-      _width = 100 + (200 * (1 + 0.5));
-      _height = 100 + (200 * (1 + 0.5));
-      _color = Color.fromRGBO(
-        (1 + 100) % 255,
-        (1 + 150) % 255,
-        (1 + 200) % 255,
-        1,
-      );
-      _borderRadius = BorderRadius.circular((1 + 0.5) * 64);
-    });
-  }
+class ddsdsd extends StatelessWidget {
+  const ddsdsd({Key? key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Fancy Flutter Page'),
-        centerTitle: true,
-        backgroundColor: Colors.deepPurple,
+        title: const Text('İlanlar',style: TextStyle(fontSize: 24)),
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.deepPurple, Colors.pinkAccent],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              AnimatedContainer(
-                width: _width,
-                height: _height,
-                decoration: BoxDecoration(
-                  color: _color,
-                  borderRadius: _borderRadius,
-                ),
-                // Set the duration of the animation
-                duration: Duration(seconds: 1),
-                curve: Curves.easeInOutBack, // Use any animation curve you like
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _randomize,
-                child: Text('Randomize'),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.white,
-                  onPrimary: Colors.deepPurple,
-                  textStyle: TextStyle(fontSize: 20),
-                ),
-              ),
-            ],
-          ),
-        ),
+      body: ListView(
+        children: [
+          Card.filled(child: _SampleCard()),
+          Card.filled(child: _SampleCard()),
+        ],
       ),
     );
   }
 }
+
+class _SampleCard extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 300,
+      height: 200,
+      child: Column(
+        children: [
+          ListTile(
+            leading: Container(
+              child: Image.network(
+                'https://m.media-amazon.com/images/I/81F38erQmuL._AC_UF1000,1000_QL80_.jpg',
+                fit: BoxFit.scaleDown,
+                width: 120,
+                height: 120,
+              ),
+            ),
+            title: Text(
+              'İlan Başlığı',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
+            ),
+            subtitle: Text(
+              'İlan Detayları',
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
+            ),
+          ),
+          SizedBox(height: 16), // to add spacing between ListTile and button
+          Align(
+            alignment: Alignment.bottomRight,
+            child: FloatingActionButton.extended(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AdvertisementDetailsPage()),
+                );
+              },
+              label: Text('Detaylara git'),
+              splashColor: Colors.white,
+            ),
+          ),
+        ],
+      ),
+    );
+
+  }
+}
+
+

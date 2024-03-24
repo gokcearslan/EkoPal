@@ -96,7 +96,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                     ? CircularProgressIndicator(color: bej)
                     : Text('Şifre Sıfırlama Talebi Gönder'),
                 style: ElevatedButton.styleFrom(
-                  primary: kahve, // Set button color
+                  backgroundColor: kahve, // Set button color
                 ),
               ),
             ],
