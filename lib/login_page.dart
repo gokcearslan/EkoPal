@@ -55,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
       }
     } catch (e) {
       // If there's an error during the login process, show it in a dialog
-      _showErrorDialog("Login failed. Please try again.");
+      _showErrorDialog("Hatali Sifre.");
     } finally {
       // Reset the processing state
       setState(() => _isProcessing = false);
@@ -68,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Mail Hatasi'),
+          title: Text('Hata'),
           content: Text(message),
           actions: <Widget>[
             TextButton(
