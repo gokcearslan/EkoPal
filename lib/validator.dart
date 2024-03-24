@@ -1,21 +1,14 @@
 class Validator {
   static String? validateName({required String name}) {
-    if (name == null) {
-      return null;
-    }if(name.isEmpty){
+    if (name.isEmpty) {
       return 'İsim boş kalamaz';
     }
     return null;
   }
 
   static String? validateEmail({required String email}) {
-    if (email == null) {
-      return null;
-    }
-
-    //@std.ieu.edu.tr   @std.izmirekonomi.edu.tr  @ieu.edu.tr @izmirekonomi.edu.tr
     RegExp emailRegExp = RegExp(
-        r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@(std\.ieu\.edu\.tr|std\.izmirekonomi\.edu\.tr|ieu\.edu\.tr|izmirekonomi\.edu\.tr)$"
+      r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@(std\.ieu\.edu\.tr|std\.izmirekonomi\.edu\.tr|ieu\.edu\.tr|izmirekonomi\.edu\.tr)$",
     );
 
     if (email.isEmpty) {
@@ -26,11 +19,7 @@ class Validator {
     return null;
   }
 
-
   static String? validatePassword({required String password}) {
-    if (password == null) {
-      return null;
-    }
     if (password.isEmpty) {
       return 'Şifre boş kalamaz, lütfen şifrenizi giriniz.';
     } else if (password.length < 6) {
