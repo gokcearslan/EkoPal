@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'announcementsDetails_page.dart'; // Make sure this import points to the correct file
+import 'announcementsDetails_page.dart'; // Ensure this import points to the correct file
 
 class AnnouncementsPage extends StatelessWidget {
   @override
@@ -34,6 +34,7 @@ class AnnouncementsPage extends StatelessWidget {
   }
 }
 
+
 class AnnouncementCard extends StatelessWidget {
   final Map<String, dynamic> data;
 
@@ -41,32 +42,41 @@ class AnnouncementCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // A function to shorten the details text and add "..." if it's too long
     String shortenDetails(String details) {
-      const int maxLength = 50; // Maximum number of characters to display
-      if (details.length > maxLength) {
-        return details.substring(0, maxLength) + '...';
-      } else {
-        return details;
-      }
+      const int maxLength = 100; // Adjusted maximum length to show more preview text
+      return (details.length > maxLength) ? details.substring(0, maxLength) + '...' : details;
     }
 
-    return Card(
-      elevation: 5.0,
-      margin: EdgeInsets.all(8.0),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      child: ListTile(
-        title: Text(data['duyuruName']),
-        subtitle: Text(shortenDetails(data['duyuruDetails'])), // Show a part of the details
-        leading: Icon(Icons.announcement, color: Theme.of(context).colorScheme.secondary),
-        trailing: Icon(Icons.arrow_forward_ios, color: Theme.of(context).colorScheme.onSurface),
-        onTap: () {
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => AnnouncementDetailsPage(data: data),
-          ));
-        },
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        elevation: 8.0, // Enhanced elevation for a more pronounced shadow
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)), // Rounded corners for a modern look
+        child: InkWell( // InkWell for a nice tap effect
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => AnnouncementDetailsPage(data: data),
+            ));
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  data['duyuruName'],
+                  style: Theme.of(context).textTheme.headline6,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  shortenDetails(data['duyuruDetails']),
+                  style: Theme.of(context).textTheme.subtitle1,
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
