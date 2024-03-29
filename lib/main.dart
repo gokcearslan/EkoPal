@@ -1,3 +1,4 @@
+import 'package:ekopal/HomePage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'login_page.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home:LoginPage(),
+      home:HomePage(),
 
     );
   }

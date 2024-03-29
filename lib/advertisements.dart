@@ -2,8 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'advertisement_details_page.dart';
-
 class CardExamplesApp extends StatefulWidget {
   const CardExamplesApp({Key? key}) : super(key: key);
 

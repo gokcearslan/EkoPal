@@ -1,4 +1,5 @@
 import 'package:ekopal/advertisements.dart';
+import 'package:ekopal/advertisements_view_page.dart';
 import 'package:ekopal/post_create_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -181,6 +182,15 @@ class HomePageContent extends StatelessWidget {
               _HomePageState().signOutAndNavigateToLogin();
             },
             child: Text('Çıkış'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ViewAds()),
+              );
+            },
+            child: Text('İlanları gör'),
           ),
           ElevatedButton(
             onPressed: () {
