@@ -55,7 +55,8 @@ class ViewAdvertisementCard extends StatelessWidget {
 
     return Card(
       child: Container(
-        height: 300,
+        height: 200,
+
         child: ListTile(
           contentPadding: EdgeInsets.symmetric(vertical: 8.0),
           title: Column(
@@ -78,35 +79,47 @@ class ViewAdvertisementCard extends StatelessWidget {
             ],
           ),
           trailing: SizedBox(
-            width: 56, // Set a fixed width for the Stack
-            // bu height olmuyor! hep aynı kalıyor (eski width 100 dü , 100 yap)
-            height: 56, // Set a fixed height for the Stack
+            width: 56,
+            height: 200,
             child: Stack(
               children: [
-                FittedBox(
-                  fit: BoxFit.cover,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(200.0),
-                    child: Image.network(
-                      'https://static1.squarespace.com/static/54226625e4b072e9cb9647ad/t/652dcdf4c396223abddc16ee/1702859506677/',
-                    ),
-                  ),
-                ),
                 Positioned(
                   bottom: 0,
                   right: 0,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => AdvertisementDetailsPage(),
-                      ));
-                    },
-                    child: Text('Button'),
+                  child: SizedBox(
+                    width: 50,
+                    height: 100,
+                    child: Stack(
+                      children: [
+                        FittedBox(
+                          fit: BoxFit.cover,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(200.0),
+                            child: Image.network(
+                              'https://static1.squarespace.com/static/54226625e4b072e9cb9647ad/t/652dcdf4c396223abddc16ee/1702859506677/',
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          right: 0,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => AdvertisementDetailsPage(),
+                              ));
+                            },
+                            child: Text('Button'),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
             ),
           ),
+
         ),
       ),
 /*
