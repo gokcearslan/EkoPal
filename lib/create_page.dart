@@ -146,32 +146,32 @@ class _IlanWidgetState extends State<IlanWidget> {
                 );
                 // Save to Firebase
                 AdvertisementService().addAdvertisement(a);
-              // Clear the selected gender
-              setState(() {
-                _selectedType = null;
-              });
-            } else {
-              print('Lütfen bir ilan türü seçiniz.');
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: Text('Hata'),
-                    content: Text('Lütfen bir ilan türü seçiniz.'),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Text('Tamam'),
-                      ),
-                    ],
-                  );
-                },
-              );
-            }
+                // Clear the selected gender
+                setState(() {
+                  _selectedType = null;
+                });
+              } else {
+                print('Lütfen bir ilan türü seçiniz.');
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('Hata'),
+                      content: Text('Lütfen bir ilan türü seçiniz.'),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('Tamam'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
 
-            _clearTextFields();
+              _clearTextFields();
             },
             child: Text('İlan Oluştur'),
           ),

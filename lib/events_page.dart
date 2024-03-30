@@ -19,45 +19,131 @@ class _EventsPageState extends State<EventsPage> {
 
   fetchEvents() async {
     events = await EventService().getEvents();
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    // Use the Theme to get the color scheme and text themes that align with Material 3
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Events'),
+        backgroundColor: colorScheme.primaryContainer, // Material 3 color usage
       ),
       body: events == null
           ? Center(child: CircularProgressIndicator())
           : ListView.builder(
         itemCount: events!.length,
         itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              // Navigate to detailed event page
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DetailedEventPage(event: events![index]),
-                ),
-              );
-            },
-            child: buildEventCard(events![index]),
-          );
+          return buildEventCard(events![index]);
         },
       ),
     );
   }
 
   Widget buildEventCard(Event event) {
+    final ThemeData theme = Theme.of(context);
+    final ColorScheme colorScheme = theme.colorScheme;
+
     return Card(
-      margin: EdgeInsets.all(8.0),
-      child: ListTile(
-        title: Text(event.eventName),
-        subtitle: Text(event.eventDate),
-        trailing: Icon(Icons.arrow_forward_ios),
+      margin: EdgeInsets.all(16.0),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+      elevation: 5.0,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Left Column for the Image
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image.network(
+                'https://i.pinimg.com/564x/12/ad/fa/12adfa1035792c44248d3eab35212c91.jpg',
+                width: 120,
+                height: 120,
+                fit: BoxFit.cover,
+              ),
+            ),
+            SizedBox(width: 16),
+            // Expanded Column for Event Details and Buttons
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align content
+                children: [
+                  // Event Name
+                  Text(
+                    event.eventName,
+                    style: theme.textTheme.headline6?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 8),
+                  // Additional Information
+                  Text(
+                    event.additionalInfo, // Additional event information
+                    style: theme.textTheme.subtitle1,
+                  ),
+                  SizedBox(height: 16),
+                  // Date Information
+                  Text(
+                    event.eventDate, // Date information
+                    style: theme.textTheme.bodyText2,
+                  ),
+                  // Buttons Row at the bottom
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end, // Align buttons to the right
+                    children: [
+                      IconButton(
+                        icon: Icon(
+                          event.isFavorite ? Icons.star : Icons.star_border,
+                          color: event.isFavorite ? Colors.amber : colorScheme.onSurfaceVariant,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            event.isFavorite = !event.isFavorite;
+                          });
+                        },
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          Icons.info_outline,
+                          color: colorScheme.onSurfaceVariant,
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DetailedEventPage(event: event),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
+
+
+
+
+
+
+
+
+
+
+
+
 }

@@ -4,6 +4,7 @@ class Event {
   final String organizer;
   final String location;
   final String additionalInfo;
+  bool isFavorite;
 
   Event({
     required this.eventName,
@@ -11,5 +12,6 @@ class Event {
     required this.organizer,
     required this.location,
     required this.additionalInfo,
+    this.isFavorite = false,
   });
 }
