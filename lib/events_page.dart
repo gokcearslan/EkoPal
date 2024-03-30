@@ -33,7 +33,7 @@ class _EventsPageState extends State<EventsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Events'),
-        backgroundColor: colorScheme.primaryContainer, // Material 3 color usage
+        backgroundColor: colorScheme.primaryContainer,
       ),
       body: events == null
           ? Center(child: CircularProgressIndicator())
@@ -72,21 +72,18 @@ class _EventsPageState extends State<EventsPage> {
               ),
             ),
             SizedBox(width: 16),
-            // Expanded Column for Event Details and Buttons
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align content
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // Event Name
                   Text(
                     event.eventName,
                     style: theme.textTheme.headline6?.copyWith(fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 8),
-                  // Additional Information
                   Text(
-                    event.additionalInfo, // Additional event information
+                    event.location,
                     style: theme.textTheme.subtitle1,
                   ),
                   SizedBox(height: 16),
@@ -95,9 +92,8 @@ class _EventsPageState extends State<EventsPage> {
                     event.eventDate, // Date information
                     style: theme.textTheme.bodyText2,
                   ),
-                  // Buttons Row at the bottom
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.end, // Align buttons to the right
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       IconButton(
                         icon: Icon(
