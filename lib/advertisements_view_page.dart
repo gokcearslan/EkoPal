@@ -122,25 +122,6 @@ class ViewAdvertisementCard extends StatelessWidget {
 
         ),
       ),
-/*
-        trailing: FloatingActionButton(
-          onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(
-              //datayı data:data diye advertisementdetailspage
-              //constructora ekle
-
-              builder: (context) => AdvertisementDetailsPage(),
-            ));
-
-          },
-          child: Icon(Icons.add),
-          backgroundColor: Colors.blueGrey,
-          // Add more properties like backgroundColor, foregroundColor, etc. as needed
-        ),
-        //subtitle: Text(data['advertisementDetails']),
-
- */
-
     );
 
   }
