@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ekopal/colors.dart';
-import 'package:ekopal/services/fire_auth.dart';
 import 'package:ekopal/services/image_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -98,7 +97,7 @@ class _ProfilePageState extends State<ProfilePage> {
             Navigator.of(context).pop();
           },
         ),
-        backgroundColor: kahve,
+        backgroundColor: Colors.purple,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -274,7 +273,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         horizontal: 20,
                         vertical: 10,
                       ),
-                      backgroundColor: kahve,
+                      backgroundColor: Colors.purple,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
@@ -307,7 +306,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             horizontal: 20,
                             vertical: 10,
                           ),
-                          backgroundColor: kahve,
+                          backgroundColor: Colors.purple,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
@@ -317,7 +316,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             horizontal: 20,
                             vertical: 10,
                           ),
-                          backgroundColor: kahve.withOpacity(0.5),
+                          backgroundColor: Colors.purple.withOpacity(0.5),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
@@ -352,7 +351,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             horizontal: 20,
                             vertical: 10,
                           ),
-                          backgroundColor: kahve,
+                          backgroundColor: Colors.purple,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),

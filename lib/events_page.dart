@@ -32,7 +32,7 @@ class _EventsPageState extends State<EventsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Events'),
+        title: Text('Etkinlikler'),
         backgroundColor: colorScheme.primaryContainer,
       ),
       body: events == null

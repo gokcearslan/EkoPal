@@ -65,6 +65,8 @@ class _HomePageState extends State<HomePage> {
   //Appbar ve Bottombar
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(45),
@@ -78,7 +80,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           centerTitle: true,
-          backgroundColor: kahve,
+          backgroundColor: Colors.purple,
           // Modify the drawer icon color here
           leading: Builder(
             builder: (BuildContext context) {
@@ -103,7 +105,7 @@ class _HomePageState extends State<HomePage> {
             children: <Widget>[
               DrawerHeader(
                 decoration: BoxDecoration(
-                  color: kahve,
+                  color: Colors.purple,
                 ),
                 child: Text(
                   'Kategoriler',
@@ -183,15 +185,7 @@ class HomePageContent extends StatelessWidget {
             },
             child: Text('Çıkış'),
           ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ViewAds()),
-              );
-            },
-            child: Text('İlanları gör'),
-          ),
+
           ElevatedButton(
             onPressed: () {
               Navigator.push(

@@ -72,7 +72,7 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
               child: Image.network(
-                'https://i.pinimg.com/564x/12/ad/fa/12adfa1035792c44248d3eab35212c91.jpg',
+                'https://mahimeta.com/wp-content/uploads/2021/07/5-Simple-Tips-to-Increase-Revenue-from-Website-Ads-Website.jpg',
                 width: 120,
                 height: 120,
                 fit: BoxFit.cover,
@@ -90,9 +90,17 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
                         fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 8),
-                  Text(
-                    ad.advertisementType ?? 'Empty Value',
-                    style: theme.textTheme.subtitle1,
+                  Row(
+                    children:[
+                      Icon(Icons.arrow_circle_right_rounded, color: Colors.blueGrey), // Icon widget
+                      SizedBox(width: 10),
+                      Text(
+                        ad.advertisementType ?? 'Empty Value',
+                        style: theme.textTheme.subtitle1,
+                        //add_home_work_outlined
+
+                      ),
+                    ],
                   ),
                   SizedBox(height: 16),
 
@@ -105,7 +113,7 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
                     children: [
                       IconButton(
                         icon: Icon(
-                          ad.isFavorite ? Icons.star : Icons.star_border,
+                          ad.isFavorite ? Icons.star_outline : Icons.star_border,
                           color: ad.isFavorite ? Colors.amber : colorScheme
                               .onSurfaceVariant,
                         ),
@@ -117,7 +125,7 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
                       ),
                       IconButton(
                         icon: Icon(
-                          Icons.info_outline,
+                          Icons.article_outlined,
                           color: colorScheme.onSurfaceVariant,
                         ),
                         onPressed: () {

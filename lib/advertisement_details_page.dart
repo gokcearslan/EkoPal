@@ -10,9 +10,18 @@ class AdvertisementDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final colorScheme = Theme
+        .of(context)
+        .colorScheme;
+    final textTheme = Theme
+        .of(context)
+        .textTheme;
+
     return Scaffold(
       appBar: AppBar(
         title: Text("İlan detayları"),
+          backgroundColor: colorScheme.primaryContainer,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -33,12 +42,12 @@ class AdvertisementDetailsPage extends StatelessWidget {
                 ),
                 Divider(),
                 Image.network(
-                  'https://i.pinimg.com/564x/25/b0/f8/25b0f846698d82069e8d3086ca29aced.jpg',
+                  'https://img3.idealista.com/blur/WEB_LISTING-M/0/id.pro.es.image.master/88/73/d4/908040653.jpg',
                   height: 200.0,
                   fit: BoxFit.cover,
                 ),
                 ListTile(
-                  leading: Icon(Icons.info_outline),
+                  leading: Icon(Icons.arrow_circle_right_rounded, color: Colors.blueGrey),
                   title: Text(ad.advertisementType ?? 'not defined' ),
                 ),
                 /*
@@ -68,7 +77,7 @@ class AdvertisementDetailsPage extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          'Created by: "" ',
+                          'Oluşturan: Bilge Ulcay',
                           style: TextStyle(fontSize: 16.0),
                         ),
                       ),
@@ -76,25 +85,26 @@ class AdvertisementDetailsPage extends StatelessWidget {
                         onPressed: () {
                           // TODO: Implement navigation to message page
                         },
-                        child: Text('Message'),
+                        child: Text('İletişime geç'),
 
                       ),
+                      /*
                       TextButton(
                         onPressed: () {
-                          // TODO: Implement navigation to message page
                         },
-                        child: Text('Edit'),
+                        child: Text('Düzenle'),
                         /* USER condition eklenince burası kullılacak
                       if (isCurrentUser) // Conditional edit button
                         IconButton(
                           icon: Icon(Icons.edit),
                           onPressed: () {
-                            // TODO: Implement navigation to editing page
                           },
                         ),
 
                        */
                       )
+
+                       */
                     ],
                   ),
                 ),

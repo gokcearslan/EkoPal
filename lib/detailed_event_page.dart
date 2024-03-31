@@ -9,9 +9,14 @@ class DetailedEventPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(event.eventName),
+        backgroundColor:colorScheme.primaryContainer,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -70,14 +75,14 @@ class DetailedEventPage extends StatelessWidget {
                         onPressed: () {
                           // TODO: Implement navigation to message page
                         },
-                        child: Text('Message'),
+                        child: Text('İletişime geç'),
 
                       ),
                       TextButton(
                         onPressed: () {
                           // TODO: Implement navigation to message page
                         },
-                        child: Text('Edit'),
+                        child: Text('Düzenle'),
                         /* USER condition eklenince burası kullılacak
                       if (isCurrentUser) // Conditional edit button
                         IconButton(
