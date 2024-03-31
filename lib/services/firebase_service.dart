@@ -55,6 +55,24 @@ class AdvertisementService {
         .then((value) => print('Advertisement added to Firestore'))
         .catchError((error) => print('Failed to add advertisement: $error'));
   }
+
+  Future<List<Advertisement>> getAdvertisements() async {
+    try {
+      QuerySnapshot querySnapshot = await advertisements.get();
+      List<Advertisement> advertisementList = querySnapshot.docs.map((doc) {
+        return Advertisement(
+          advertisementName: doc['advertisementName'],
+          advertisementType: doc['advertisementType'],
+          advertisementDetails: doc['advertisementDetails'],
+
+        );
+      }).toList();
+      return advertisementList;
+    } catch (e) {
+      print("Error fetching ads: $e");
+      return [];
+    }
+  }
 }
 
 class DuyuruService {

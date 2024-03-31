@@ -1,117 +1,145 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ekopal/services/advertisement_model.dart';
+import 'package:ekopal/services/firebase_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class CardExamplesApp extends StatefulWidget {
-  const CardExamplesApp({Key? key}) : super(key: key);
+import 'advertisement_details_page.dart';
+
+class ViewAdvertisements extends StatefulWidget {
+  const ViewAdvertisements({Key? key}) : super(key: key);
 
   @override
-  _CardExamplesAppState createState() => _CardExamplesAppState();
+  _ViewAdvertisementsState createState() => _ViewAdvertisementsState();
 }
 
-class _CardExamplesAppState extends State<CardExamplesApp> {
+class _ViewAdvertisementsState extends State<ViewAdvertisements> {
+  List<Advertisement>? advertisements;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchAdvertisements();
+  }
+
+  fetchAdvertisements() async {
+    advertisements = await AdvertisementService().getAdvertisements();
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme
+        .of(context)
+        .colorScheme;
+    final textTheme = Theme
+        .of(context)
+        .textTheme;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('İlanlar', style: TextStyle(fontSize: 24)),
+        title: Text('İlanlar'),
+        backgroundColor: colorScheme.primaryContainer,
       ),
-      body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('advertisements').snapshots(),
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          if (snapshot.hasError) {
-            return Center(
-              child: Text('Error: ${snapshot.error}'),
-            );
-          }
-          final data = snapshot.data!.docs;
-          return ListView.builder(
-            itemCount: data.length,
-            itemBuilder: (context, index) {
-              var document = data[index];
-              return Card.filled(child: _SampleCard());
-            },
-          );
+      body: advertisements == null
+          ? Center(child: CircularProgressIndicator())
+          : ListView.builder(
+        itemCount: advertisements!.length,
+        itemBuilder: (context, index) {
+          return buildAdCard(advertisements![index]);
         },
       ),
     );
   }
-}
 
-class _SampleCard extends StatelessWidget {
+  Widget buildAdCard(Advertisement ad) {
+    final ThemeData theme = Theme.of(context);
+    final ColorScheme colorScheme = theme.colorScheme;
 
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 400,
-      height: 300,
-      child: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('advertisements').snapshots(),
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          if (snapshot.hasError) {
-            return Center(
-              child: Text('Error: ${snapshot.error}'),
-            );
-          }
-          final data = snapshot.data!.docs;
-          if (data.isEmpty) {
-            return Center(
-              child: Text('No data available'),
-            );
-          }
-          return SingleChildScrollView(
+    return Card(
+      margin: EdgeInsets.all(16.0),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+      elevation: 5.0,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image.network(
+                'https://i.pinimg.com/564x/12/ad/fa/12adfa1035792c44248d3eab35212c91.jpg',
+                width: 120,
+                height: 120,
+                fit: BoxFit.cover,
+              ),
+            ),
+            SizedBox(width: 16),
+            Expanded(
               child: Column(
-              children: data.map((document) {
-            return Column(
-              children: [
-                ListTile(
-                  leading: Container(
-                    child: Image.network(
-                      'https://m.media-amazon.com/images/I/81F38erQmuL._AC_UF1000,1000_QL80_.jpg',
-                      fit: BoxFit.scaleDown,
-                      width: 200,
-                      height: 120,
-                    ),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    ad.advertisementName,
+                    style: theme.textTheme.headline6?.copyWith(
+                        fontWeight: FontWeight.bold),
                   ),
-                  title: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  SizedBox(height: 8),
+                  Text(
+                    ad.advertisementType ?? 'Empty Value',
+                    style: theme.textTheme.subtitle1,
+                  ),
+                  SizedBox(height: 16),
+
+                  Text(
+                    ad.advertisementDetails,
+                    style: theme.textTheme.bodyText2,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text(
-                        document['advertisementName'],
-                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
+                      IconButton(
+                        icon: Icon(
+                          ad.isFavorite ? Icons.star : Icons.star_border,
+                          color: ad.isFavorite ? Colors.amber : colorScheme
+                              .onSurfaceVariant,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            ad.isFavorite = !ad.isFavorite;
+                          });
+                        },
                       ),
-                      Text(
-                        document['advertisementType'],
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.grey),
+                      IconButton(
+                        icon: Icon(
+                          Icons.info_outline,
+                          color: colorScheme.onSurfaceVariant,
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  AdvertisementDetailsPage(ad: ad),
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),
-                  subtitle: Text(
-                    document['advertisementDetails'],
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
-                  ),
-                ),
-                SizedBox(height: 16), // to add spacing between ListTiles
-              ],
-            );
-          }).toList(),
+                ],
               ),
-          );
-        },
+            ),
+          ],
+        ),
       ),
     );
   }
-
 }
 
 

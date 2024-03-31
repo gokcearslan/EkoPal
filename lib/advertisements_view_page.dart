@@ -105,9 +105,12 @@ class ViewAdvertisementCard extends StatelessWidget {
                           right: 0,
                           child: ElevatedButton(
                             onPressed: () {
+                              /*
                               Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => AdvertisementDetailsPage(),
                               ));
+
+                               */
                             },
                             child: Text('Button'),
                           ),
