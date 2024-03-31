@@ -1,39 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import 'announcementsDetails_page.dart'; // Ensure this import points to the correct file
+import 'announcementsDetails_page.dart'; //
 
 class AnnouncementsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Announcements"),
-        backgroundColor: Theme.of(context).colorScheme.primary,
+        title: const Text("Duyurular"),
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('duyurular').snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
+            return Center(child: Text('Error: ${snapshot.error.toString()}'));
           }
 
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return const Center(child: CircularProgressIndicator());
+            default:
+              return ListView.builder(
+                itemCount: snapshot.data?.docs.length ?? 0,
+                itemBuilder: (context, index) {
+                  DocumentSnapshot document = snapshot.data!.docs[index];
+                  Map<String, dynamic>? data = document.data() as Map<String, dynamic>?;
+                  if (data == null) {
+                    return Center(child: Text('Document data is null'));
+                  }
+                  return AnnouncementCard(data: data);
+                },
+              );
           }
-
-          return ListView(
-            children: snapshot.data!.docs.map((DocumentSnapshot document) {
-              Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-              return AnnouncementCard(data: data);
-            }).toList(),
-          );
         },
       ),
     );
   }
 }
-
 
 class AnnouncementCard extends StatelessWidget {
   final Map<String, dynamic> data;
@@ -42,40 +46,49 @@ class AnnouncementCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String shortenDetails(String details) {
-      const int maxLength = 100; // Adjusted maximum length to show more preview text
-      return (details.length > maxLength) ? details.substring(0, maxLength) + '...' : details;
-    }
+    final ThemeData theme = Theme.of(context);
 
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Card(
-        elevation: 8.0, // Enhanced elevation for a more pronounced shadow
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)), // Rounded corners for a modern look
-        child: InkWell( // InkWell for a nice tap effect
-          onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => AnnouncementDetailsPage(data: data),
-            ));
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  data['duyuruName'],
-                  style: Theme.of(context).textTheme.headline6,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  shortenDetails(data['duyuruDetails']),
-                  style: Theme.of(context).textTheme.subtitle1,
-                ),
-              ],
+    String imageUrl = data['imageUrl'] as String? ?? 'https://seeklogo.com/images/I/Izmir_Ekonomi_Universitesi-logo-1DBBF2BAF5-seeklogo.com.png';
+    String duyuruName = data['duyuruName'] as String? ?? 'Unnamed Announcement';
+    String duyuruDetails = data['duyuruDetails'] as String? ?? 'No details provided.';
+
+    return Card(
+      margin: const EdgeInsets.all(16.0),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+      elevation: 5.0,
+      child: Theme( //
+        data: theme.copyWith(dividerColor: Colors.transparent), //
+        child: ExpansionTile(
+          tilePadding: EdgeInsets.all(16.0), //
+          leading: ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Image.network(
+              imageUrl,
+              width: 100,
+              height: 100,
+              fit: BoxFit.cover,
             ),
           ),
+          title: Text(
+            duyuruName,
+            style: theme.textTheme.headline6?.copyWith(fontWeight: FontWeight.bold),
+            overflow: TextOverflow.ellipsis,
+          ),
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              child: Text(duyuruDetails, style: theme.textTheme.bodyText2),
+            ),
+          ],
+          onExpansionChanged: (bool expanded) {
+            if (expanded) {
+              //
+            } else {
+              //
+            }
+          },
         ),
       ),
     );
