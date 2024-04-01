@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ekopal/advertisements.dart';
 import 'package:ekopal/advertisements_view_page.dart';
 import 'package:ekopal/post_create_page.dart';
@@ -172,20 +173,47 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class HomePageContent extends StatelessWidget {
+class HomePageContent extends StatefulWidget {
+  @override
+  _HomePageContentState createState() => _HomePageContentState();
+}
+
+class _HomePageContentState extends State<HomePageContent> {
+  Map<String, dynamic>? announcementData;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchAnnouncement();
+  }
+
+  void fetchAnnouncement() async {
+    // Fetch a single announcement from Firestore
+    QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('duyurular').limit(1).get();
+    if (snapshot.docs.isNotEmpty) {
+      setState(() {
+        // Assuming your data structure has fields 'imageUrl', 'duyuruName', and 'duyuruDetails'
+        announcementData = snapshot.docs.first.data() as Map<String, dynamic>;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ElevatedButton(
             onPressed: () {
-              _HomePageState().signOutAndNavigateToLogin();
+              FirebaseAuth.instance.signOut().then((value) {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => LoginPage()),
+                );
+              });
             },
             child: Text('Çıkış'),
           ),
-
           ElevatedButton(
             onPressed: () {
               Navigator.push(
@@ -195,9 +223,39 @@ class HomePageContent extends StatelessWidget {
             },
             child: Text('Profil'),
           ),
+          Padding(
+            padding: const EdgeInsets.only(left: 16.0, top: 16.0, right: 16.0),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Duyurular',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+              ),
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            height: 2.0,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.blue, Colors.orange, Colors.brown],
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+              ),
+            ),
+          ),
+          // Display the announcement card if data is available
+          if (announcementData != null)
+            AnnouncementCard(data: announcementData!),
+          // You might want to add some more content here or handle the case when data is not available
         ],
       ),
     );
   }
 }
+
 
