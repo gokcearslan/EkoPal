@@ -17,9 +17,16 @@ class _AnnouncementsPageState extends State<AnnouncementsPage> {
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         actions: <Widget>[
           IconButton(
+            icon: Icon(Icons.edit), // The edit/pencil icon
+            onPressed: () {
+              // Edit fonksiyon
+              print('Edit icon tapped');
+            },
+          ),
+          IconButton(
             icon: Icon(Icons.delete_outline),
             onPressed: () {
-              // Buraya delete fonksiyon gelcek
+              // delete fonksiyonu
               print('Trash icon tapped');
             },
           ),
@@ -35,7 +42,6 @@ class _AnnouncementsPageState extends State<AnnouncementsPage> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
-
           return ListView.builder(
             itemCount: snapshot.data?.docs.length ?? 0,
             itemBuilder: (context, index) {
@@ -59,72 +65,55 @@ class AnnouncementCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final ThemeData theme = Theme.of(context);
 
     String imageUrl = data['imageUrl'] as String? ?? 'https://seeklogo.com/images/I/Izmir_Ekonomi_Universitesi-logo-1DBBF2BAF5-seeklogo.com.png';
     String duyuruName = data['duyuruName'] as String? ?? 'Unnamed Announcement';
     String duyuruDetails = data['duyuruDetails'] as String? ?? 'No details provided.';
 
-
-    return Stack(
-      children: [
-        Card(
-          margin: const EdgeInsets.all(16.0),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          elevation: 5.0,
-          child: Theme(
-            data: theme.copyWith(dividerColor: Colors.transparent),
-            child: ExpansionTile(
-              tilePadding: EdgeInsets.all(16.0),
-              leading: ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: Image.network(
-                  imageUrl,
-                  width: 80,
-                  height: 80,
-                  fit: BoxFit.fitHeight,
-                ),
-              ),
-              title: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Flexible(
-                    child: Text(
-                      duyuruName,
-                      style: theme.textTheme.headline6?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                    ),
-                  ),
-                ],
-              ),
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                  child: Text(duyuruDetails, style: theme.textTheme.bodyText2),
-                ),
-              ],
+    return Card(
+      margin: const EdgeInsets.all(16.0),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+      elevation: 5.0,
+      child: Theme(
+        data: theme.copyWith(dividerColor: Colors.transparent),
+        child: ExpansionTile(
+          tilePadding: EdgeInsets.all(16.0),
+          leading: ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Image.network(
+              imageUrl,
+              width: 80,
+              height: 80,
+              fit: BoxFit.fitHeight,
             ),
           ),
-        ),
-        Positioned(
-          right: 10,
-          top: 10,
-          child: IconButton(
-            icon: Icon(Icons.edit, color: Colors.grey), // Ikon degisebilir
-            onPressed: () {
-              // edit yapmak fonksiyon buraya
-              print('Edit/Delete Announcement');
-            },
+          title: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Flexible(
+                child: Text(
+                  duyuruName,
+                  style: theme.textTheme.headline6?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                ),
+              ),
+            ],
           ),
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              child: Text(duyuruDetails, style: theme.textTheme.bodyText2),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
