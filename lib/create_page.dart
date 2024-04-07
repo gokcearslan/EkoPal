@@ -1,3 +1,4 @@
+import 'package:ekopal/services/new_Type_Service.dart';
 import 'package:ekopal/services/advertisement_model.dart';
 import 'package:ekopal/services/duyuru_model.dart';
 import 'package:ekopal/services/event_model.dart';
@@ -11,7 +12,15 @@ class CreatePage extends StatefulWidget {
 }
 
 class _CreatePageState extends State<CreatePage> {
-  String _selectedOption = '';
+  String? _selectedOption;
+  final String _placeholderValue = "__placeholder__";
+  @override
+  void initState() {
+    super.initState();
+    // Initialize _selectedOption to the placeholder value
+    _selectedOption = 'İlan';
+  }
+
 
   Widget _buildContent() {
     switch (_selectedOption) {
@@ -28,6 +37,7 @@ class _CreatePageState extends State<CreatePage> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Oluştur'),
@@ -45,20 +55,41 @@ class _CreatePageState extends State<CreatePage> {
                   style: TextStyle(fontSize: 18),
                 ),
                 SizedBox(height: 20),
-                DropdownButton<String>(
-                  value: _selectedOption,
-                  items: <String>['', 'İlan', 'Duyuru', 'Etkinlik']
-                      .map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(
-                          value.isEmpty ? 'Bir kategori seçiniz' : value),
+                FutureBuilder<List<String>>(
+                  future: getCategoryNames(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    }
+
+                    List<String> categories = snapshot.data ?? [];
+                    // Debugging
+                    print("Selected option: $_selectedOption");
+                    print("Categories: $categories");
+
+                    return DropdownButton<String>(
+                      value: _selectedOption,
+                      items: [
+                        DropdownMenuItem<String>(
+                          value: _placeholderValue,
+                          child: Text('Bir kategori seçiniz'),
+                        ),
+                        ...categories.map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ],
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          _selectedOption = newValue;
+                        });
+                      },
+
                     );
-                  }).toList(),
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      _selectedOption = newValue!;
-                    });
                   },
                 ),
                 SizedBox(height: 20),
@@ -84,8 +115,14 @@ class _IlanWidgetState extends State<IlanWidget> {
   TextEditingController _advertisementTypeController = TextEditingController();
   TextEditingController _advertisementDetailsController = TextEditingController();
 
-  List<String> ad_types = ['Ev', 'Kitap', 'Proje', 'İş', 'Staj'];
+  List<String> ad_types = [];
   String? _selectedType;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadTypeNames();
+  }
 
   void _clearTextFields() {
     _advertisementNameController.clear();
@@ -95,6 +132,11 @@ class _IlanWidgetState extends State<IlanWidget> {
     setState(() {
       _selectedType = null;
     });
+  }
+
+  Future<void> _loadTypeNames() async {
+    ad_types = await getTypeNames();
+    setState(() {}); // Call setState to rebuild the widget with the loaded types
   }
 
   @override
@@ -112,7 +154,11 @@ class _IlanWidgetState extends State<IlanWidget> {
           Container(
             child: TextFormField(
               controller: _advertisementDetailsController,
-              decoration: InputDecoration(labelText: 'İlan detayları'),
+              decoration: InputDecoration(labelText: 'İlan detayları',
+                icon: Icon(Icons.details),
+                hintText: 'Gelecek olan kişinin  payına düşen kira, oda sayısı, eşyalı/eşyasız olma durumu vb. bilgileri giriniz.',
+                hintMaxLines: 3
+              ),
               maxLines: null,
               minLines: 3,
               keyboardType: TextInputType.multiline,
