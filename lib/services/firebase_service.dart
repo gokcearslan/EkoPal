@@ -90,9 +90,6 @@ class DuyuruService {
         .catchError((error) => print('Failed to add duyuru: $error'));
   }
 }
-
-
-
 class PostService {
   final CollectionReference posts = FirebaseFirestore.instance.collection('posts');
 
@@ -104,5 +101,23 @@ class PostService {
     })
         .then((value) => print('Post added to Firestore'))
         .catchError((error) => print('Failed to add post: $error'));
+  }
+
+  Future<List<Post>> getPosts() async {
+    try {
+      QuerySnapshot querySnapshot = await posts.get();
+      List<Post> postList = querySnapshot.docs.map((doc) {
+        var data = doc.data() as Map<String, dynamic>; // Cast the data to a map
+        // Ensure you have proper null checks and default values as necessary
+        return Post(
+          id: data['id'] ?? '', // Provide a default value in case it's null
+          PostContent: data['PostContent'] ?? '',
+        );
+      }).toList();
+      return postList;
+    } catch (e) {
+      print("Error fetching posts: $e");
+      return [];
+    }
   }
 }

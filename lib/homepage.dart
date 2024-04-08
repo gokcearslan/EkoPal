@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ekopal/advertisements.dart';
 import 'package:ekopal/advertisements_view_page.dart';
 import 'package:ekopal/post_create_page.dart';
+import 'package:ekopal/post_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ekopal/login_page.dart';
@@ -240,6 +241,15 @@ class _HomePageContentState extends State<HomePageContent> {
               );
             },
             child: Text('Profil'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PostsPage()),
+              );
+            },
+            child: Text('Post'),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 16.0, top: 16.0, right: 16.0),
