@@ -3,6 +3,9 @@ import 'package:ekopal/services/event_model.dart';
 import 'package:ekopal/services/firebase_service.dart';
 import 'package:ekopal/detailed_event_page.dart';
 
+import 'colors.dart';
+import 'create_page.dart';
+
 class EventsPage extends StatefulWidget {
   @override
   _EventsPageState createState() => _EventsPageState();
@@ -26,7 +29,6 @@ class _EventsPageState extends State<EventsPage> {
 
   @override
   Widget build(BuildContext context) {
-    // Use the Theme to get the color scheme and text themes that align with Material 3
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
@@ -42,6 +44,23 @@ class _EventsPageState extends State<EventsPage> {
         itemBuilder: (context, index) {
           return buildEventCard(events![index]);
         },
+      ),
+      //Create butonu floating
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreatePage()));
+        },
+        child: Material(
+          color: Colors.transparent,
+          child: Icon(
+            Icons.add,
+            color: koyuSomon,
+          ),
+        ),
+        backgroundColor: floatingcolor,
+        // backgroundColor: Colors.transparent, // transparent olunca gözükmüyor gibi geldi
+        // elevation: 0, // Remove shadow
+
       ),
     );
   }
