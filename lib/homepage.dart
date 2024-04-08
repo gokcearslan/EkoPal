@@ -63,11 +63,9 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  //Appbar ve Bottombar
+
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(45),
@@ -100,6 +98,7 @@ class _HomePageState extends State<HomePage> {
 
       drawer: Container(
         color: Colors.white, // Set the background color of the container
+        //yandaki menü
         child: Drawer(
           child: ListView(
             padding: EdgeInsets.zero,
@@ -169,6 +168,25 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
+
+      //Create butonu floating
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreatePage()));
+        },
+        child: Material(
+          color: Colors.transparent,
+          child: Icon(
+            Icons.add,
+            color: koyuSomon,
+          ),
+        ),
+        backgroundColor: floatingcolor,
+       // backgroundColor: Colors.transparent, // transparent olunca gözükmüyor gibi geldi
+       // elevation: 0, // Remove shadow
+
+      ),
+
     );
   }
 }

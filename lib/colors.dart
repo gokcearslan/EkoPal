@@ -12,3 +12,7 @@ const Color somon = Color(0xFFFFBF9B);
 const Color koyuSomon = Color(0xFFBB6060);
 const Color gri = Color(0xFF4D4D4D);
 
+// Floating için renk denemesi
+const Color floatingcolor = Color(0xFFE1D0D7);
+
+
