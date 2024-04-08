@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Recipe App',
+      title: 'EKOPAL',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -237,5 +237,4 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-
 

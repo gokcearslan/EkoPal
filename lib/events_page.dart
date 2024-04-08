@@ -79,12 +79,12 @@ class _EventsPageState extends State<EventsPage> {
                 children: [
                   Text(
                     event.eventName,
-                    style: theme.textTheme.headline6?.copyWith(fontWeight: FontWeight.bold),
+                    style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 8),
                   Text(
                     event.location,
-                    style: theme.textTheme.subtitle1,
+                    style: theme.textTheme.titleMedium,
                   ),
                   SizedBox(height: 16),
                   // Date Information

@@ -14,7 +14,7 @@ class Validator {
     if (email.isEmpty) {
       return 'Mail adresi boş kalamaz, lütfen mail adresinizi giriniz';
     } else if (!emailRegExp.hasMatch(email)) {
-      return 'Geçersiz mail adresi! Lütfen std.ieu.edu.tr, std.izmirekonomi.edu.tr, ieu.edu.tr, veya izmirekonomi.edu.tr uzantılı bir mail adresi giriniz.';
+      return 'Geçersiz mail adresi!';
     }
     return null;
   }
