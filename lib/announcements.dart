@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'announcementsDetails_page.dart'; //
+import 'announcementsDetails_page.dart';
+import 'colors.dart';
+import 'create_page.dart'; //
 
 class AnnouncementsPage extends StatefulWidget {
   @override
@@ -55,6 +57,25 @@ class _AnnouncementsPageState extends State<AnnouncementsPage> {
           );
         },
       ),
+
+      //Create butonu floating
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreatePage()));
+        },
+        child: Material(
+          color: Colors.transparent,
+          child: Icon(
+            Icons.add,
+            color: koyuSomon,
+          ),
+        ),
+        backgroundColor: floatingcolor,
+        // backgroundColor: Colors.transparent, // transparent olunca gözükmüyor gibi geldi
+        // elevation: 0, // Remove shadow
+
+      ),
+
     );
   }
 }
