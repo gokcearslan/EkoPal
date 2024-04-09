@@ -1,7 +1,7 @@
-import 'package:ekopal/post_create_page.dart';
 import 'package:flutter/material.dart';
-import 'package:ekopal/services/post_model.dart'; // Assuming this exists and is similar to event_model.dart
-import 'package:ekopal/services/firebase_service.dart'; // Assuming this includes PostService
+import 'package:ekopal/services/post_model.dart';
+import 'package:ekopal/services/firebase_service.dart';
+import 'package:ekopal/post_create_page.dart';
 
 class PostsPage extends StatefulWidget {
   @override
@@ -18,7 +18,7 @@ class _PostsPageState extends State<PostsPage> {
   }
 
   fetchPosts() async {
-    posts = await PostService().getPosts(); // Assuming getPosts exists and works similarly to getEvents
+    posts = await PostService().getPosts();
     if (mounted) {
       setState(() {});
     }
@@ -29,7 +29,6 @@ class _PostsPageState extends State<PostsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Posts'),
-        // Adjust the colors as needed
       ),
       body: posts == null
           ? Center(child: CircularProgressIndicator())
@@ -41,14 +40,10 @@ class _PostsPageState extends State<PostsPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => PostCreationPage()),
-          );
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => PostCreationPage()));
         },
         child: Icon(Icons.add),
-        // Adjust the colors and icons as needed
       ),
-
     );
   }
 
@@ -65,13 +60,19 @@ class _PostsPageState extends State<PostsPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              post.PostContent, // Assuming PostContent is what you want to display
+              post.postTitle, // Display the title
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 18,
+                fontSize: 20,
               ),
             ),
-            // Include other post details here (e.g., author, timestamp) if available
+            SizedBox(height: 10), // Space between title and content
+            Text(
+              post.PostContent, // Display the content
+              style: TextStyle(
+                fontSize: 16,
+              ),
+            ),
           ],
         ),
       ),

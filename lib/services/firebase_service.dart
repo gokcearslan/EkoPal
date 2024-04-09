@@ -98,9 +98,11 @@ class PostService {
         .add({
       'id': post.id,
       'PostContent': post.PostContent,
+      'postTitle': post.postTitle,
+
     })
-        .then((value) => print('Post added to Firestore'))
-        .catchError((error) => print('Failed to add post: $error'));
+        .then((value) => print('Gönderi başarıyla paylaşıldı.'))
+        .catchError((error) => print('Gönderi paylaşılırken bir sorun oluştu: $error'));
   }
 
   Future<List<Post>> getPosts() async {
@@ -111,7 +113,7 @@ class PostService {
         // Ensure you have proper null checks and default values as necessary
         return Post(
           id: data['id'] ?? '', // Provide a default value in case it's null
-          PostContent: data['PostContent'] ?? '',
+          PostContent: data['PostContent'] ?? '', postTitle: '',
         );
       }).toList();
       return postList;

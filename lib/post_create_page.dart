@@ -10,15 +10,17 @@ class PostCreationPage extends StatefulWidget {
 
 class _PostCreationPageState extends State<PostCreationPage> {
   final TextEditingController _postContentController = TextEditingController();
+  final TextEditingController _postTitleController = TextEditingController(); // New controller for post title
   final PostService _postService = PostService();
 
   //random id yaratma
   void _createPost() async {
     final String id = Random().nextInt(100000).toString();
     final String postContent = _postContentController.text;
+    final String postTitle = _postTitleController.text;
 
     if (postContent.isNotEmpty) {
-      final post = Post(id: id, PostContent: postContent);
+      final post = Post(id: id, PostContent: postContent, postTitle: postTitle);
 
       await _postService.addPost(post).then((value) {
         print("Postunuz başarıyla paylaşıldı");
@@ -45,16 +47,24 @@ class _PostCreationPageState extends State<PostCreationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Post'),
+        title: Text('Gönderi'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
             TextField(
+              controller: _postTitleController, // Use the new controller here
+              decoration: InputDecoration(
+                labelText: 'Gönderi Başlığı',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(height: 20),
+            TextField(
               controller: _postContentController,
               decoration: InputDecoration(
-                labelText: 'Post İçeriği',
+                labelText: 'Gönderi İçeriği',
                 border: OutlineInputBorder(),
               ),
               maxLines: null,
@@ -62,11 +72,12 @@ class _PostCreationPageState extends State<PostCreationPage> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: _createPost,
-              child: Text('Post Oluşturun'),
+              child: Text('Gönderi Oluşturun'),
             ),
           ],
         ),
       ),
     );
   }
+
 }
