@@ -61,7 +61,7 @@ class _AnnouncementsPageState extends State<AnnouncementsPage> {
       //Create butonu floating
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreatePage()));
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreatePage(initialCategory: 'Duyuru')));
         },
         child: Material(
           color: Colors.transparent,

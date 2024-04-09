@@ -7,6 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class CreatePage extends StatefulWidget {
+
+  final String initialCategory;
+  CreatePage({this.initialCategory = 'İlan'}); // Default is 'İlan'
+
+
   @override
   _CreatePageState createState() => _CreatePageState();
 }
@@ -18,7 +23,9 @@ class _CreatePageState extends State<CreatePage> {
   void initState() {
     super.initState();
     // Initialize _selectedOption to the placeholder value
-    _selectedOption = 'İlan';
+    //_selectedOption = 'İlan';
+    _selectedOption = widget.initialCategory;
+
   }
 
 

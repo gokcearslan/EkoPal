@@ -57,7 +57,7 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
       //Create butonu floating
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreatePage()));
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreatePage(initialCategory: 'İlan')));
         },
         child: Material(
           color: Colors.transparent,

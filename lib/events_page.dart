@@ -48,7 +48,8 @@ class _EventsPageState extends State<EventsPage> {
       //Create butonu floating
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreatePage()));
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => CreatePage(initialCategory: 'Etkinlik')));
         },
         child: Material(
           color: Colors.transparent,
