@@ -33,6 +33,8 @@ class _PostCreationPageState extends State<PostCreationPage> {
       });
 
       _postContentController.clear();
+      _postTitleController.clear();
+
     } else {
       print("Bu alan boş kalamaz.");
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Bu alan boş kalamaz.')));
