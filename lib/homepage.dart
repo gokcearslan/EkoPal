@@ -11,6 +11,7 @@ import 'package:ekopal/profile_page.dart';
 import 'announcements.dart';
 import 'create_page.dart';
 import 'events_page.dart';
+import 'main.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -71,12 +72,18 @@ class _HomePageState extends State<HomePage> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(45),
         child: AppBar(
-          title: Text(
-            'EkoPal',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w400,
-              fontSize: 40,
+          title: InkWell(
+            onTap: () {
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => MainApp()));
+            },
+            child: Text(
+              'EkoPal',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w400,
+                fontSize: 40,
+              ),
             ),
           ),
           centerTitle: true,
