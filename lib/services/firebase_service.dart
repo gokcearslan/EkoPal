@@ -112,8 +112,8 @@ class PostService {
         var data = doc.data() as Map<String, dynamic>; // Cast the data to a map
         // Ensure you have proper null checks and default values as necessary
         return Post(
-          id: data['id'] ?? '', // Provide a default value in case it's null
-          PostContent: data['PostContent'] ?? '', postTitle: '',
+          id: data['id'] ?? '',
+          PostContent: data['PostContent'] ?? '', postTitle: data['postTitle'] ??'',
         );
       }).toList();
       return postList;

@@ -28,14 +28,16 @@ class _PostsPageState extends State<PostsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Posts'),
+        title: Text('Gönderiler'),
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+
       ),
       body: posts == null
           ? Center(child: CircularProgressIndicator())
           : ListView.builder(
         itemCount: posts!.length,
         itemBuilder: (context, index) {
-          return buildPostCard(posts![index]);
+          return PostCard(post: posts![index]);
         },
       ),
       floatingActionButton: FloatingActionButton(
@@ -46,31 +48,51 @@ class _PostsPageState extends State<PostsPage> {
       ),
     );
   }
+}
 
-  Widget buildPostCard(Post post) {
+class PostCard extends StatelessWidget {
+  final Post post;
+
+  const PostCard({Key? key, required this.post}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    // Your specified image URL
+    String imageUrl = 'https://i.pinimg.com/564x/25/b0/f8/25b0f846698d82069e8d3086ca29aced.jpg';
+
     return Card(
-      margin: EdgeInsets.all(16.0),
+      margin: const EdgeInsets.all(16.0),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
       elevation: 5.0,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              post.postTitle, // Display the title
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
+      child: Theme(
+        data: theme.copyWith(dividerColor: Colors.transparent),
+        child: ExpansionTile(
+          tilePadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+          leading: ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: Image.network(
+              imageUrl,
+              width: 80,
+              height: 80,
+              fit: BoxFit.cover,
             ),
-            SizedBox(height: 10), // Space between title and content
-            Text(
-              post.PostContent, // Display the content
-              style: TextStyle(
-                fontSize: 16,
+          ),
+          title: Text(
+            post.postTitle,
+            style: theme.textTheme.headline6?.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
+            overflow: TextOverflow.ellipsis,
+          ),
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                post.PostContent,
+                style: theme.textTheme.bodyText2,
               ),
             ),
           ],

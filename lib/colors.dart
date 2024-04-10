@@ -15,4 +15,7 @@ const Color gri = Color(0xFF4D4D4D);
 // Floating için renk denemesi
 const Color floatingcolor = Color(0xFFE1D0D7);
 
+const Color buttonColor = Color(0xFFD0B6BD);
+
+
 

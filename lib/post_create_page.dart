@@ -3,6 +3,8 @@ import 'package:ekopal/services/post_model.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
+import 'colors.dart';
+
 class PostCreationPage extends StatefulWidget {
   @override
   _PostCreationPageState createState() => _PostCreationPageState();
@@ -45,39 +47,98 @@ class _PostCreationPageState extends State<PostCreationPage> {
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
+    OutlineInputBorder borderStyle = OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10),
+      borderSide: BorderSide(
+        color: colorScheme.onSurface.withOpacity(0.5), // Adjust the opacity as you see fit
+      ),
+    );
     return Scaffold(
       appBar: AppBar(
-        title: Text('Gönderi'),
+        backgroundColor: colorScheme.primaryContainer, // Use primary container color for the app bar
+        title: Text('Gönderi', style: TextStyle(color: colorScheme.onPrimaryContainer)), // Assuming 'onPrimaryContainer' is the color for text on top of primary containers
+        centerTitle: true,
+        iconTheme: IconThemeData(color: colorScheme.onPrimaryContainer), // Assuming 'onPrimaryContainer' is the color for icons on top of primary containers
+        elevation: 1,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             TextField(
-              controller: _postTitleController, // Use the new controller here
+              controller: _postTitleController,
               decoration: InputDecoration(
-                labelText: 'Gönderi Başlığı',
-                border: OutlineInputBorder(),
+                hintText: 'Başlık',
+                hintStyle: TextStyle(color: colorScheme.onSurface.withOpacity(0.5)),
+                filled: true,
+                fillColor: colorScheme.surface,
+                border: borderStyle,
+                enabledBorder: borderStyle,
+                focusedBorder: borderStyle.copyWith(
+                  borderSide: BorderSide(
+                    color: colorScheme.primary, // Border color when the TextField is focused
+                    width: 2.0,
+                  ),
+                ),
+                prefixIcon: Icon(Icons.title, color: colorScheme.onSurface),
               ),
             ),
             SizedBox(height: 20),
             TextField(
               controller: _postContentController,
               decoration: InputDecoration(
-                labelText: 'Gönderi İçeriği',
-                border: OutlineInputBorder(),
+                hintText: 'İçeriğin ne hakkında?',
+                hintStyle: TextStyle(color: colorScheme.onSurface.withOpacity(0.5)),
+                filled: true,
+                fillColor: colorScheme.surface,
+                border: borderStyle,
+                enabledBorder: borderStyle,
+                focusedBorder: borderStyle.copyWith(
+                  borderSide: BorderSide(
+                    color: colorScheme.primary,
+                    width: 2.0,
+                  ),
+                ),
+                prefixIcon: Icon(Icons.short_text, color: colorScheme.onSurface),
               ),
+              minLines: 5,
               maxLines: null,
+              keyboardType: TextInputType.multiline,
+            ),
+              SizedBox(height: 20),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.image, color: colorScheme.onSurface),
+                  onPressed: () {}, // TODO: Implement your image upload logic
+                ),
+                // Add more icons if needed
+              ],
             ),
             SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _createPost,
-              child: Text('Gönderi Oluşturun'),
+            Center(
+              child: ElevatedButton(
+                onPressed: _createPost,
+                child: Text('Gönderi Oluşturun'),
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: colorScheme.onPrimaryContainer, // Assuming 'onPrimaryContainer' is the text color for buttons
+                  backgroundColor: colorScheme.primaryContainer, // Button background color from the color scheme
+                  shape: StadiumBorder(),
+                  padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                ),
+              ),
             ),
-          ],
+
+        ],
         ),
-      ),
-    );
+        ),
+        );
   }
+
+
 
 }
