@@ -99,7 +99,8 @@ class PostService {
       'id': post.id,
       'PostContent': post.PostContent,
       'postTitle': post.postTitle,
-
+      'upvotes': 0,
+      'downvotes': 0,
     })
         .then((value) => print('Gönderi başarıyla paylaşıldı.'))
         .catchError((error) => print('Gönderi paylaşılırken bir sorun oluştu: $error'));
@@ -114,6 +115,7 @@ class PostService {
         return Post(
           id: data['id'] ?? '',
           PostContent: data['PostContent'] ?? '', postTitle: data['postTitle'] ??'',
+          upvotes: data['upvotes'] ?? '', downvotes: data['downvotes'] ?? ' ',
         );
       }).toList();
       return postList;
@@ -122,4 +124,43 @@ class PostService {
       return [];
     }
   }
+
+  // post için vote
+  Future<void> upvotePost(String postId) async {
+    return posts.doc(postId).update({
+      'upvotes': FieldValue.increment(1),
+    }).catchError((error) {
+      throw Exception("Failed to upvote: $error");
+    });
+  }
+
+  Future<void> downvotePost(String postId) async {
+    return posts.doc(postId).update({
+      'downvotes': FieldValue.increment(1),
+    }).catchError((error) {
+      throw Exception("Failed to downvote: $error");
+    });
+  }
+
+
+  //en çok oy alan 5 postu görüntüleme
+  Future<List<Post>> getTopPosts() async {
+    try {
+      QuerySnapshot querySnapshot = await posts
+          .orderBy('upvotes', descending: true)
+          .limit(5)
+          .get();
+
+      List<Post> postList = querySnapshot.docs.map((doc) {
+        return Post.fromFirestore(doc);
+      }).toList();
+
+      return postList;
+    } catch (e) {
+      print("Error fetching top posts: $e");
+      return [];
+    }
+  }
+
+
 }
