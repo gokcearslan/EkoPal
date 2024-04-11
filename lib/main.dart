@@ -1,8 +1,11 @@
 import 'package:ekopal/HomePage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'advertisements.dart';
+import 'announcements.dart';
 import 'bottom_bar.dart';
 import 'create_page.dart';
+import 'events_page.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -33,12 +36,12 @@ class MainApp extends StatefulWidget {
 class _MainAppState extends State<MainApp> {
   int _selectedIndex = 0;
 
-  // Add your page widgets here
+  //widgets of bottom bar
   final List<Widget> _pages = [
     HomePage(),
-    IlanWidget(),
-    EtkinlikWidget(),
-    DuyuruWidget(),
+    ViewAdvertisements(),
+    AnnouncementsPage(),
+    EventsPage(),
   ];
 
   void _onItemTapped(int index) {

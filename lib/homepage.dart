@@ -126,7 +126,7 @@ class _HomePageState extends State<HomePage> {
               ListTile(
                 title: Text('İlanlar'),
                 onTap: () {
-                  Navigator.pop(context);  // This pops the drawer off the navigation stack.
+                  Navigator.pop(context);  // used to go to main page instead of drawer(hamburger)
                   Navigator.push(context, MaterialPageRoute(builder: (context) => ViewAdvertisements()));
                 },
               ),
