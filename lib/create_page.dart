@@ -154,6 +154,72 @@ class _IlanWidgetState extends State<IlanWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextFormField(
+            decoration: InputDecoration(
+              labelText: 'İlan başlığı',
+              hintText: 'Başlık giriniz.',
+              floatingLabelBehavior: FloatingLabelBehavior.always,
+              filled: true,
+              fillColor: Colors.purpleAccent.withOpacity(0.1),
+              labelStyle: TextStyle(
+                color: Colors.brown,  // Sets the color of the label text
+                fontSize: 16,
+                fontWeight: FontWeight.bold,// Optionally set the font size
+              ),
+              hintStyle:TextStyle(
+                color: Colors.brown,  // Sets the color of the label text
+                fontSize: 16,
+                fontWeight: FontWeight.bold,// Optionally set the font size
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8.0),
+                borderSide: BorderSide.none,
+              ),
+              focusedBorder: UnderlineInputBorder( // Underlined border when focused
+                borderSide: BorderSide(
+                  color: Colors.brown.withOpacity(0.5), // Color of the underline
+                  width: 2.5, // Thickness of the underline
+                ),
+              ),
+            ),
+          ),
+
+          SizedBox(height: 5),
+
+          DropdownButtonFormField<String>(
+            decoration: InputDecoration(
+              filled: true,
+              fillColor: Colors.purpleAccent.withOpacity(0.1),
+              prefixIcon: Icon(Icons.keyboard_arrow_down, color: Colors.brown), // Search icon
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8.0),
+                borderSide: BorderSide.none,
+              ),
+            ),
+            value: _selectedType,
+            icon: Icon(Icons.arrow_drop_down, color: Colors.white), // Dropdown icon
+            iconSize: 24,
+            elevation: 16,
+            style: TextStyle(color: Colors.white, fontSize: 18),
+            onChanged: (String? newValue) {
+              _selectedType = newValue; // Update the selected value on change
+            },
+            items: ad_types.map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value, style: TextStyle(
+                  color: Colors.brown, // Color for each item
+                  fontSize: 16, // Font size for each item
+                  fontWeight: FontWeight.bold, // Font weight for each item
+                )),
+              );
+            }).toList(),
+          ),
+
+
+          /// eskisi aşağıda
+
+          SizedBox(height: 20),
+          TextFormField(
             controller: _advertisementNameController,
             decoration: InputDecoration(labelText: 'İlan başlığı'),
           ),
