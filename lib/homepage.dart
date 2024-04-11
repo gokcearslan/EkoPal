@@ -126,9 +126,8 @@ class _HomePageState extends State<HomePage> {
               ListTile(
                 title: Text('İlanlar'),
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder:
-                      (context) => ViewAdvertisements()));
-                  // Add navigation logic here
+                  Navigator.pop(context);  // This pops the drawer off the navigation stack.
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => ViewAdvertisements()));
                 },
               ),
               ListTile(
