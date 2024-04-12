@@ -347,7 +347,8 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
 
         if (pickedDateTime.isAfter(now)) {
           setState(() {
-            _eventDateController.text = DateFormat('yyyy-MM-dd – HH:mm').format(pickedDateTime);
+            _eventDateController.text = DateFormat('dd-MM-yyyy – HH:mm').format(pickedDateTime);
+                //DateFormat('yyyy-MM-dd – HH:mm').format(pickedDateTime);
           });
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -365,32 +366,51 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextFormField(
+          TextField(
             controller: _eventNameController,
-            decoration: InputDecoration(labelText: 'Etkinlik Adı'),
+            decoration: InputDecoration(
+              labelText: 'Etkinlik Adı',
+              border: OutlineInputBorder(),
+            ),
           ),
-          TextFormField(
+          SizedBox(height: 10),  // Spacing between text fields
+          TextField(
             controller: _eventDateController,
-            decoration: InputDecoration(labelText: 'Etkinlik Tarihi'),
+            decoration: InputDecoration(
+              labelText: 'Etkinlik Tarihi',
+              border: OutlineInputBorder(),
+              suffixIcon: Icon(Icons.calendar_today),
+            ),
             readOnly: true,
             onTap: () => _selectDateAndTime(context),
           ),
-          TextFormField(
+          SizedBox(height: 10),  // Spacing between text fields
+          TextField(
             controller: _organizerController,
-            decoration: InputDecoration(labelText: 'Etkinliği Düzenleyen Kişi/Topluluk'),
+            decoration: InputDecoration(
+              labelText: 'Etkinliği Düzenleyen Kişi/Topluluk',
+              border: OutlineInputBorder(),
+            ),
           ),
-          TextFormField(
+          SizedBox(height: 10),  // Spacing between text fields
+          TextField(
             controller: _locationController,
-            decoration: InputDecoration(labelText: 'Etkinlik Yeri'),
+            decoration: InputDecoration(
+              labelText: 'Etkinlik Yeri',
+              border: OutlineInputBorder(),
+            ),
           ),
-          TextFormField(
+          SizedBox(height: 10),  // Spacing between text fields
+          TextField(
             controller: _additionalInfoController,
-            decoration: InputDecoration(labelText: 'Ek Açıklamalar'),
+            decoration: InputDecoration(
+              labelText: 'Ek Açıklamalar',
+              border: OutlineInputBorder(),
+            ),
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 20),  // Larger space before the button
           ElevatedButton(
             onPressed: () {
-
               Event event = Event(
                 eventName: _eventNameController.text,
                 eventDate: _eventDateController.text,
@@ -398,7 +418,6 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
                 location: _locationController.text,
                 additionalInfo: _additionalInfoController.text,
               );
-
               EventService().addEvent(event);
               _clearTextFields();
             },
@@ -408,6 +427,8 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
       ),
     );
   }
+
+
 }
 
 
