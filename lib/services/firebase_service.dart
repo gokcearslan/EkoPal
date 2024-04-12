@@ -110,20 +110,16 @@ class PostService {
     try {
       QuerySnapshot querySnapshot = await posts.get();
       List<Post> postList = querySnapshot.docs.map((doc) {
-        var data = doc.data() as Map<String, dynamic>; // Cast the data to a map
-        // Ensure you have proper null checks and default values as necessary
-        return Post(
-          id: data['id'] ?? '',
-          PostContent: data['PostContent'] ?? '', postTitle: data['postTitle'] ??'',
-          upvotes: data['upvotes'] ?? '', downvotes: data['downvotes'] ?? ' ',
-        );
+        return Post.fromFirestore(doc);
       }).toList();
+      print("Fetched posts: $postList"); // Debug line
       return postList;
     } catch (e) {
       print("Error fetching posts: $e");
       return [];
     }
   }
+
 
   // post için vote
   Future<void> upvotePost(String postId) async {
