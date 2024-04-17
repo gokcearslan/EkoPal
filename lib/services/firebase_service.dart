@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ekopal/services/event_model.dart';
 import 'package:ekopal/services/post_model.dart';
+import 'package:ekopal/services/question_ans_model.dart';
 
 import 'advertisement_model.dart';
 import 'duyuru_model.dart';
@@ -157,6 +158,36 @@ class PostService {
       return [];
     }
   }
+}
 
+//soru cevap
+class SoruCevapService {
+  final CollectionReference soruCevapCollection =
+  FirebaseFirestore.instance.collection('soru_cevap');
 
+  Future<void> addSoruCevap(SoruCevap soruCevap) {
+    return soruCevapCollection
+        .add({
+      'soru': soruCevap.soru,
+      'cevap': soruCevap.cevap,
+    })
+        .then((value) => print('Soru-Cevap added to Firestore'))
+        .catchError((error) => print('Failed to add Soru-Cevap: $error'));
+  }
+
+  Future<List<SoruCevap>> getSoruCevap() async {
+    try {
+      QuerySnapshot querySnapshot = await soruCevapCollection.get();
+      List<SoruCevap> soruCevapList = querySnapshot.docs.map((doc) {
+        return SoruCevap(
+          soru: doc['soru'],
+          cevap: doc['cevap'],
+        );
+      }).toList();
+      return soruCevapList;
+    } catch (e) {
+      print("Error fetching Soru-Cevap: $e");
+      return [];
+    }
+  }
 }
