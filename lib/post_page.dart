@@ -61,34 +61,42 @@ class PostCard extends StatefulWidget {
 class _PostCardState extends State<PostCard> {
   PostService _postService = PostService();
 
-  void _upvote() {
+  void _upvote() async {
     int originalUpvotes = widget.post.upvotes;
-    setState(() {
-      widget.post.upvotes += 1; // Optimistically update UI
-    });
-    _postService.upvotePost(widget.post.id).catchError((error) {
+    try {
+      // Update votes in Firestore
+      await _postService.upvotePost(widget.post.id);
+      // Update UI after successful update
       setState(() {
-        widget.post.upvotes = originalUpvotes; // Revert if error
+        widget.post.upvotes += 1; // Optimistically update UI
       });
+    } catch (error) {
+      // Revert UI changes if an error occurs
+      setState(() {
+        widget.post.upvotes = originalUpvotes;
+      });
+      // Display error message
       ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to upvote: $error'))
+        SnackBar(content: Text('Failed to upvote: $error')),
       );
-    });
+    }
   }
 
-  void _downvote() {
+  void _downvote() async {
     int originalDownvotes = widget.post.downvotes;
     setState(() {
       widget.post.downvotes += 1; // Optimistically update UI
     });
-    _postService.downvotePost(widget.post.id).catchError((error) {
+    try {
+      await _postService.downvotePost(widget.post.id);
+    } catch (error) {
       setState(() {
         widget.post.downvotes = originalDownvotes; // Revert if error
       });
       ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to downvote: $error'))
+        SnackBar(content: Text('Failed to downvote: $error')),
       );
-    });
+    }
   }
 
   @override
