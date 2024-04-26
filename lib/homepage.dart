@@ -11,6 +11,8 @@ import 'package:ekopal/create_page.dart';
 import 'package:ekopal/events_page.dart';
 import 'package:ekopal/announcements.dart';
 
+import 'mySharingsPage.dart';
+
 class HomePage extends StatefulWidget {
   final String? base64Image; // Define base64Image as a parameter
 
@@ -164,6 +166,13 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
             ListTile(
+              title: Text('Paylaşımlarım'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => MySharingsPage()));
+              },
+            ),
+            ListTile(
               title: Text('Gönderiler'),
               onTap: () {
                 Navigator.pop(context);
@@ -173,6 +182,7 @@ class _HomePageState extends State<HomePage> {
             ListTile(
               title: Text('Soru-Cevap'),
               onTap: () {
+                Navigator.pop(context);
                 Navigator.push(context, MaterialPageRoute(builder: (context) => SoruCevapDisplayPage()));
               },
             ),
@@ -198,6 +208,7 @@ class _HomePageState extends State<HomePage> {
         ),
         backgroundColor: floatingcolor,
       ),
+
     );
   }
 }

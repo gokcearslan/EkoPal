@@ -1,3 +1,4 @@
+import 'package:ekopal/main.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -50,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
       if (userCredential.user != null) {
         // If login is successful, navigate to the HomePage
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => HomePage()),
+          MaterialPageRoute(builder: (context) => MainApp()),
         );
       }
     } catch (e) {
@@ -83,7 +84,17 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  void _appendDomain(String domain) {
+    final currentText = _emailTextController.text;
+    final atSymbolIndex = currentText.indexOf('@');
 
+    if (atSymbolIndex == -1) {
+      _emailTextController.text = '$currentText$domain';
+    } else {
+      final newText = currentText.substring(0, atSymbolIndex);
+      _emailTextController.text = '$newText$domain';
+    }
+  }
 
 
 
@@ -128,15 +139,40 @@ class _LoginPageState extends State<LoginPage> {
                             TextFormField(
                               controller: _emailTextController,
                               focusNode: _focusEmail,
-                              validator: (value) =>
-                                  Validator.validateEmail(email: value!),
+                              validator: (value) => Validator.validateEmail(email: value ?? ''),
                               decoration: InputDecoration(
-                                hintText: "Okul Mail Adresiniz",
+                                labelText: "Okul Mail Adresiniz",
                                 errorBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10.0),
                                   borderSide: BorderSide(color: kahve),
                                 ),
+                                suffixIcon: PopupMenuButton<String>(
+                                  onSelected: _appendDomain,
+                                  itemBuilder: (BuildContext context) {
+                                    return <PopupMenuEntry<String>>[
+                                      const PopupMenuItem<String>(
+                                        value: '@std.ieu.edu.tr',
+                                        child: Text('@std.ieu.edu.tr'),
+                                      ),
+                                      const PopupMenuItem<String>(
+                                        value: '@ieu.edu.tr',
+                                        child: Text('@ieu.edu.tr'),
+                                      ),
+                                      // Add more entries here for other domains
+                                    ];
+                                  },
+                                  icon: Icon(Icons.arrow_drop_down),
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderSide: BorderSide(color: kahve),
+                                ),
                               ),
+                              keyboardType: TextInputType.emailAddress,
+                              autocorrect: false,
                             ),
                             SizedBox(height: 8.0),
                             TextFormField(

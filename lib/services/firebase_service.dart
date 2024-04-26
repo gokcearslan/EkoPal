@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ekopal/services/event_model.dart';
 import 'package:ekopal/services/post_model.dart';
 import 'package:ekopal/services/question_ans_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'advertisement_model.dart';
 import 'duyuru_model.dart';
@@ -77,20 +78,26 @@ class AdvertisementService {
 }
 
 class DuyuruService {
-  final CollectionReference duyurular =
-  FirebaseFirestore.instance.collection('duyurular');
+  final CollectionReference duyurular = FirebaseFirestore.instance.collection('duyurular');
 
   Future<void> addDuyuru(Duyuru duyuru) {
+
+
+    // Include the userId in the document
     return duyurular
         .add({
       'duyuruName': duyuru.duyuruName,
       'duyuruType': duyuru.duyuruType,
       'duyuruDetails': duyuru.duyuruDetails,
+      'userId': duyuru.userId,  // Adding the userId field
     })
         .then((value) => print('Duyuru added to Firestore'))
         .catchError((error) => print('Failed to add duyuru: $error'));
   }
+
+
 }
+
 class PostService {
   final CollectionReference posts = FirebaseFirestore.instance.collection('posts');
 

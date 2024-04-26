@@ -7,6 +7,7 @@ class FireAuth {
     required String name,
     required String email,
     required String password,
+    required String role,
     String? base64Image,
   }) async {
     FirebaseAuth auth = FirebaseAuth.instance;
@@ -28,6 +29,7 @@ class FireAuth {
         //'password': password,
        // 'formcount': 0,
         'base64Image': base64Image,
+        'role':role,
       });
 
     } on FirebaseAuthException catch (e) {

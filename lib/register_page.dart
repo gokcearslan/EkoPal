@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ekopal/main.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ekopal/HomePage.dart';
@@ -30,29 +32,29 @@ class _RegisterPageState extends State<RegisterPage> {
         _isProcessing = true;
       });
 
+      String role = _emailTextController.text.endsWith('@ieu.edu.tr') ? 'staff' : 'student';
+
       User? user = await FireAuth.registerUsingEmailPassword(
         name: _nameTextController.text,
         email: _emailTextController.text,
         password: _passwordTextController.text,
+        role: role, // Pass the determined role
       );
 
       setState(() {
         _isProcessing = false;
       });
-
-      if (user != null) {
         // Navigate to the home page or any other page after successful registration
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
-            builder: (context) => HomePage(),
+            builder: (context) => MainApp(),
           ),
           ModalRoute.withName('/'),
         );
-      } else {
 
-      }
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
