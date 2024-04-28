@@ -27,38 +27,29 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailTextController = TextEditingController();
   final TextEditingController _passwordTextController = TextEditingController();
-
   final _formKey = GlobalKey<FormState>();
-
   final _focusEmail = FocusNode();
   final _focusPassword = FocusNode();
-
   bool _isProcessing = false;
 
   Future<void> login() async {
-    // Indicate that the login process is starting
     setState(() => _isProcessing = true);
 
     try {
-      // Attempt to sign in with the provided email and password
       final auth = FirebaseAuth.instance;
       UserCredential userCredential = await auth.signInWithEmailAndPassword(
         email: _emailTextController.text.trim(),
         password: _passwordTextController.text.trim(),
       );
 
-      // Check if the sign-in was successful
       if (userCredential.user != null) {
-        // If login is successful, navigate to the HomePage
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => MainApp()),
         );
       }
     } catch (e) {
-      // If there's an error during the login process, show it in a dialog
       _showErrorDialog("Hatali Sifre.");
     } finally {
-      // Reset the processing state
       setState(() => _isProcessing = false);
     }
   }
@@ -75,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
             TextButton(
               child: Text('OK'),
               onPressed: () {
-                Navigator.of(context).pop(); // Dismiss the dialog
+                Navigator.of(context).pop();
               },
             ),
           ],
@@ -106,15 +97,7 @@ class _LoginPageState extends State<LoginPage> {
         _focusPassword.unfocus();
       },
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: kahve, // Assuming 'kahve' is a defined color
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () => Navigator.of(context).pop(),
-            color: Colors.white,
-          ),
-          title: Text('Giriş Yap', style: TextStyle(color: Colors.white)),
-        ),
+        backgroundColor: backgroundColor,
         body: FutureBuilder(
           future: Firebase.initializeApp(),
           builder: (context, snapshot) {
@@ -123,15 +106,39 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   children: [
                     Image.network(
-                      'https://i.pinimg.com/564x/98/48/3e/98483e01c683158eac0e1153f5c38908.jpg',
+                      'https://i.pinimg.com/564x/d6/3d/95/d63d95bd2b5d0db1f114384b089451ce.jpg',
                       fit: BoxFit.cover,
                       height: MediaQuery
                           .of(context)
                           .size
                           .height * 0.4,
                     ),
+                    Container(
+                      width: double.infinity,
+                      alignment: Alignment.center,
+                      child: const Text(
+                        'EKOPAL',
+                        style: TextStyle(
+                          fontSize: 100,
+                          fontWeight: FontWeight.bold,
+                          color: textColor,
+                        ),
+                      ),
+                    ),
+                    //SizedBox(height:0),
+                    Container(
+                      width: double.infinity,
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Devam etmek için lütfen hesap oluşturun',
+                        style: TextStyle(
+                          fontSize:15,
+                          color: textColor,
+                        ),
+                      ),
+                    ),
                     Padding(
-                      padding: const EdgeInsets.all(24.0),
+                      padding: const EdgeInsets.all(18.0), // text field kısımlarının uzunluğu
                       child: Form(
                         key: _formKey,
                         child: Column(
@@ -144,7 +151,7 @@ class _LoginPageState extends State<LoginPage> {
                                 labelText: "Okul Mail Adresiniz",
                                 errorBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10.0),
-                                  borderSide: BorderSide(color: kahve),
+                                  borderSide: BorderSide(color: Colors.red),
                                 ),
                                 suffixIcon: PopupMenuButton<String>(
                                   onSelected: _appendDomain,
@@ -174,77 +181,66 @@ class _LoginPageState extends State<LoginPage> {
                               keyboardType: TextInputType.emailAddress,
                               autocorrect: false,
                             ),
-                            SizedBox(height: 8.0),
+                            SizedBox(height: 20.0), // mail ve şifre arası boşluk
                             TextFormField(
                               controller: _passwordTextController,
                               focusNode: _focusPassword,
-                              obscureText: true,
-                              validator: (value) =>
-                                  Validator.validatePassword(password: value!),
+                              obscureText: true, // Ensures the password is hidden
+                              validator: (value) => Validator.validatePassword(password: value ?? ''),
                               decoration: InputDecoration(
-                                hintText: "Şifreniz",
+                                labelText: "Şifreniz", // Adds a label to the input field
+                                hintText: "Şifreniz", // Placeholder text when the field is empty
                                 errorBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderSide: BorderSide(color: Colors.red), // error state
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10.0),
                                   borderSide: BorderSide(color: kahve),
                                 ),
-                              ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderSide: BorderSide(color: kahve),
+                                ),
+
                             ),
-                            SizedBox(height: 24.0),
+                            ),
+                            SizedBox(height: 20.0), // şifte ve giriş arası boşluk
                             _isProcessing
                                 ? CircularProgressIndicator()
-                                : Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            :Column(
                               children: [
-                                Expanded(
+                                Container(
+                                  width: double.infinity,
                                   child: ElevatedButton(
                                     onPressed: () async {
-                                      // Manually call validation methods
                                       String? emailError = Validator.validateEmail(email: _emailTextController.text);
                                       String? passwordError = Validator.validatePassword(password: _passwordTextController.text);
-
-                                      // Show the first error encountered in a popup dialog
                                       if (emailError != null) {
                                         _showErrorDialog(emailError);
                                       } else if (passwordError != null) {
                                         _showErrorDialog(passwordError);
                                       } else {
-                                        // If no errors, proceed with the login
                                         await login();
                                       }
                                     },
+                                    child: Text('Giriş', style: TextStyle(color: Colors.white)), // Assuming 'bej' is a defined color
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: buttonColor,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                    ),
+                                  ),
+                                ),
 
-                                    child: Text(
-                                        'Giriş', style: TextStyle(color: bej)),
-                                    // Assuming 'bej' is a defined color
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: kahve,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(width: 24.0),
-                                Expanded(
-                                  child: ElevatedButton(
-                                    onPressed: () =>
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    RegisterPage())),
-                                    child: Text(
-                                        'Kaydol', style: TextStyle(color: bej)),
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: kahve,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                    ),
-                                  ),
-                                ),
                               ],
                             ),
-                            SizedBox(height: 20.0),
+
+                            SizedBox(height: 10.0), // giriş ve şifremi unuttum arası
                             InkWell(
                               onTap: () =>
                                   Navigator.of(context).push(MaterialPageRoute(
@@ -258,6 +254,35 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                               ),
                             ),
+                            SizedBox(height: 10.0), // şifremi unuttum ve kaydol
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Text(
+                                  'Hesabınız yok mu? ',
+                                  style: TextStyle(
+                                    color: textColor,
+                                  ),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => RegisterPage(),
+                                      ),
+                                    );
+                                  },
+                                  child: Text(
+                                    'Kaydolun.',
+                                    style: TextStyle(
+                                      color: Colors.blue, // Replace with your preferred color, e.g., kahve if you have such a color
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+
                           ],
                         ),
                       ),
