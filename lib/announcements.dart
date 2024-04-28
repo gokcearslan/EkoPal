@@ -104,6 +104,7 @@ class _AnnouncementsPageState extends State<AnnouncementsPage> {
   }
 }
 class AnnouncementCard extends StatelessWidget {
+
   final Map<String, dynamic> data;
 
   const AnnouncementCard({Key? key, required this.data}) : super(key: key);

@@ -19,6 +19,8 @@ class EventService {
       'organizer': event.organizer,
       'location': event.location,
       'additionalInfo': event.additionalInfo,
+      'userId': event.userId,
+
     })
         .then((value) => print('Event added to Firestore'))
         .catchError((error) => print('Failed to add event: $error'));
@@ -33,6 +35,9 @@ class EventService {
           organizer: doc['organizer'],
           location: doc['location'],
           additionalInfo: doc['additionalInfo'],
+          userId: doc['userId'],
+
+
         );
       }).toList();
       return eventList;

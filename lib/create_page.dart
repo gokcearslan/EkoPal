@@ -421,12 +421,20 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
           SizedBox(height: 20),  // Larger space before the button
           ElevatedButton(
             onPressed: () {
+              String? userId = FirebaseAuth.instance.currentUser?.uid;
+
+              if (userId == null) {
+                print('No user logged in');
+                return;
+              }
               Event event = Event(
+
                 eventName: _eventNameController.text,
                 eventDate: _eventDateController.text,
                 organizer: _organizerController.text,
                 location: _locationController.text,
                 additionalInfo: _additionalInfoController.text,
+                userId: userId,
               );
               EventService().addEvent(event);
               _clearTextFields();

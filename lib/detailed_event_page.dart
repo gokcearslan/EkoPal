@@ -67,7 +67,7 @@ class DetailedEventPage extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          'Created by: gokce ', // Assuming 'creatorName' exists in your Event model
+                          'Created by: gokce // Burasi olmayacak', // Assuming 'creatorName' exists in your Event model
                           style: TextStyle(fontSize: 16.0),
                         ),
                       ),
