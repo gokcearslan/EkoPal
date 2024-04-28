@@ -206,12 +206,12 @@ class _LoginPageState extends State<LoginPage> {
                                   borderSide: BorderSide(color: kahve),
                                 ),
 
-                            ),
+                              ),
                             ),
                             SizedBox(height: 20.0), // şifte ve giriş arası boşluk
                             _isProcessing
                                 ? CircularProgressIndicator()
-                            :Column(
+                                :Column(
                               children: [
                                 Container(
                                   width: double.infinity,
@@ -298,4 +298,3 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-
