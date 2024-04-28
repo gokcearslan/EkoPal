@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ekopal/services/event_model.dart';
 import 'package:ekopal/services/firebase_service.dart';
@@ -13,12 +15,32 @@ class EventsPage extends StatefulWidget {
 
 class _EventsPageState extends State<EventsPage> {
   List<Event>? events;
+  String? userRole;
+
 
   @override
   void initState() {
     super.initState();
     fetchEvents();
+    fetchUserRole();
+
   }
+
+  Future<void> fetchUserRole() async {
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      DocumentSnapshot userDocSnapshot = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+
+      if (userDocSnapshot.exists && userDocSnapshot.data() != null) {
+        Map<String, dynamic> userData = userDocSnapshot.data()! as Map<String, dynamic>;
+        setState(() {
+          userRole = userData['role'] as String?;
+        });
+      }
+    }
+  }
+
 
   fetchEvents() async {
     events = await EventService().getEvents();
@@ -45,11 +67,11 @@ class _EventsPageState extends State<EventsPage> {
           return buildEventCard(events![index]);
         },
       ),
-      //Create butonu floating
-      floatingActionButton: FloatingActionButton(
+
+      floatingActionButton: userRole == 'staff' ? FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => CreatePage(initialCategory: 'Etkinlik')));
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => CreatePage(initialCategory: 'Etkinlik')));
         },
         child: Material(
           color: Colors.transparent,
@@ -59,10 +81,7 @@ class _EventsPageState extends State<EventsPage> {
           ),
         ),
         backgroundColor: floatingcolor,
-        // backgroundColor: Colors.transparent, // transparent olunca gözükmüyor gibi geldi
-        // elevation: 0, // Remove shadow
-
-      ),
+      ) : null,
     );
   }
 

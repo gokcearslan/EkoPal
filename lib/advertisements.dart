@@ -18,13 +18,11 @@ class ViewAdvertisements extends StatefulWidget {
 
 class _ViewAdvertisementsState extends State<ViewAdvertisements> {
   List<Advertisement>? advertisements;
-  String? userRole;
 
   @override
   void initState() {
     super.initState();
     fetchAdvertisements();
-    fetchUserRole();
 
   }
 
@@ -35,22 +33,6 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
     }
   }
 
-  Future<void> fetchUserRole() async {
-    User? user = FirebaseAuth.instance.currentUser;
-
-    if (user != null) {
-      DocumentSnapshot userDocSnapshot = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
-
-      // Check if the snapshot exists and contains data
-      if (userDocSnapshot.exists && userDocSnapshot.data() != null) {
-        // Cast the data to a Map and then access the 'role'
-        Map<String, dynamic> userData = userDocSnapshot.data()! as Map<String, dynamic>;
-        setState(() {
-          userRole = userData['role'] as String?;
-        });
-      }
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,10 +58,7 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
           },
         ),
 
-        //Create butonu floating
-        //user bunu görmesin öğrenci olan diye bunu ife almak fikri
-
-      floatingActionButton: userRole == 'staff' ? FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => CreatePage(initialCategory: 'İlan')));
@@ -92,7 +71,7 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
             ),
           ),
           backgroundColor: floatingcolor,
-        ) : null,
+        ),
         );
   }
 

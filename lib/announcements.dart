@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'announcementsDetails_page.dart';
@@ -10,6 +11,31 @@ class AnnouncementsPage extends StatefulWidget {
 }
 
 class _AnnouncementsPageState extends State<AnnouncementsPage> {
+
+  String? userRole;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchUserRole();
+  }
+
+  Future<void> fetchUserRole() async {
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      DocumentSnapshot userDocSnapshot = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+
+      // Check if the snapshot exists and contains data
+      if (userDocSnapshot.exists && userDocSnapshot.data() != null) {
+        // Cast the data to a Map and then access the 'role'
+        Map<String, dynamic> userData = userDocSnapshot.data()! as Map<String, dynamic>;
+        setState(() {
+          userRole = userData['role'] as String?;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,10 +85,12 @@ class _AnnouncementsPageState extends State<AnnouncementsPage> {
       ),
 
       //Create butonu floating
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreatePage(initialCategory: 'Duyuru')));
-        },
+
+    floatingActionButton: userRole == 'staff' ? FloatingActionButton(
+    onPressed: () {
+    Navigator.of(context).push(MaterialPageRoute(
+    builder: (context) => CreatePage(initialCategory: 'Duyuru')));
+    },
         child: Material(
           color: Colors.transparent,
           child: Icon(
@@ -71,11 +99,7 @@ class _AnnouncementsPageState extends State<AnnouncementsPage> {
           ),
         ),
         backgroundColor: floatingcolor,
-        // backgroundColor: Colors.transparent, // transparent olunca gözükmüyor gibi geldi
-        // elevation: 0, // Remove shadow
-
-      ),
-
+    ) : null,
     );
   }
 }
