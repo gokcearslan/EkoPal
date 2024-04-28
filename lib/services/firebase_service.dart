@@ -53,6 +53,8 @@ class AdvertisementService {
       'advertisementName': advertisement.advertisementName,
       'advertisementType': advertisement.advertisementType,
       'advertisementDetails': advertisement.advertisementDetails,
+      'userId': advertisement.userId,  // Adding the userId field
+
     })
         .then((value) => print('Advertisement added to Firestore'))
         .catchError((error) => print('Failed to add advertisement: $error'));
@@ -66,7 +68,7 @@ class AdvertisementService {
           advertisementName: doc['advertisementName'],
           advertisementType: doc['advertisementType'],
           advertisementDetails: doc['advertisementDetails'],
-
+          userId: doc['userId'],
         );
       }).toList();
       return advertisementList;

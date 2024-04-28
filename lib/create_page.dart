@@ -258,11 +258,20 @@ class _IlanWidgetState extends State<IlanWidget> {
           SizedBox(height: 20),
           ElevatedButton(
             onPressed: () async {
+
+              String? userId = FirebaseAuth.instance.currentUser?.uid;
+
+              if (userId == null) {
+                print('No user logged in');
+                return;
+              }
+
               if (_selectedType != null) {
                 Advertisement a = Advertisement(
                   advertisementName: _advertisementNameController.text,
                   advertisementType: _selectedType,
                   advertisementDetails: _advertisementDetailsController.text,
+                  userId: userId
                 );
                 // Save to Firebase
                 AdvertisementService().addAdvertisement(a);
@@ -479,15 +488,14 @@ class _DuyuruWidgetState extends State<DuyuruWidget> {
 
               if (userId == null) {
                 print('No user logged in');
-                return; // Stop further execution if no user is logged in
+                return;
               }
 
-              // Now that we're sure userId is not null, it's safe to create the Duyuru instance
               Duyuru duyuru = Duyuru(
                 duyuruName: _DuyuruNameController.text,
                 duyuruType: _duyuruTypeController.text,
                 duyuruDetails: _duyuruDetailsController.text,
-                userId: userId, // userId is now guaranteed to be non-null
+                userId: userId,
               );
 
               // Save the "duyuru" to Firebase
