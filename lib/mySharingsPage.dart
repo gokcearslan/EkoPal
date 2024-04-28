@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ekopal/services/advertisement_model.dart';
 import 'package:ekopal/services/duyuru_model.dart';
@@ -337,4 +336,3 @@ class _MySharingsPageState extends State<MySharingsPage> {
   }
 
 }
-
