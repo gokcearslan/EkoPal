@@ -45,9 +45,15 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
 
 
     return Scaffold(
+      backgroundColor:white,
         appBar: AppBar(
-          title: Text('İlanlar'),
-          backgroundColor: colorScheme.primaryContainer,
+          title: const Text(
+            'İlanlar',
+            style: TextStyle(
+              fontSize: 30,
+            ),
+          ),
+          backgroundColor: appBarColor,
         ),
         body: advertisements == null
             ? Center(child: CircularProgressIndicator())
@@ -67,10 +73,10 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
             color: Colors.transparent,
             child: Icon(
               Icons.add,
-              color: koyuSomon,
+              color: textColor,
             ),
           ),
-          backgroundColor: floatingcolor,
+          backgroundColor: lightButtonColor,
         ),
         );
   }
@@ -86,6 +92,7 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
         borderRadius: BorderRadius.circular(16),
       ),
       elevation: 5.0,
+        color:cardColor,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
@@ -94,7 +101,7 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
               child: Image.network(
-                'https://mahimeta.com/wp-content/uploads/2021/07/5-Simple-Tips-to-Increase-Revenue-from-Website-Ads-Website.jpg',
+                'https://img3.idealista.com/blur/WEB_LISTING-M/0/id.pro.es.image.master/88/73/d4/908040653.jpg',
                 width: 120,
                 height: 120,
                 fit: BoxFit.cover,
@@ -135,9 +142,8 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
                     children: [
                       IconButton(
                         icon: Icon(
-                          ad.isFavorite ? Icons.star_outline : Icons.star_border,
-                          color: ad.isFavorite ? Colors.amber : colorScheme
-                              .onSurfaceVariant,
+                          ad.isFavorite ? Icons.star : Icons.star_border,
+                          color: ad.isFavorite ? Colors.amber : colorScheme.onSurfaceVariant,
                         ),
                         onPressed: () {
                           setState(() {

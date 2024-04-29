@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ekopal/services/event_model.dart';
 
+import 'colors.dart';
+
 class DetailedEventPage extends StatelessWidget {
   final Event event;
   final bool isCurrentUser; // Assume this determines if the current user created the event
@@ -9,27 +11,33 @@ class DetailedEventPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
+      backgroundColor: Colors.white, // Ensure 'white' is defined or use Colors.white directly
+
       appBar: AppBar(
-        title: Text(event.eventName),
-        backgroundColor:colorScheme.primaryContainer,
+        title: Text(event.eventName,
+          style: const TextStyle(
+            fontSize: 30,
+          ),),
+        backgroundColor: appBarColor, // Ensure 'appBarColor' is defined
       ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Card(
             elevation: 5,
+            color: cardColor, // Ensure 'cardColor' is defined
+
             child: Column(
               children: [
                 Padding(
                   padding: const EdgeInsets.only(top: 16.0),
                   child: Text(
                     event.eventName,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 24.0,
                       fontWeight: FontWeight.bold,
                     ),
@@ -40,6 +48,13 @@ class DetailedEventPage extends StatelessWidget {
                   'https://i.pinimg.com/564x/25/b0/f8/25b0f846698d82069e8d3086ca29aced.jpg',
                   height: 200.0,
                   fit: BoxFit.cover,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    event.additionalInfo,
+                    style: TextStyle(color:Colors.black,fontSize:20),
+                  ),
                 ),
                 ListTile(
                   leading: Icon(Icons.calendar_today),
@@ -54,20 +69,13 @@ class DetailedEventPage extends StatelessWidget {
                   title: Text(event.location),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Text(
-                    event.additionalInfo,
-                    style: TextStyle(color: Colors.black.withOpacity(0.6)),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
                         child: Text(
-                          'Created by: gokce // Burasi olmayacak', // Assuming 'creatorName' exists in your Event model
+                          'Created by: gokce',
                           style: TextStyle(fontSize: 16.0),
                         ),
                       ),
@@ -76,23 +84,12 @@ class DetailedEventPage extends StatelessWidget {
                           // TODO: Implement navigation to message page
                         },
                         child: Text('İletişime geç'),
-
                       ),
                       TextButton(
                         onPressed: () {
                           // TODO: Implement navigation to message page
                         },
                         child: Text('Düzenle'),
-                        /* USER condition eklenince burası kullılacak
-                      if (isCurrentUser) // Conditional edit button
-                        IconButton(
-                          icon: Icon(Icons.edit),
-                          onPressed: () {
-                            // TODO: Implement navigation to editing page
-                          },
-                        ),
-
-                       */
                       )
                     ],
                   ),
@@ -104,4 +101,5 @@ class DetailedEventPage extends StatelessWidget {
       ),
     );
   }
+
 }

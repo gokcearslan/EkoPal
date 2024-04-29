@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'colors.dart';
+
 class AnnouncementDetailsPage extends StatelessWidget {
   final Map<String, dynamic> data;
 
@@ -9,9 +11,11 @@ class AnnouncementDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor:white,
+
       appBar: AppBar(
         title: Text(data['duyuruName']),
-        backgroundColor: Theme.of(context).colorScheme.primary,
+        backgroundColor:white,
       ),
       body: Center( // Aligns the container to the center of the screen
         child: SingleChildScrollView(

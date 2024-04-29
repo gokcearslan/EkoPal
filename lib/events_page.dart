@@ -55,9 +55,15 @@ class _EventsPageState extends State<EventsPage> {
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
+      backgroundColor:white,
       appBar: AppBar(
-        title: Text('Etkinlikler'),
-        backgroundColor: colorScheme.primaryContainer,
+        title: const Text('Etkinlikler',
+          style: TextStyle(
+            fontSize: 30,
+          ),
+        ),
+
+        backgroundColor: appBarColor,
       ),
       body: events == null
           ? Center(child: CircularProgressIndicator())
@@ -95,6 +101,8 @@ class _EventsPageState extends State<EventsPage> {
         borderRadius: BorderRadius.circular(16),
       ),
       elevation: 5.0,
+      color:cardColor,
+
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
@@ -147,7 +155,7 @@ class _EventsPageState extends State<EventsPage> {
                       ),
                       IconButton(
                         icon: Icon(
-                          Icons.info_outline,
+                          Icons.article_outlined,
                           color: colorScheme.onSurfaceVariant,
                         ),
                         onPressed: () {

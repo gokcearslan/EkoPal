@@ -1,3 +1,4 @@
+import 'package:ekopal/colors.dart';
 import 'package:ekopal/services/advertisement_model.dart';
 import 'package:flutter/material.dart';
 
@@ -19,23 +20,28 @@ class AdvertisementDetailsPage extends StatelessWidget {
         .textTheme;
 
     return Scaffold(
+      backgroundColor:white,
       appBar: AppBar(
-        title: Text("İlan detayları"),
-          backgroundColor: colorScheme.primaryContainer,
+        title: const Text("İlan detayları",
+        style: TextStyle(
+        fontSize: 30,
+          ),),
+          backgroundColor: appBarColor,
       ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Card(
             elevation: 5,
+            color:cardColor,
             child: Column(
               children: [
                 Padding(
                   padding: const EdgeInsets.only(top: 16.0),
                   child: Text(
                     ad.advertisementName,
-                    style: TextStyle(
-                      fontSize: 24.0,
+                    style: const TextStyle(
+                      fontSize: 23.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),

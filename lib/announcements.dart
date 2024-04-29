@@ -40,10 +40,16 @@ class _AnnouncementsPageState extends State<AnnouncementsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor:white,
       appBar: AppBar(
-        title: const Text("Duyurular"),
-        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+        title: const Text("Duyurular",
+            style: TextStyle(
+              fontSize: 30,
+            ),
+        ),
+        backgroundColor: appBarColor,
         actions: <Widget>[
+          /*
           IconButton(
             icon: Icon(Icons.edit), // The edit/pencil icon
             onPressed: () {
@@ -58,6 +64,8 @@ class _AnnouncementsPageState extends State<AnnouncementsPage> {
               print('Trash icon tapped');
             },
           ),
+
+           */
         ],
       ),
       body: StreamBuilder<QuerySnapshot>(
@@ -95,7 +103,7 @@ class _AnnouncementsPageState extends State<AnnouncementsPage> {
           color: Colors.transparent,
           child: Icon(
             Icons.add,
-            color: koyuSomon,
+            color: textColor,
           ),
         ),
         backgroundColor: floatingcolor,
@@ -123,6 +131,7 @@ class AnnouncementCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
       ),
       elevation: 5.0,
+      color:cardColor,
       child: Theme(
         data: theme.copyWith(dividerColor: Colors.transparent),
         child: ExpansionTile(
@@ -133,11 +142,11 @@ class AnnouncementCard extends StatelessWidget {
               imageUrl,
               width: 80,
               height: 80,
-              fit: BoxFit.fitHeight,
+              fit: BoxFit.cover,
             ),
           ),
           title: Row(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween, // Adjust this for alignment
             children: [
               Flexible(
                 child: Text(
@@ -149,6 +158,14 @@ class AnnouncementCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                 ),
+              ),
+
+              IconButton(
+                icon: Icon(Icons.edit, color: theme.colorScheme.secondary),
+                onPressed: () {
+                  // Placeholder for future edit functionality
+                  print('Edit button tapped');
+                },
               ),
             ],
           ),
