@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ekopal/login_page.dart';
+import 'package:ekopal/sharings_advertisement.dart';
+import 'package:ekopal/sharings_announcements.dart';
+import 'package:ekopal/sharings_events.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ekopal/colors.dart';
@@ -190,6 +193,7 @@ class _HomePageState extends State<HomePage> {
               title: Text('Çıkış'),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
+
               },
             ),
           ],
