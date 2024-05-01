@@ -14,6 +14,7 @@ import 'package:ekopal/create_page.dart';
 import 'package:ekopal/events_page.dart';
 import 'package:ekopal/announcements.dart';
 
+import 'SampleScreen.dart';
 import 'mySharingsPage.dart';
 
 class HomePage extends StatefulWidget {

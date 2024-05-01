@@ -5,6 +5,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ekopal/colors.dart';
 import 'package:ekopal/question_answ_create_page.dart';
 
+//SORU CEVAP GÖKÇE UI SAYFASI !!!
+
 class SoruCevapDisplayPage extends StatefulWidget {
   @override
   _SoruCevapDisplayPageState createState() => _SoruCevapDisplayPageState();
@@ -31,7 +33,7 @@ class _SoruCevapDisplayPageState extends State<SoruCevapDisplayPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Soru-Cevaplar'),
+        title: Text('Sorular'),
       ),
       body: soruCeap == null
           ? Center(child: CircularProgressIndicator())
@@ -44,7 +46,7 @@ class _SoruCevapDisplayPageState extends State<SoruCevapDisplayPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => SoruCevapPage()),
+            MaterialPageRoute(builder: (context) => AskQuestionPage()),
           );
         },
         child: Icon(Icons.add),
@@ -81,15 +83,7 @@ class SoruCevapCard extends StatelessWidget {
           soruCevap.soru,
           style: Theme.of(context).textTheme.headline6?.copyWith(fontWeight: FontWeight.bold),
         ),
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
-              soruCevap.cevap,
-              style: Theme.of(context).textTheme.bodyText2,
-            ),
-          ),
-        ],
+
       ),
     );
   }

@@ -1,55 +1,96 @@
+import 'package:ekopal/colors.dart';
 import 'package:ekopal/services/firebase_service.dart';
 import 'package:ekopal/services/question_ans_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
-class SoruCevapPage extends StatefulWidget {
+//yeni soru sorma ekranı UI - 1 mayıs bilge
+
+class AskQuestionPage extends StatefulWidget {
   @override
-  _SoruCevapPageState createState() => _SoruCevapPageState();
+  _AskQuestionPageState createState() => _AskQuestionPageState();
 }
 
-class _SoruCevapPageState extends State<SoruCevapPage> {
+class _AskQuestionPageState extends State<AskQuestionPage> {
   TextEditingController _soruController = TextEditingController();
-  TextEditingController _cevapController = TextEditingController();
+  TextEditingController _soruDetailsController = TextEditingController();
+
+  void _submitQuestion() {
+    Navigator.of(context).pop();  // To close the screen after submitting
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Soru-Cevap Oluştur'),
+        leading: IconButton(
+          icon: Icon(Icons.close),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        backgroundColor:buttonColor,
+
+        title: Text('Sorun varsa, Gönder!'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextField(
               controller: _soruController,
               decoration: InputDecoration(
-                labelText: 'Soru',
-                border: OutlineInputBorder(),
+                labelText: 'Soru Başlığı',
+                hintText: 'Soruyu özetleyen bir başlık seçin.',
+                border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey[300]!)),
               ),
-            ),
-            SizedBox(height: 10),
-            TextField(
-              controller: _cevapController,
-              decoration: InputDecoration(
-                labelText: 'Cevap',
-                border: OutlineInputBorder(),
-              ),
+              textInputAction: TextInputAction.next,
             ),
             SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                SoruCevap soruCevap = SoruCevap(
-                  soru: _soruController.text,
-                  cevap: _cevapController.text,
-                );
-                SoruCevapService().addSoruCevap(soruCevap);
-                _soruController.clear();
-                _cevapController.clear();
-              },
-              child: Text('Soru-Cevap Oluştur'),
+            TextField(
+              controller: _soruDetailsController,
+              decoration: InputDecoration(
+                labelText: 'Soru İçeriği',
+                hintText: 'Sorunuzdan kısaca bahsedin.',
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey[300]!), // Lighter border color
+                ),
+                alignLabelWithHint: true,
+              ),
+              maxLines: 6,
+              textInputAction: TextInputAction.newline,
+            ),
+            SizedBox(height: 20),
+            SizedBox(
+              width: double.infinity, // makes the button stretch to full width
+              child: ElevatedButton(
+                onPressed: () async {
+
+                  String? userId = FirebaseAuth.instance.currentUser?.uid;
+
+                  if (userId == null) {
+                    print('No user logged in');
+                    return;
+                  }
+
+                  SoruCevap soruCevap = SoruCevap(
+                    soru: _soruController.text,
+                    soruDetails: _soruDetailsController.text,
+                    userId: userId,
+                  );
+                  SoruCevapService().addSoruCevap(soruCevap);
+                  _soruController.clear();
+                  _submitQuestion();
+                },
+
+                child: Text('Sorum var!',style: TextStyle(
+                  color: Colors.black,),
+                ),
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(vertical: 20),
+                  backgroundColor: cardColor, // button background color
+
+                ),
+              ),
             ),
           ],
         ),

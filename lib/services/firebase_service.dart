@@ -184,10 +184,10 @@ class SoruCevapService {
     return soruCevapCollection
         .add({
       'soru': soruCevap.soru,
-      'cevap': soruCevap.cevap,
+      'soruDetails': soruCevap.soruDetails,
     })
-        .then((value) => print('Soru-Cevap added to Firestore'))
-        .catchError((error) => print('Failed to add Soru-Cevap: $error'));
+        .then((value) => print('Soru ve açıklama added to Firestore'))
+        .catchError((error) => print('Failed to add Soru: $error'));
   }
 
   Future<List<SoruCevap>> getSoruCevap() async {
@@ -196,12 +196,13 @@ class SoruCevapService {
       List<SoruCevap> soruCevapList = querySnapshot.docs.map((doc) {
         return SoruCevap(
           soru: doc['soru'],
-          cevap: doc['cevap'],
+          soruDetails: doc['soruDetails'],
+          userId: doc['userId'],
         );
       }).toList();
       return soruCevapList;
     } catch (e) {
-      print("Error fetching Soru-Cevap: $e");
+      print("Error fetching Soru: $e");
       return [];
     }
   }
