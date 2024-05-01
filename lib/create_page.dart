@@ -593,45 +593,125 @@ class _DuyuruWidgetState extends State<DuyuruWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextFormField(
-            controller: _DuyuruNameController,
-            decoration: InputDecoration(labelText: 'Duyuru Başlığı'),
+          SizedBox(height: 20),
+          Container(
+            width: double.infinity,
+            child: TextFormField(
+              controller: _DuyuruNameController,
+              style: const TextStyle(
+                fontSize: 20,
+                color: Colors.black,
+              ),
+              decoration: InputDecoration(
+                labelText: 'Duyuru Başlığı',
+                labelStyle: TextStyle(
+                  fontSize: 20,
+                  color: Colors.black,
+                ),
+                fillColor: backgroundColor,
+                filled: true,
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+              ),
+            ),
           ),
-          TextFormField(
-            controller: _duyuruDetailsController,
-            decoration: InputDecoration(labelText: 'Duyuru İçeriği'),
+          SizedBox(height: 20),
+          Container(
+            width: double.infinity,
+            child: TextFormField(
+              controller: _duyuruDetailsController,
+              style: const TextStyle(
+                fontSize: 20,
+                color: Colors.black,
+              ),
+              decoration: InputDecoration(
+                labelText: 'Duyuru İçeriği',
+                labelStyle: TextStyle(
+                  fontSize: 20,
+                  color: Colors.black,
+                ),
+                fillColor: backgroundColor,
+                filled: true,
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+              ),
+              maxLines: null, // Allows for multi-line input without a fixed limit
+              minLines: 3, // Starts with 3 lines visible
+              keyboardType: TextInputType.multiline,
+            ),
           ),
-          TextFormField(
-            controller: _duyuruTypeController,
-            decoration: InputDecoration(labelText: 'Duyuru Türü'),
+          SizedBox(height: 20),
+          Container(
+            width: double.infinity,
+            child: TextFormField(
+              controller: _duyuruTypeController,
+              style: const TextStyle(
+                fontSize: 20,
+                color: Colors.black,
+              ),
+              decoration: InputDecoration(
+                labelText: 'Duyuru Türü',
+                labelStyle: TextStyle(
+                  fontSize: 20,
+                  color: Colors.black,
+                ),
+                fillColor: backgroundColor,
+                filled: true,
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+              ),
+            ),
+          ),
+          SizedBox(height: 20),
+          IconButton(
+            icon: Icon(Icons.add_photo_alternate, size: 50),
+            onPressed: () {
+              // Functionality to be implemented later
+              print('Icon to add image pressed');
+            },
           ),
           SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
-
               String? userId = FirebaseAuth.instance.currentUser?.uid;
-
               if (userId == null) {
                 print('No user logged in');
                 return;
               }
-
               Duyuru duyuru = Duyuru(
                 duyuruName: _DuyuruNameController.text,
                 duyuruType: _duyuruTypeController.text,
                 duyuruDetails: _duyuruDetailsController.text,
                 userId: userId,
               );
-
-              // Save the "duyuru" to Firebase
               DuyuruService().addDuyuru(duyuru);
-
               _clearTextFields();
             },
+            style: ElevatedButton.styleFrom(
+              foregroundColor: textColor,
+              backgroundColor: backgroundColor,
+              textStyle: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              padding: EdgeInsets.symmetric(horizontal: 118, vertical: 11),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              elevation: 10,
+            ),
             child: Text('Duyuru Oluştur'),
           ),
+          SizedBox(height: 20),
         ],
       ),
     );
   }
+
 }
