@@ -6,6 +6,7 @@ import 'package:ekopal/colors.dart';
 import 'package:ekopal/question_answ_create_page.dart';
 
 //SORU CEVAP GÖKÇE UI SAYFASI !!!
+//görüntüleme
 
 class SoruCevapDisplayPage extends StatefulWidget {
   @override

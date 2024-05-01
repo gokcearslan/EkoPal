@@ -7,6 +7,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import 'colors.dart';
+
 class CreatePage extends StatefulWidget {
 
   final String initialCategory;
@@ -45,39 +47,42 @@ class _CreatePageState extends State<CreatePage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
-        title: Text('Oluştur'),
+        title: const Text('Oluştur', style: TextStyle(fontSize: 26)),
+        backgroundColor: backgroundColor,
       ),
-      body: ListView(
-        shrinkWrap: true,
-        children: [
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(height: 20),
-                Text(
-                  'Oluşturmak istediğiniz kategoriyi seçiniz',
-                  style: TextStyle(fontSize: 18),
-                ),
-                SizedBox(height: 20),
-                FutureBuilder<List<String>>(
-                  future: getCategoryNames(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CircularProgressIndicator();
-                    } else if (snapshot.hasError) {
-                      return Text('Error: ${snapshot.error}');
-                    }
+      body: SafeArea(
+        child: ListView(
+          padding: EdgeInsets.all(20),
+          children: [
+            SizedBox(height: 20),
+            Text(
+              'Oluşturmak istediğiniz kategoriyi seçiniz',
+              style: TextStyle(fontSize: 18),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 20),
+            FutureBuilder<List<String>>(
+              future: getCategoryNames(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                }
 
-                    List<String> categories = snapshot.data ?? [];
-                    // Debugging
-                    print("Selected option: $_selectedOption");
-                    print("Categories: $categories");
-
-                    return DropdownButton<String>(
+                List<String> categories = snapshot.data ?? [];
+                return Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(horizontal: 12),
+                  decoration: BoxDecoration(
+                    color:backgroundColor,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<String>(
+                      isExpanded: true,
                       value: _selectedOption,
                       items: [
                         DropdownMenuItem<String>(
@@ -96,23 +101,22 @@ class _CreatePageState extends State<CreatePage> {
                           _selectedOption = newValue;
                         });
                       },
-
-                    );
-                  },
-                ),
-                SizedBox(height: 20),
-                _buildContent(),
-              ],
+                      style: TextStyle(color: textColor, fontSize: 21),
+                      dropdownColor: backgroundColor,
+                    ),
+                  ),
+                );
+              },
             ),
-          ),
-        ],
+            SizedBox(height: 20),
+            _buildContent(),
+          ],
+        ),
       ),
     );
   }
 }
-
-
-///////////
+///
 
 class IlanWidget extends StatefulWidget {
   @override
@@ -150,132 +154,130 @@ class _IlanWidgetState extends State<IlanWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(20.0),
+      padding: const EdgeInsets.all(0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextFormField(
-            decoration: InputDecoration(
-              labelText: 'İlan başlığı',
-              hintText: 'Başlık giriniz.',
-              floatingLabelBehavior: FloatingLabelBehavior.always,
-              filled: true,
-              fillColor: Colors.purpleAccent.withOpacity(0.1),
-              labelStyle: TextStyle(
-                color: Colors.brown,  // Sets the color of the label text
-                fontSize: 16,
-                fontWeight: FontWeight.bold,// Optionally set the font size
-              ),
-              hintStyle:TextStyle(
-                color: Colors.brown,  // Sets the color of the label text
-                fontSize: 16,
-                fontWeight: FontWeight.bold,// Optionally set the font size
-              ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8.0),
-                borderSide: BorderSide.none,
-              ),
-              focusedBorder: UnderlineInputBorder( // Underlined border when focused
-                borderSide: BorderSide(
-                  color: Colors.brown.withOpacity(0.5), // Color of the underline
-                  width: 2.5, // Thickness of the underline
-                ),
-              ),
-            ),
-          ),
-
-          SizedBox(height: 5),
-
-          DropdownButtonFormField<String>(
-            decoration: InputDecoration(
-              filled: true,
-              fillColor: Colors.purpleAccent.withOpacity(0.1),
-              prefixIcon: Icon(Icons.keyboard_arrow_down, color: Colors.brown), // Search icon
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8.0),
-                borderSide: BorderSide.none,
-              ),
-            ),
-            value: _selectedType,
-            icon: Icon(Icons.arrow_drop_down, color: Colors.white), // Dropdown icon
-            iconSize: 24,
-            elevation: 16,
-            style: TextStyle(color: Colors.white, fontSize: 18),
-            onChanged: (String? newValue) {
-              _selectedType = newValue; // Update the selected value on change
-            },
-            items: ad_types.map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value, style: TextStyle(
-                  color: Colors.brown, // Color for each item
-                  fontSize: 16, // Font size for each item
-                  fontWeight: FontWeight.bold, // Font weight for each item
-                )),
-              );
-            }).toList(),
-          ),
-
-
-          /// eskisi aşağıda
-
           SizedBox(height: 20),
-          TextFormField(
-            controller: _advertisementNameController,
-            decoration: InputDecoration(labelText: 'İlan başlığı'),
+      Container(
+        width: double.infinity, // Ensures the container tries to expand to fill all available horizontal space
+        child: TextFormField(
+          controller: _advertisementNameController,
+          style: const TextStyle(
+            fontSize: 20,
+            color: Colors.black,
           ),
-
-          Container(
-            child: TextFormField(
-              controller: _advertisementDetailsController,
-              decoration: InputDecoration(labelText: 'İlan detayları',
-                icon: Icon(Icons.details),
-                hintText: 'Gelecek olan kişinin  payına düşen kira, oda sayısı, eşyalı/eşyasız olma durumu vb. bilgileri giriniz.',
-                hintMaxLines: 3
+          decoration: InputDecoration(
+            labelText: 'İlan başlığı',
+            labelStyle: TextStyle(
+              fontSize: 20,
+              color: Colors.black,
+            ),
+            fillColor: backgroundColor,
+            filled: true,
+            border: OutlineInputBorder(
+              borderSide: BorderSide.none,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 10), // Increase padding to make the field larger
+          ),
+        ),
+      ),
+          SizedBox(height: 20),
+        Container(
+          width: double.infinity,
+          child: TextFormField(
+            controller: _advertisementDetailsController,
+            style: const TextStyle(
+              fontSize: 20,
+              color: Colors.black,
+            ),
+            decoration: InputDecoration(
+              labelText: 'İlan detayları',
+              labelStyle: TextStyle(
+                fontSize: 20,
+                color: Colors.black,
               ),
-              maxLines: null,
-              minLines: 3,
-              keyboardType: TextInputType.multiline,
+              //icon: Icon(Icons.details), // Icon next to the label
+              hintText: 'Gelecek olan kişinin payına düşen kira, oda sayısı, eşyalı/eşyasız olma durumu vb. bilgileri giriniz.',
+              hintStyle: TextStyle(
+                fontSize: 16,
+                color: Colors.grey,
+              ),
+              hintMaxLines: 3,
+              fillColor: backgroundColor,
+              filled: true,
+              border: OutlineInputBorder(
+                borderSide: BorderSide.none, // No border visible
+                borderRadius: BorderRadius.circular(12), // Rounded corners of the border
+              ),
+              contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 10), // Padding inside the text field
+            ),
+            maxLines: null, // Allows the field to expand vertically as text is entered
+            minLines: 3, // Starts with 3 lines visible
+            keyboardType: TextInputType.multiline, // Keyboard type set for multiline text
+          ),
+        ),
+          SizedBox(height: 20),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: backgroundColor,
+          ),
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<String>(
+              hint: Text('İlan türünü seçiniz'),
+              value: _selectedType,
+              onChanged: (String? newValue) {
+                if (newValue != null) {
+                  setState(() {
+                    _selectedType = newValue;
+                  });
+                }
+              },
+              dropdownColor: backgroundColor,
+              items: ad_types.map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(
+                    value,
+                    style: TextStyle(color: textColor, fontSize: 21),
+                  ),
+                );
+              }).toList(),
+              style: TextStyle(color: textColor, fontSize: 21),
+              icon: Icon(Icons.arrow_drop_down, color: textColor),
+              iconSize: 24,
+              elevation: 16,
+              isExpanded: true,
             ),
           ),
-          DropdownButton<String>(
-            hint: Text('İlan türünü seçiniz'),
-            value: _selectedType,
-            onChanged: (String? newValue) {
-              if(newValue != null) {
-                setState(() {
-                  _selectedType = newValue;
-                });
-              }
+        ),
+        SizedBox(height: 20),
+        IconButton(
+          icon: Icon(Icons.add_photo_alternate, size: 50),
+          onPressed: () {
+            // Functionality to be implemented later
+            print('Icon to add image pressed');
             },
-            items: ad_types.map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
-          ),
+        ),
           SizedBox(height: 20),
           ElevatedButton(
             onPressed: () async {
-
               String? userId = FirebaseAuth.instance.currentUser?.uid;
-
               if (userId == null) {
                 print('No user logged in');
                 return;
               }
-
               if (_selectedType != null) {
                 Advertisement a = Advertisement(
-                  advertisementName: _advertisementNameController.text,
-                  advertisementType: _selectedType,
-                  advertisementDetails: _advertisementDetailsController.text,
-                  userId: userId
+                    advertisementName: _advertisementNameController.text,
+                    advertisementType: _selectedType,
+                    advertisementDetails: _advertisementDetailsController.text,
+                    userId: userId
                 );
-                // Save to Firebase
                 AdvertisementService().addAdvertisement(a);
-                // Clear the selected gender
                 setState(() {
                   _selectedType = null;
                 });
@@ -299,11 +301,21 @@ class _IlanWidgetState extends State<IlanWidget> {
                   },
                 );
               }
-
               _clearTextFields();
             },
+            style: ElevatedButton.styleFrom(
+              foregroundColor: textColor,
+             backgroundColor: backgroundColor,
+              textStyle: TextStyle(fontSize: 22, fontWeight: FontWeight.bold), // Text style
+              padding: EdgeInsets.symmetric(horizontal: 118, vertical: 11),
+              shape: RoundedRectangleBorder( // Button shape
+                borderRadius: BorderRadius.circular(12), // Rounded corners
+              ),
+              elevation: 10, // Shadow depth
+            ),
             child: Text('İlan Oluştur'),
           ),
+
         ],
       ),
     );

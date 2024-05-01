@@ -50,12 +50,13 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
           title: const Text(
             'İlanlar',
             style: TextStyle(
-              fontSize: 30,
+              fontSize: 26,
             ),
           ),
           backgroundColor: appBarColor,
         ),
-        body: advertisements == null
+        body:SafeArea(
+        child: advertisements == null
             ? Center(child: CircularProgressIndicator())
             : ListView.builder(
           itemCount: advertisements!.length,
@@ -63,7 +64,7 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
             return buildAdCard(advertisements![index]);
           },
         ),
-
+        ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(
@@ -78,6 +79,7 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
           ),
           backgroundColor: lightButtonColor,
         ),
+
         );
   }
 

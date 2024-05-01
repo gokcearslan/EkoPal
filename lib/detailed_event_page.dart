@@ -18,13 +18,14 @@ class DetailedEventPage extends StatelessWidget {
       backgroundColor: Colors.white, // Ensure 'white' is defined or use Colors.white directly
 
       appBar: AppBar(
-        title: Text(event.eventName,
-          style: const TextStyle(
-            fontSize: 30,
+        title: const Text("Etkinlik detayları",
+          style: TextStyle(
+            fontSize: 26,
           ),),
-        backgroundColor: appBarColor, // Ensure 'appBarColor' is defined
+        backgroundColor: appBarColor,
       ),
-      body: SingleChildScrollView(
+      body:SafeArea(
+      child: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Card(
@@ -98,6 +99,7 @@ class DetailedEventPage extends StatelessWidget {
             ),
           ),
         ),
+      ),
       ),
     );
   }

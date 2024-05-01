@@ -27,7 +27,7 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
           icon: Icon(Icons.close),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        backgroundColor:buttonColor,
+        backgroundColor:appBarColor,
 
         title: Text('Sorun varsa, Gönder!'),
       ),
@@ -83,11 +83,11 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
                 },
 
                 child: Text('Sorum var!',style: TextStyle(
-                  color: Colors.black,),
+                  color: textColor,fontSize:20),
                 ),
                 style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.symmetric(vertical: 20),
-                  backgroundColor: cardColor, // button background color
+                  backgroundColor: buttonColor1, // button background color
 
                 ),
               ),

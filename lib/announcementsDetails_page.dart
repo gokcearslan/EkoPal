@@ -17,7 +17,8 @@ class AnnouncementDetailsPage extends StatelessWidget {
         title: Text(data['duyuruName']),
         backgroundColor:white,
       ),
-      body: Center( // Aligns the container to the center of the screen
+      body:SafeArea(
+      child: Center( // Aligns the container to the center of the screen
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -54,6 +55,7 @@ class AnnouncementDetailsPage extends StatelessWidget {
             ),
           ),
         ),
+      ),
       ),
     );
   }

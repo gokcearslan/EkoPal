@@ -24,11 +24,12 @@ class AdvertisementDetailsPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("İlan detayları",
         style: TextStyle(
-        fontSize: 30,
+        fontSize: 26,
           ),),
           backgroundColor: appBarColor,
       ),
-      body: SingleChildScrollView(
+      body:SafeArea(
+      child: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Card(
@@ -73,7 +74,7 @@ class AdvertisementDetailsPage extends StatelessWidget {
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
                     ad.advertisementDetails,
-                    style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                    style: TextStyle(color: Colors.black),
                   ),
                 ),
                 Padding(
@@ -94,23 +95,6 @@ class AdvertisementDetailsPage extends StatelessWidget {
                         child: Text('İletişime geç'),
 
                       ),
-                      /*
-                      TextButton(
-                        onPressed: () {
-                        },
-                        child: Text('Düzenle'),
-                        /* USER condition eklenince burası kullılacak
-                      if (isCurrentUser) // Conditional edit button
-                        IconButton(
-                          icon: Icon(Icons.edit),
-                          onPressed: () {
-                          },
-                        ),
-
-                       */
-                      )
-
-                       */
                     ],
                   ),
                 ),
@@ -118,6 +102,7 @@ class AdvertisementDetailsPage extends StatelessWidget {
             ),
           ),
         ),
+      ),
       ),
     );
   }

@@ -59,7 +59,7 @@ class _EventsPageState extends State<EventsPage> {
       appBar: AppBar(
         title: const Text('Etkinlikler',
           style: TextStyle(
-            fontSize: 30,
+            fontSize: 26,
           ),
         ),
 
@@ -83,10 +83,10 @@ class _EventsPageState extends State<EventsPage> {
           color: Colors.transparent,
           child: Icon(
             Icons.add,
-            color: koyuSomon,
+            color: textColor,
           ),
         ),
-        backgroundColor: floatingcolor,
+        backgroundColor: lightButtonColor,
       ) : null,
     );
   }

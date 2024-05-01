@@ -44,31 +44,13 @@ class _AnnouncementsPageState extends State<AnnouncementsPage> {
       appBar: AppBar(
         title: const Text("Duyurular",
             style: TextStyle(
-              fontSize: 30,
+              fontSize: 26,
             ),
         ),
         backgroundColor: appBarColor,
-        actions: <Widget>[
-          /*
-          IconButton(
-            icon: Icon(Icons.edit), // The edit/pencil icon
-            onPressed: () {
-              // Edit fonksiyon
-              print('Edit icon tapped');
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.delete_outline),
-            onPressed: () {
-              // delete fonksiyonu
-              print('Trash icon tapped');
-            },
-          ),
-
-           */
-        ],
       ),
-      body: StreamBuilder<QuerySnapshot>(
+      body:SafeArea(
+      child: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('duyurular').snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
@@ -91,7 +73,7 @@ class _AnnouncementsPageState extends State<AnnouncementsPage> {
           );
         },
       ),
-
+      ),
       //Create butonu floating
 
     floatingActionButton: userRole == 'staff' ? FloatingActionButton(
@@ -106,9 +88,10 @@ class _AnnouncementsPageState extends State<AnnouncementsPage> {
             color: textColor,
           ),
         ),
-        backgroundColor: floatingcolor,
+        backgroundColor: lightButtonColor,
     ) : null,
     );
+
   }
 }
 class AnnouncementCard extends StatelessWidget {
