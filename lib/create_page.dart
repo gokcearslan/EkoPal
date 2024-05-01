@@ -388,59 +388,152 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextField(
-            controller: _eventNameController,
-            decoration: InputDecoration(
-              labelText: 'Etkinlik Adı',
-              border: OutlineInputBorder(),
+          SizedBox(height: 20),
+          Container(
+            width: double.infinity,
+            child: TextFormField(
+              controller: _eventNameController,
+              style: const TextStyle(
+                fontSize: 20,
+                color: Colors.black,
+              ),
+              decoration: InputDecoration(
+                labelText: 'Etkinlik Adı',
+                labelStyle: TextStyle(
+                  fontSize: 20,
+                  color: Colors.black,
+                ),
+                fillColor: backgroundColor,
+                filled: true,
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal:10),
+              ),
             ),
           ),
-          SizedBox(height: 10),  // Spacing between text fields
-          TextField(
-            controller: _eventDateController,
-            decoration: InputDecoration(
-              labelText: 'Etkinlik Tarihi',
-              border: OutlineInputBorder(),
-              suffixIcon: Icon(Icons.calendar_today),
-            ),
-            readOnly: true,
-            onTap: () => _selectDateAndTime(context),
-          ),
-          SizedBox(height: 10),  // Spacing between text fields
-          TextField(
-            controller: _organizerController,
-            decoration: InputDecoration(
-              labelText: 'Etkinliği Düzenleyen Kişi/Topluluk',
-              border: OutlineInputBorder(),
-            ),
-          ),
-          SizedBox(height: 10),  // Spacing between text fields
-          TextField(
-            controller: _locationController,
-            decoration: InputDecoration(
-              labelText: 'Etkinlik Yeri',
-              border: OutlineInputBorder(),
-            ),
-          ),
-          SizedBox(height: 10),  // Spacing between text fields
-          TextField(
-            controller: _additionalInfoController,
-            decoration: InputDecoration(
-              labelText: 'Ek Açıklamalar',
-              border: OutlineInputBorder(),
+          SizedBox(height: 20),
+          Container(
+            width: double.infinity,
+            child: TextFormField(
+              controller: _eventDateController,
+              style: const TextStyle(
+                fontSize: 20,
+                color: Colors.black,
+              ),
+              decoration: InputDecoration(
+                labelText: 'Etkinlik Tarihi',
+                labelStyle: TextStyle(
+                  fontSize: 20,
+                  color: Colors.black,
+                ),
+                suffixIcon: Icon(Icons.calendar_today, color: Colors.black),
+                fillColor: backgroundColor,
+                filled: true,
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+              ),
+              readOnly: true,
+              onTap: () => _selectDateAndTime(context),
             ),
           ),
-          SizedBox(height: 20),  // Larger space before the button
+          SizedBox(height: 20),
+          Container(
+            width: double.infinity,
+            child: TextFormField(
+              controller: _organizerController,
+              style: const TextStyle(
+                fontSize: 20,
+                color: Colors.black,
+              ),
+              decoration: InputDecoration(
+                labelText: 'Etkinliği Düzenleyen Kişi/Topluluk',
+                labelStyle: TextStyle(
+                  fontSize: 20,
+                  color: Colors.black,
+                ),
+                fillColor: backgroundColor,
+                filled: true,
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+              ),
+            ),
+          ),
+          SizedBox(height: 20),
+          Container(
+            width: double.infinity,
+            child: TextFormField(
+              controller: _locationController,
+              style: const TextStyle(
+                fontSize: 20,
+                color: Colors.black,
+              ),
+              decoration: InputDecoration(
+                labelText: 'Etkinlik Yeri',
+                labelStyle: TextStyle(
+                  fontSize: 20,
+                  color: Colors.black,
+                ),
+                fillColor: backgroundColor,
+                filled: true,
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+              ),
+            ),
+          ),
+          SizedBox(height: 20),
+          Container(
+            width: double.infinity,
+            child: TextFormField(
+              controller: _additionalInfoController,
+              style: const TextStyle(
+                fontSize: 20,
+                color: Colors.black,
+              ),
+              decoration: InputDecoration(
+                labelText: 'Ek Açıklamalar',
+                labelStyle: TextStyle(
+                  fontSize: 20,
+                  color: Colors.black,
+                ),
+                fillColor: backgroundColor,
+                filled: true,
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+              ),
+            ),
+          ),
+          SizedBox(height: 20),
+          IconButton(
+            icon: Icon(Icons.add_photo_alternate, size: 50),
+            onPressed: () {
+              // Functionality to be implemented later
+              print('Icon to add image pressed');
+            },
+          ),
+          SizedBox(height: 20),
+
           ElevatedButton(
             onPressed: () {
               String? userId = FirebaseAuth.instance.currentUser?.uid;
-
               if (userId == null) {
                 print('No user logged in');
                 return;
               }
               Event event = Event(
-
                 eventName: _eventNameController.text,
                 eventDate: _eventDateController.text,
                 organizer: _organizerController.text,
@@ -451,12 +544,24 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
               EventService().addEvent(event);
               _clearTextFields();
             },
+            style: ElevatedButton.styleFrom(
+              foregroundColor: textColor,
+              backgroundColor: backgroundColor,
+              textStyle: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              padding: EdgeInsets.symmetric(horizontal: 118, vertical: 11),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              elevation: 10,
+            ),
             child: Text('Etkinlik Oluştur'),
           ),
+          SizedBox(height: 20),
         ],
       ),
     );
   }
+
 
 
 }
