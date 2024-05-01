@@ -98,7 +98,8 @@ class _LoginPageState extends State<LoginPage> {
       },
       child: Scaffold(
         backgroundColor: backgroundColor,
-        body: FutureBuilder(
+        body:SafeArea(
+        child: FutureBuilder(
           future: Firebase.initializeApp(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
@@ -111,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                       height: MediaQuery
                           .of(context)
                           .size
-                          .height * 0.4,
+                          .height * 0.36,
                     ),
                     Container(
                       width: double.infinity,
@@ -294,6 +295,7 @@ class _LoginPageState extends State<LoginPage> {
             return Center(child: CircularProgressIndicator());
           },
         ),
+      ),
       ),
     );
   }

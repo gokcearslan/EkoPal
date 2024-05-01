@@ -66,8 +66,9 @@ class _RegisterPageState extends State<RegisterPage> {
         _focusPassword.unfocus();
       },
       child: Scaffold(
-        backgroundColor: backgroundColor,  // Make sure this color is defined in your color resources
-        body: FutureBuilder(
+        backgroundColor: backgroundColor,
+        body:SafeArea(
+        child: FutureBuilder(
           future: Firebase.initializeApp(),  // Initialization of Firebase
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
@@ -76,12 +77,18 @@ class _RegisterPageState extends State<RegisterPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(height: 23.0),
+
+                    Image.network(
+                      'https://i.pinimg.com/564x/d6/3d/95/d63d95bd2b5d0db1f114384b089451ce.jpg',
+                      fit: BoxFit.cover,
+                      height: MediaQuery.of(context).size.height * 0.36,
+                    ),
                     Container(
                       width: double.infinity,
                       child: const Text(
                         'Hesap Oluşturun',
                         style: TextStyle(
-                          fontSize: 45,
+                          fontSize: 44,
                           fontWeight: FontWeight.bold,
                           color: textColor,
                         ),
@@ -90,17 +97,12 @@ class _RegisterPageState extends State<RegisterPage> {
                     const Text(
                       'Devam etmek için lütfen okul mailiniz ile hesap oluşturun',
                       style: TextStyle(
-                        fontSize: 14.5,
+                        fontSize: 14,
                         fontWeight: FontWeight.bold,
                         color: textColor,  // Ensure textColor is defined
                       ),
                     ),
-                    Image.network(
-                      'https://i.pinimg.com/564x/d6/3d/95/d63d95bd2b5d0db1f114384b089451ce.jpg',
-                      fit: BoxFit.cover,
-                      height: MediaQuery.of(context).size.height * 0.39,
-                    ),
-                    SizedBox(height: 20.0),
+                    SizedBox(height: 15.0),
                     Padding(
                       padding: const EdgeInsets.all(18.0),
                       child: Form(
@@ -238,6 +240,7 @@ class _RegisterPageState extends State<RegisterPage> {
             }
           },
         ),
+      ),
       ),
     );
   }
