@@ -1,12 +1,10 @@
 import 'package:ekopal/sharings_advertisement.dart';
 import 'package:ekopal/sharings_announcements.dart';
 import 'package:ekopal/sharings_events.dart';
+import 'package:ekopal/sharings_posts.dart';
 import 'package:flutter/material.dart';
+import 'colors.dart';
 
-import 'colors.dart';
-import 'colors.dart';
-import 'colors.dart';
-import 'colors.dart';
 
 class MySharingsPage extends StatefulWidget {
 
@@ -26,9 +24,7 @@ class _MySharingsPageState extends State<MySharingsPage> {
     Category(icon: Icons.announcement, name: 'İlanlarım', widget: SharingViewAds(),color: Colors.black54),
     Category(icon: Icons.campaign, name: 'Duyurularım', widget: SharingViewAnnouncements(),color: Colors.black54),
     Category(icon: Icons.event, name: 'Etkinliklerim', widget: SharingViewEvents(),color:Colors.black54),
-    Category(icon: Icons.announcement, name: 'İlanlarım', widget: SharingViewAds(),color: Colors.black54),
-    Category(icon: Icons.campaign, name: 'Duyurularım', widget: SharingViewAnnouncements(),color: Colors.black54),
-
+    Category(icon: Icons.post_add, name: 'Gönderilerim', widget: SharingViewPosts(),color:Colors.black54),
 
   ];
 

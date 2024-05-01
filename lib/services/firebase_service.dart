@@ -116,6 +116,7 @@ class PostService {
       'postTitle': post.postTitle,
       'upvotes': 0,
       'downvotes': 0,
+      'userId': post.userId,
     })
         .then((value) => print('Gönderi başarıyla paylaşıldı.'))
         .catchError((error) => print('Gönderi paylaşılırken bir sorun oluştu: $error'));

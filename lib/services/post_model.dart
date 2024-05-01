@@ -6,6 +6,7 @@ class Post {
   final String postTitle;
   int upvotes;
   int downvotes;
+  final String userId;
 
   Post({
     required this.id,
@@ -13,9 +14,10 @@ class Post {
     required this.postTitle,
      this.upvotes=0,
      this.downvotes=0,
+    required this.userId,
+
   });
 
-  // Method to create a Post from a Firestore document
   factory Post.fromFirestore(DocumentSnapshot doc) {
     Map data = doc.data() as Map<String, dynamic>;
     return Post(
@@ -24,6 +26,7 @@ class Post {
       postTitle: data['postTitle'],
       upvotes: data['upvotes'] ?? 0,
       downvotes: data['downvotes'] ?? 0,
+      userId: data['userId'],
     );
   }
 }

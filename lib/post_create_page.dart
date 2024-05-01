@@ -1,5 +1,6 @@
 import 'package:ekopal/services/firebase_service.dart';
 import 'package:ekopal/services/post_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
@@ -16,13 +17,14 @@ class _PostCreationPageState extends State<PostCreationPage> {
   final PostService _postService = PostService();
 
   //random id yaratma
-  void _createPost() async {
+  void _createPost(String userId) async {
     final String id = Random().nextInt(100000).toString();
     final String postContent = _postContentController.text;
     final String postTitle = _postTitleController.text;
 
-    if (postContent.isNotEmpty) {
-      final post = Post(id: id, PostContent: postContent, postTitle: postTitle);
+
+     if (postContent.isNotEmpty) {
+      final post = Post(id: id, PostContent: postContent, postTitle: postTitle,userId: userId);
 
       await _postService.addPost(post).then((value) {
         print("Postunuz başarıyla paylaşıldı");
@@ -124,7 +126,16 @@ class _PostCreationPageState extends State<PostCreationPage> {
             SizedBox(height: 20),
             Center(
               child: ElevatedButton(
-                onPressed: _createPost,
+
+                onPressed: () async {
+                  String? userId = FirebaseAuth.instance.currentUser?.uid;
+
+                  if (userId == null) {
+                  print('No user logged in');
+                  return;
+                  }
+                  _createPost(userId);
+  },
                 child: Text('Gönderi Oluşturun'),
                 style: ElevatedButton.styleFrom(
                   foregroundColor: colorScheme.onPrimaryContainer, // Assuming 'onPrimaryContainer' is the text color for buttons
