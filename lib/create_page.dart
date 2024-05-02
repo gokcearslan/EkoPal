@@ -50,7 +50,8 @@ class _CreatePageState extends State<CreatePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Oluştur', style: TextStyle(fontSize: 26)),
-        backgroundColor: backgroundColor,
+        centerTitle: true,
+        backgroundColor: appBarColor,
       ),
       body: SafeArea(
         child: ListView(
@@ -59,7 +60,7 @@ class _CreatePageState extends State<CreatePage> {
             SizedBox(height: 20),
             Text(
               'Oluşturmak istediğiniz kategoriyi seçiniz',
-              style: TextStyle(fontSize: 18),
+              style: TextStyle(fontSize: 19),
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 20),
@@ -160,7 +161,7 @@ class _IlanWidgetState extends State<IlanWidget> {
         children: [
           SizedBox(height: 20),
       Container(
-        width: double.infinity, // Ensures the container tries to expand to fill all available horizontal space
+        width: double.infinity,
         child: TextFormField(
           controller: _advertisementNameController,
           style: const TextStyle(
@@ -171,7 +172,7 @@ class _IlanWidgetState extends State<IlanWidget> {
             labelText: 'İlan başlığı',
             labelStyle: TextStyle(
               fontSize: 20,
-              color: Colors.black,
+              color: textColor,
             ),
             fillColor: backgroundColor,
             filled: true,
@@ -196,9 +197,9 @@ class _IlanWidgetState extends State<IlanWidget> {
               labelText: 'İlan detayları',
               labelStyle: TextStyle(
                 fontSize: 20,
-                color: Colors.black,
+                color: textColor,
               ),
-              //icon: Icon(Icons.details), // Icon next to the label
+             // icon: Icon(Icons.details), // Icon next to the label
               hintText: 'Gelecek olan kişinin payına düşen kira, oda sayısı, eşyalı/eşyasız olma durumu vb. bilgileri giriniz.',
               hintStyle: TextStyle(
                 fontSize: 16,
@@ -208,14 +209,14 @@ class _IlanWidgetState extends State<IlanWidget> {
               fillColor: backgroundColor,
               filled: true,
               border: OutlineInputBorder(
-                borderSide: BorderSide.none, // No border visible
-                borderRadius: BorderRadius.circular(12), // Rounded corners of the border
+                borderSide: BorderSide.none,
+                borderRadius: BorderRadius.circular(12),
               ),
-              contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 10), // Padding inside the text field
+              contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 10),
             ),
-            maxLines: null, // Allows the field to expand vertically as text is entered
-            minLines: 3, // Starts with 3 lines visible
-            keyboardType: TextInputType.multiline, // Keyboard type set for multiline text
+            maxLines: null,
+            minLines: 3,
+            keyboardType: TextInputType.multiline,
           ),
         ),
           SizedBox(height: 20),
@@ -255,13 +256,19 @@ class _IlanWidgetState extends State<IlanWidget> {
           ),
         ),
         SizedBox(height: 20),
-        IconButton(
-          icon: Icon(Icons.add_photo_alternate, size: 50),
-          onPressed: () {
-            // Functionality to be implemented later
-            print('Icon to add image pressed');
-            },
-        ),
+          //FOTO EKLEME YERİ
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              IconButton(
+                icon: Icon(Icons.add_photo_alternate, size: 50),
+                onPressed: () {
+                  // Functionality to be implemented later
+                  print('Icon to add image pressed');
+                },
+              ),
+            ],
+          ),
           SizedBox(height: 20),
           ElevatedButton(
             onPressed: () async {
@@ -306,10 +313,10 @@ class _IlanWidgetState extends State<IlanWidget> {
             style: ElevatedButton.styleFrom(
               foregroundColor: textColor,
              backgroundColor: backgroundColor,
-              textStyle: TextStyle(fontSize: 22, fontWeight: FontWeight.bold), // Text style
+              textStyle: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               padding: EdgeInsets.symmetric(horizontal: 118, vertical: 11),
-              shape: RoundedRectangleBorder( // Button shape
-                borderRadius: BorderRadius.circular(12), // Rounded corners
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
               ),
               elevation: 10, // Shadow depth
             ),
@@ -374,7 +381,7 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
           });
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Geçmiş Tarihler için etkinlik oluşturulamaz!.')),
+            SnackBar(content: Text('Geçmiş Tarihler için etkinlik oluşturulamaz!')),
           );
         }
       }
@@ -384,12 +391,12 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(20.0),
+      padding: const EdgeInsets.all(0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 20),
-          Container(
+          const SizedBox(height: 20),
+          SizedBox(
             width: double.infinity,
             child: TextFormField(
               controller: _eventNameController,
@@ -399,9 +406,9 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
               ),
               decoration: InputDecoration(
                 labelText: 'Etkinlik Adı',
-                labelStyle: TextStyle(
+                labelStyle: const TextStyle(
                   fontSize: 20,
-                  color: Colors.black,
+                  color: textColor,
                 ),
                 fillColor: backgroundColor,
                 filled: true,
@@ -409,12 +416,13 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
                   borderSide: BorderSide.none,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal:10),
+                contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+
               ),
             ),
           ),
-          SizedBox(height: 20),
-          Container(
+          const SizedBox(height: 20),
+          SizedBox(
             width: double.infinity,
             child: TextFormField(
               controller: _eventDateController,
@@ -424,25 +432,25 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
               ),
               decoration: InputDecoration(
                 labelText: 'Etkinlik Tarihi',
-                labelStyle: TextStyle(
+                labelStyle: const TextStyle(
                   fontSize: 20,
-                  color: Colors.black,
+                  color: textColor,
                 ),
-                suffixIcon: Icon(Icons.calendar_today, color: Colors.black),
+                suffixIcon: const Icon(Icons.calendar_today, color: Colors.black),
                 fillColor: backgroundColor,
                 filled: true,
                 border: OutlineInputBorder(
                   borderSide: BorderSide.none,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+                contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 10),
               ),
               readOnly: true,
               onTap: () => _selectDateAndTime(context),
             ),
           ),
-          SizedBox(height: 20),
-          Container(
+          const SizedBox(height: 20),
+          SizedBox(
             width: double.infinity,
             child: TextFormField(
               controller: _organizerController,
@@ -452,9 +460,9 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
               ),
               decoration: InputDecoration(
                 labelText: 'Etkinliği Düzenleyen Kişi/Topluluk',
-                labelStyle: TextStyle(
+                labelStyle: const TextStyle(
                   fontSize: 20,
-                  color: Colors.black,
+                  color: textColor,
                 ),
                 fillColor: backgroundColor,
                 filled: true,
@@ -462,12 +470,12 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
                   borderSide: BorderSide.none,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+                contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 10),
               ),
             ),
           ),
-          SizedBox(height: 20),
-          Container(
+          const SizedBox(height: 20),
+          SizedBox(
             width: double.infinity,
             child: TextFormField(
               controller: _locationController,
@@ -477,9 +485,9 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
               ),
               decoration: InputDecoration(
                 labelText: 'Etkinlik Yeri',
-                labelStyle: TextStyle(
+                labelStyle: const TextStyle(
                   fontSize: 20,
-                  color: Colors.black,
+                  color: textColor,
                 ),
                 fillColor: backgroundColor,
                 filled: true,
@@ -487,12 +495,12 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
                   borderSide: BorderSide.none,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+                contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 10),
               ),
             ),
           ),
-          SizedBox(height: 20),
-          Container(
+          const SizedBox(height: 20),
+          SizedBox(
             width: double.infinity,
             child: TextFormField(
               controller: _additionalInfoController,
@@ -502,9 +510,9 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
               ),
               decoration: InputDecoration(
                 labelText: 'Ek Açıklamalar',
-                labelStyle: TextStyle(
+                labelStyle: const TextStyle(
                   fontSize: 20,
-                  color: Colors.black,
+                  color: textColor,
                 ),
                 fillColor: backgroundColor,
                 filled: true,
@@ -512,19 +520,25 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
                   borderSide: BorderSide.none,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+                contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 10),
               ),
             ),
           ),
-          SizedBox(height: 20),
-          IconButton(
-            icon: Icon(Icons.add_photo_alternate, size: 50),
-            onPressed: () {
-              // Functionality to be implemented later
-              print('Icon to add image pressed');
-            },
+          const SizedBox(height: 20),
+          //FOTO EKLEME YERİ
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              IconButton(
+                icon: Icon(Icons.add_photo_alternate, size: 50),
+                onPressed: () {
+                  // Functionality to be implemented later
+                  print('Icon to add image pressed');
+                },
+              ),
+            ],
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
 
           ElevatedButton(
             onPressed: () {
@@ -547,16 +561,15 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
             style: ElevatedButton.styleFrom(
               foregroundColor: textColor,
               backgroundColor: backgroundColor,
-              textStyle: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-              padding: EdgeInsets.symmetric(horizontal: 118, vertical: 11),
+              textStyle: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              padding: const EdgeInsets.symmetric(horizontal: 118, vertical: 11),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
               elevation: 10,
             ),
-            child: Text('Etkinlik Oluştur'),
+            child: const Text('Etkinlik Oluştur'),
           ),
-          SizedBox(height: 20),
         ],
       ),
     );
@@ -589,7 +602,7 @@ class _DuyuruWidgetState extends State<DuyuruWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(20.0),
+      padding: const EdgeInsets.all(0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -604,9 +617,9 @@ class _DuyuruWidgetState extends State<DuyuruWidget> {
               ),
               decoration: InputDecoration(
                 labelText: 'Duyuru Başlığı',
-                labelStyle: TextStyle(
+                labelStyle: const TextStyle(
                   fontSize: 20,
-                  color: Colors.black,
+                  color: textColor,
                 ),
                 fillColor: backgroundColor,
                 filled: true,
@@ -614,12 +627,12 @@ class _DuyuruWidgetState extends State<DuyuruWidget> {
                   borderSide: BorderSide.none,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+                contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 10),
               ),
             ),
           ),
-          SizedBox(height: 20),
-          Container(
+          const SizedBox(height: 20),
+          SizedBox(
             width: double.infinity,
             child: TextFormField(
               controller: _duyuruDetailsController,
@@ -629,9 +642,9 @@ class _DuyuruWidgetState extends State<DuyuruWidget> {
               ),
               decoration: InputDecoration(
                 labelText: 'Duyuru İçeriği',
-                labelStyle: TextStyle(
+                labelStyle: const TextStyle(
                   fontSize: 20,
-                  color: Colors.black,
+                  color: textColor,
                 ),
                 fillColor: backgroundColor,
                 filled: true,
@@ -639,15 +652,15 @@ class _DuyuruWidgetState extends State<DuyuruWidget> {
                   borderSide: BorderSide.none,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+                contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 10),
               ),
-              maxLines: null, // Allows for multi-line input without a fixed limit
-              minLines: 3, // Starts with 3 lines visible
+              maxLines: null,
+              minLines: 3,
               keyboardType: TextInputType.multiline,
             ),
           ),
-          SizedBox(height: 20),
-          Container(
+          const SizedBox(height: 20),
+          SizedBox(
             width: double.infinity,
             child: TextFormField(
               controller: _duyuruTypeController,
@@ -657,9 +670,9 @@ class _DuyuruWidgetState extends State<DuyuruWidget> {
               ),
               decoration: InputDecoration(
                 labelText: 'Duyuru Türü',
-                labelStyle: TextStyle(
+                labelStyle: const TextStyle(
                   fontSize: 20,
-                  color: Colors.black,
+                  color: textColor,
                 ),
                 fillColor: backgroundColor,
                 filled: true,
@@ -667,19 +680,25 @@ class _DuyuruWidgetState extends State<DuyuruWidget> {
                   borderSide: BorderSide.none,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+                contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 10),
               ),
             ),
           ),
-          SizedBox(height: 20),
-          IconButton(
-            icon: Icon(Icons.add_photo_alternate, size: 50),
-            onPressed: () {
-              // Functionality to be implemented later
-              print('Icon to add image pressed');
-            },
+          const SizedBox(height: 20),
+          //FOTO EKLEME YERİ
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              IconButton(
+                icon: Icon(Icons.add_photo_alternate, size: 50),
+                onPressed: () {
+                  // Functionality to be implemented later
+                  print('Icon to add image pressed');
+                },
+              ),
+            ],
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
               String? userId = FirebaseAuth.instance.currentUser?.uid;
@@ -708,7 +727,6 @@ class _DuyuruWidgetState extends State<DuyuruWidget> {
             ),
             child: Text('Duyuru Oluştur'),
           ),
-          SizedBox(height: 20),
         ],
       ),
     );
