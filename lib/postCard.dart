@@ -1,4 +1,5 @@
 
+import 'package:ekopal/colors.dart';
 import 'package:ekopal/services/firebase_service.dart';
 import 'package:ekopal/services/post_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -64,6 +65,7 @@ class _PostCardState extends State<PostCard> {
         borderRadius: BorderRadius.circular(16),
       ),
       elevation: 5,
+      color: cardColor,
       child: ExpansionTile(
         tilePadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         leading: ClipRRect(

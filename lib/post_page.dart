@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:ekopal/services/post_model.dart';
 import 'package:ekopal/services/firebase_service.dart';
 
+import 'colors.dart';
+
 class PostsPage extends StatefulWidget {
   @override
   _PostsPageState createState() => _PostsPageState();
@@ -29,10 +31,17 @@ class _PostsPageState extends State<PostsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Gönderiler'),
-        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+        title: const Text(
+          'Gönderiler',
+          style: TextStyle(
+            fontSize: 26,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: appBarColor,
       ),
-      body: posts == null
+      body:SafeArea(
+      child: posts == null
           ? Center(child: CircularProgressIndicator())
           : ListView.builder(
         itemCount: posts!.length,
@@ -40,12 +49,22 @@ class _PostsPageState extends State<PostsPage> {
           return PostCard(post: posts![index]);
         },
       ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => PostCreationPage()));
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => PostCreationPage()));
         },
-        child: Icon(Icons.add),
+        backgroundColor: lightButtonColor,
+        child: const Material(
+          color: Colors.transparent,
+          child: Icon(
+            Icons.add,
+            color: textColor,
+          ),
+        ),
       ),
+
     );
   }
 }

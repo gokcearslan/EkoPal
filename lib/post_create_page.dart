@@ -60,11 +60,14 @@ class _PostCreationPageState extends State<PostCreationPage> {
     );
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: colorScheme.primaryContainer, // Use primary container color for the app bar
-        title: Text('Gönderi', style: TextStyle(color: colorScheme.onPrimaryContainer)), // Assuming 'onPrimaryContainer' is the color for text on top of primary containers
+        title: const Text(
+          'Gönderi Oluştur',
+          style: TextStyle(
+            fontSize: 26,
+          ),
+        ),
         centerTitle: true,
-        iconTheme: IconThemeData(color: colorScheme.onPrimaryContainer), // Assuming 'onPrimaryContainer' is the color for icons on top of primary containers
-        elevation: 1,
+        backgroundColor: appBarColor,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -81,9 +84,9 @@ class _PostCreationPageState extends State<PostCreationPage> {
                 border: borderStyle,
                 enabledBorder: borderStyle,
                 focusedBorder: borderStyle.copyWith(
-                  borderSide: BorderSide(
-                    color: colorScheme.primary, // Border color when the TextField is focused
-                    width: 2.0,
+                  borderSide: const BorderSide(
+                    color: backgroundColor,
+                    width: 3.0,
                   ),
                 ),
                 prefixIcon: Icon(Icons.title, color: colorScheme.onSurface),
@@ -100,9 +103,9 @@ class _PostCreationPageState extends State<PostCreationPage> {
                 border: borderStyle,
                 enabledBorder: borderStyle,
                 focusedBorder: borderStyle.copyWith(
-                  borderSide: BorderSide(
-                    color: colorScheme.primary,
-                    width: 2.0,
+                  borderSide: const BorderSide(
+                    color: backgroundColor,
+                    width: 3.0,
                   ),
                 ),
                 prefixIcon: Icon(Icons.short_text, color: colorScheme.onSurface),
@@ -136,12 +139,16 @@ class _PostCreationPageState extends State<PostCreationPage> {
                   }
                   _createPost(userId);
   },
-                child: Text('Gönderi Oluşturun'),
+                child: Text('     Oluştur     '),
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: colorScheme.onPrimaryContainer, // Assuming 'onPrimaryContainer' is the text color for buttons
-                  backgroundColor: colorScheme.primaryContainer, // Button background color from the color scheme
-                  shape: StadiumBorder(),
-                  padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                  foregroundColor: textColor,
+                  backgroundColor: backgroundColor,
+                  textStyle: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  padding: EdgeInsets.symmetric(horizontal: 118, vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  elevation: 10,
                 ),
               ),
             ),
