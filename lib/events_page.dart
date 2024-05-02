@@ -62,7 +62,7 @@ class _EventsPageState extends State<EventsPage> {
             fontSize: 26,
           ),
         ),
-
+        centerTitle: true,
         backgroundColor: appBarColor,
       ),
       body: events == null

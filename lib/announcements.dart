@@ -47,6 +47,7 @@ class _AnnouncementsPageState extends State<AnnouncementsPage> {
               fontSize: 26,
             ),
         ),
+        centerTitle: true,
         backgroundColor: appBarColor,
       ),
       body:SafeArea(
