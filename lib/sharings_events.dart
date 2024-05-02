@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import 'colors.dart';
 import 'detailed_event_page.dart';
 
 class SharingViewEvents extends StatefulWidget {
@@ -131,11 +132,18 @@ class _SharingViewEventsState extends State<SharingViewEvents> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-        title: Text("Etkinliklerim"),
-
-    ),
-    body: Column(
+      appBar: AppBar(
+        title: const Text(
+          'Etkinliklerim',
+          style: TextStyle(
+            fontSize: 26,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: appBarColor,
+      ),
+    body:SafeArea(
+    child: Column(
     children: [
       Expanded(
         child: _isEventsLoaded
@@ -150,6 +158,7 @@ class _SharingViewEventsState extends State<SharingViewEvents> {
         ),
       ),
     ],
+    ),
     ),
     );
   }

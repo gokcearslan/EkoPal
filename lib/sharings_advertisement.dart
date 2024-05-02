@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'advertisement_details_page.dart';
+import 'colors.dart';
 
 class SharingViewAds extends StatefulWidget {
   @override
@@ -73,36 +74,35 @@ class _SharingViewAdsState extends State<SharingViewAds> {
                 children: [
                   Text(
                     ad.advertisementName,
-                    style: theme.textTheme.headline6?.copyWith(
+                    style: theme.textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Row(
                     children:[
-                      Icon(Icons.arrow_circle_right_rounded, color: Colors.blueGrey), // Icon widget
-                      SizedBox(width: 10),
+                      const Icon(Icons.arrow_circle_right_rounded, color: Colors.blueGrey), // Icon widget
+                      const SizedBox(width: 10),
                       Text(
                         ad.advertisementType ?? 'Empty Value',
-                        style: theme.textTheme.subtitle1,
+                        style: theme.textTheme.titleMedium,
                         //add_home_work_outlined
 
                       ),
                     ],
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
 
                   Text(
                     ad.advertisementDetails,
-                    style: theme.textTheme.bodyText2,
+                    style: theme.textTheme.bodyMedium,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       IconButton(
                         icon: Icon(
-                          ad.isFavorite ? Icons.star_outline : Icons.star_border,
-                          color: ad.isFavorite ? Colors.amber : colorScheme
-                              .onSurfaceVariant,
+                          ad.isFavorite ? Icons.star : Icons.star_border,
+                          color: ad.isFavorite ? Colors.amber : colorScheme.onSurfaceVariant,
                         ),
                         onPressed: () {
                           setState(() {
@@ -110,6 +110,7 @@ class _SharingViewAdsState extends State<SharingViewAds> {
                           });
                         },
                       ),
+
                       IconButton(
                         icon: Icon(
                           Icons.article_outlined,
@@ -141,11 +142,18 @@ class _SharingViewAdsState extends State<SharingViewAds> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-        title: Text("İlanlarım"),
-
-    ),
-    body: Column(
+      appBar: AppBar(
+        title: const Text(
+          'İlanlarım',
+          style: TextStyle(
+            fontSize: 26,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: appBarColor,
+      ),
+    body:SafeArea(
+    child: Column(
     children: [
     Expanded(
     child: _isLoaded
@@ -161,6 +169,7 @@ class _SharingViewAdsState extends State<SharingViewAds> {
     ),
     ),
     ],
+    ),
     ),
     );
   }

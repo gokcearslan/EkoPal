@@ -105,11 +105,18 @@ class _SharingViewAnnouncementsState extends State<SharingViewAnnouncements> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Duyurularım"),
-
+      appBar: AppBar(
+        title: const Text(
+          'Duyurularım',
+          style: TextStyle(
+            fontSize: 26,
+          ),
         ),
-        body: Column(
+        centerTitle: true,
+        backgroundColor: appBarColor,
+      ),
+        body:SafeArea(
+        child: Column(
             children: [
         Expanded(
         child: _isLoading
@@ -125,6 +132,7 @@ class _SharingViewAnnouncementsState extends State<SharingViewAnnouncements> {
     ),
     ),
             ],
+        ),
         ),
     );
   }

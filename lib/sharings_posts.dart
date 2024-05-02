@@ -4,6 +4,8 @@ import 'package:ekopal/services/post_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import 'colors.dart';
+
 class SharingViewPosts extends StatefulWidget {
   @override
   _SharingViewPostsState createState() => _SharingViewPostsState();
@@ -43,10 +45,17 @@ class _SharingViewPostsState extends State<SharingViewPosts> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Gönderilerim'),
-        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+        title: const Text(
+          'Gönderilerim',
+          style: TextStyle(
+            fontSize: 26,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: appBarColor,
       ),
-      body: Column(
+      body:SafeArea(
+      child: Column(
         children: [
           Expanded(
             child: _isLoaded
@@ -62,9 +71,9 @@ class _SharingViewPostsState extends State<SharingViewPosts> {
           ),
         ],
       ),
+      ),
     );
-
-  }
+}
 
 
 
