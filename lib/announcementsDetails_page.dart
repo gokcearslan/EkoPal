@@ -15,6 +15,7 @@ class AnnouncementDetailsPage extends StatelessWidget {
 
       appBar: AppBar(
         title: Text(data['duyuruName']),
+        centerTitle: true,
         backgroundColor:white,
       ),
       body:SafeArea(

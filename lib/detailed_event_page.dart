@@ -22,6 +22,7 @@ class DetailedEventPage extends StatelessWidget {
           style: TextStyle(
             fontSize: 26,
           ),),
+        centerTitle: true,
         backgroundColor: appBarColor,
       ),
       body:SafeArea(

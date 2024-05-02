@@ -26,7 +26,8 @@ class AdvertisementDetailsPage extends StatelessWidget {
         style: TextStyle(
         fontSize: 26,
           ),),
-          backgroundColor: appBarColor,
+        centerTitle: true,
+        backgroundColor: appBarColor,
       ),
       body:SafeArea(
       child: SingleChildScrollView(
