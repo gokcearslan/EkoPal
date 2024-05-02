@@ -32,16 +32,21 @@ class _MySharingsPageState extends State<MySharingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Paylaşım Kategorileri'),
+        title: const Text('Paylaşım Kategorileri',
+          style: TextStyle(
+            fontSize: 26,
+          ),),
+        centerTitle: true,
         backgroundColor: appBarColor,
       ),
-      body: GridView.builder(
-        padding: EdgeInsets.all(20),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 1, // Each item takes a full row
+      body:SafeArea(
+      child: GridView.builder(
+        padding: const EdgeInsets.all(20),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 1,
           crossAxisSpacing: 10,
-          mainAxisSpacing: 20, // Increased spacing for better visual separation
-          childAspectRatio: 2, // Adjusted aspect ratio
+          mainAxisSpacing: 20,
+          childAspectRatio: 2,
         ),
         itemCount: categories.length,
         itemBuilder: (context, index) {
@@ -60,18 +65,18 @@ class _MySharingsPageState extends State<MySharingsPage> {
                   BoxShadow(
                     color: Colors.grey.shade400,
                     blurRadius: 5,
-                    offset: Offset(0, 6), // changes position of shadow
+                    offset: const Offset(0, 6),
                   ),
                 ],
               ),
-              padding: EdgeInsets.all(10),
-              margin: EdgeInsets.symmetric(vertical: 5),
+              padding: const EdgeInsets.all(10),
+              margin: const EdgeInsets.symmetric(vertical: 5),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(categories[index].icon, size: 80, color: categories[index].color ?? Colors.black54),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Text(
                     categories[index].name,
                     style: Theme.of(context).textTheme.headline6?.copyWith(
@@ -83,6 +88,7 @@ class _MySharingsPageState extends State<MySharingsPage> {
             ),
           );
         },
+      ),
       ),
     );
   }
