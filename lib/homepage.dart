@@ -13,8 +13,6 @@ import 'package:ekopal/main.dart';
 import 'package:ekopal/create_page.dart';
 import 'package:ekopal/events_page.dart';
 import 'package:ekopal/announcements.dart';
-
-import 'SampleScreen.dart';
 import 'mySharingsPage.dart';
 
 class HomePage extends StatefulWidget {
@@ -187,7 +185,8 @@ class _HomePageState extends State<HomePage> {
               title: Text('Soru-Cevap'),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.push(context, MaterialPageRoute(builder: (context) => SoruCevapDisplayPage()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => DisplayQuestionsPage()));
+
               },
             ),
             ListTile(

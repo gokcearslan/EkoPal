@@ -27,6 +27,7 @@ class _PostsPageState extends State<PostsPage> {
       setState(() {});
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,33 +39,36 @@ class _PostsPageState extends State<PostsPage> {
           ),
         ),
         centerTitle: true,
-        backgroundColor: appBarColor,
+        backgroundColor: appBarColor, // Make sure appBarColor is defined somewhere
       ),
-      body:SafeArea(
-      child: posts == null
-          ? Center(child: CircularProgressIndicator())
-          : ListView.builder(
-        itemCount: posts!.length,
-        itemBuilder: (context, index) {
-          return PostCard(post: posts![index]);
-        },
-      ),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: posts == null
+              ? Center(child: CircularProgressIndicator())
+              : ListView.builder(
+            itemCount: posts!.length,
+            itemBuilder: (context, index) {
+              return PostCard(post: posts![index]);
+            },
+          ),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => PostCreationPage()));
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => PostCreationPage()), // Ensure AskQuestionPage is created
+          );
         },
-        backgroundColor: lightButtonColor,
+        backgroundColor: lightButtonColor, // Make sure lightButtonColor is defined
         child: const Material(
           color: Colors.transparent,
           child: Icon(
             Icons.add,
-            color: textColor,
+            color: textColor, // Make sure textColor is defined
           ),
         ),
       ),
-
     );
   }
 }

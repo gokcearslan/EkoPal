@@ -185,6 +185,7 @@ class SoruCevapService {
         .add({
       'soru': soruCevap.soru,
       'soruDetails': soruCevap.soruDetails,
+      'userId': soruCevap.userId,
     })
         .then((value) => print('Soru ve açıklama added to Firestore'))
         .catchError((error) => print('Failed to add Soru: $error'));
