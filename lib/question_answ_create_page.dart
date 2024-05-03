@@ -27,11 +27,18 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
           icon: Icon(Icons.close),
           onPressed: () => Navigator.of(context).pop(),
         ),
+        centerTitle: true,
+
         backgroundColor:appBarColor,
 
-        title: Text('Sorun varsa, Gönder!'),
+        title: const Text('Sorun varsa, Gönder!',
+          style: TextStyle(
+            fontSize: 26,
+          ),
+        ),
       ),
-      body: Padding(
+      body:SafeArea(
+      child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
@@ -41,8 +48,9 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
                 labelText: 'Soru Başlığı',
                 hintText: 'Soruyu özetleyen bir başlık seçin.',
                 border: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey[300]!)),
+                    borderSide: BorderSide(color:backgroundColor)),
               ),
+              maxLength: 45, //maz karakter sınırı
               textInputAction: TextInputAction.next,
             ),
             SizedBox(height: 20),
@@ -52,7 +60,7 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
                 labelText: 'Soru İçeriği',
                 hintText: 'Sorunuzdan kısaca bahsedin.',
                 border: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey[300]!), // Lighter border color
+                  borderSide: BorderSide(color: backgroundColor),
                 ),
                 alignLabelWithHint: true,
               ),
@@ -60,6 +68,19 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
               textInputAction: TextInputAction.newline,
             ),
             SizedBox(height: 20),
+            //FOTO EKLEME YERİ
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.add_photo_alternate, size: 50),
+                  onPressed: () {
+                    // Functionality to be implemented later
+                    print('Icon to add image pressed');
+                  },
+                ),
+              ],
+            ),
             SizedBox(
               width: double.infinity, // makes the button stretch to full width
               child: ElevatedButton(
@@ -83,7 +104,7 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
                 },
 
                 child: Text('Sorum var!',style: TextStyle(
-                  color: textColor,fontSize:20),
+                  color: Colors.black,fontSize:22),
                 ),
                 style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.symmetric(vertical: 20),
@@ -94,6 +115,7 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
             ),
           ],
         ),
+      ),
       ),
     );
   }

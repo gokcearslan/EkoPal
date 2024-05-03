@@ -26,6 +26,7 @@ class _SoruCevapCardState extends State<SoruCevapCard> {
         borderRadius: BorderRadius.circular(16),
       ),
       elevation: 5,
+      color:cardColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -71,7 +72,7 @@ class _SoruCevapCardState extends State<SoruCevapCard> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
-                minimumSize: Size(double.infinity, 36), // double.infinity is the key to full width
+                minimumSize: Size(double.infinity, 36),
               ),
             ),
           ),

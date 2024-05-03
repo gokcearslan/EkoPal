@@ -32,16 +32,29 @@ class _DisplayQuestionsPageState extends State<DisplayQuestionsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sor ya da Cevapla!'),
-        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.close),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        centerTitle: true,
+
+        backgroundColor: appBarColor,
+
+        title: const Text('Sor ya da Cevapla',
+          style: TextStyle(
+            fontSize: 26,
+          ),
+        ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ListView.builder(
-          itemCount: soruCeap?.length ?? 0,
-          itemBuilder: (context, index) {
-            return SoruCevapCard(soruCevap: soruCeap![index]);
-          },
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ListView.builder(
+            itemCount: soruCeap?.length ?? 0,
+            itemBuilder: (context, index) {
+              return SoruCevapCard(soruCevap: soruCeap![index]);
+            },
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -50,11 +63,15 @@ class _DisplayQuestionsPageState extends State<DisplayQuestionsPage> {
             MaterialPageRoute(builder: (context) => AskQuestionPage()),
           );
         },
-        child: Icon(Icons.add),
+        child: Material(
+          color: Colors.transparent,
+          child: Icon(
+            Icons.add,
+            color: textColor,
+          ),
+        ),
+        backgroundColor: lightButtonColor,
       ),
     );
   }
 }
-
-
-
