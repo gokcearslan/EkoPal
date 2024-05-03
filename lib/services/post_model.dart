@@ -12,8 +12,8 @@ class Post {
     required this.id,
     required this.PostContent,
     required this.postTitle,
-     this.upvotes=0,
-     this.downvotes=0,
+    this.upvotes=0,
+    this.downvotes=0,
     required this.userId,
 
   });

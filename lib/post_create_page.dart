@@ -23,7 +23,7 @@ class _PostCreationPageState extends State<PostCreationPage> {
     final String postTitle = _postTitleController.text;
 
 
-     if (postContent.isNotEmpty) {
+    if (postContent.isNotEmpty) {
       final post = Post(id: id, PostContent: postContent, postTitle: postTitle,userId: userId);
 
       await _postService.addPost(post).then((value) {
@@ -114,7 +114,7 @@ class _PostCreationPageState extends State<PostCreationPage> {
               maxLines: null,
               keyboardType: TextInputType.multiline,
             ),
-              SizedBox(height: 20),
+            SizedBox(height: 20),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -134,11 +134,11 @@ class _PostCreationPageState extends State<PostCreationPage> {
                   String? userId = FirebaseAuth.instance.currentUser?.uid;
 
                   if (userId == null) {
-                  print('No user logged in');
-                  return;
+                    print('No user logged in');
+                    return;
                   }
                   _createPost(userId);
-  },
+                },
                 child: Text('     Oluştur     '),
                 style: ElevatedButton.styleFrom(
                   foregroundColor: textColor,
@@ -153,10 +153,10 @@ class _PostCreationPageState extends State<PostCreationPage> {
               ),
             ),
 
-        ],
+          ],
         ),
-        ),
-        );
+      ),
+    );
   }
 
 

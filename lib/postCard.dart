@@ -65,7 +65,7 @@ class _PostCardState extends State<PostCard> {
           ClipRRect(
             borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
             child: Image.network(
-               ('https://cdn.vectorstock.com/i/500p/28/89/a-question-mark-symbol-vector-1122889.jpg'),
+              ('https://cdn.vectorstock.com/i/500p/28/89/a-question-mark-symbol-vector-1122889.jpg'),
               width: double.infinity,
               height: 200,
               fit: BoxFit.cover,
