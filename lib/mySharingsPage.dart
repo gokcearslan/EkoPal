@@ -2,6 +2,7 @@ import 'package:ekopal/sharings_advertisement.dart';
 import 'package:ekopal/sharings_announcements.dart';
 import 'package:ekopal/sharings_events.dart';
 import 'package:ekopal/sharings_posts.dart';
+import 'package:ekopal/sharings_questions.dart';
 import 'package:flutter/material.dart';
 import 'colors.dart';
 
@@ -25,6 +26,8 @@ class _MySharingsPageState extends State<MySharingsPage> {
     Category(icon: Icons.campaign, name: 'Duyurularım', widget: SharingViewAnnouncements(),color: Colors.black54),
     Category(icon: Icons.event, name: 'Etkinliklerim', widget: SharingViewEvents(),color:Colors.black54),
     Category(icon: Icons.post_add, name: 'Gönderilerim', widget: SharingViewPosts(),color:Colors.black54),
+    Category(icon: Icons.live_help_outlined, name: 'Sorularım', widget: SharingViewQuestions(),color:Colors.black54),
+
 
   ];
 
