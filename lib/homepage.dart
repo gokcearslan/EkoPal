@@ -13,6 +13,8 @@ import 'package:ekopal/main.dart';
 import 'package:ekopal/create_page.dart';
 import 'package:ekopal/events_page.dart';
 import 'package:ekopal/announcements.dart';
+import 'package:ekopal/onboarding_view.dart';
+
 import 'mySharingsPage.dart';
 
 class HomePage extends StatefulWidget {
@@ -193,6 +195,14 @@ class _HomePageState extends State<HomePage> {
               title: Text('Çıkış'),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
+
+              },
+            ),
+            //ONBOARD DENEME İÇİN
+            ListTile(
+              title: Text('onboard'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => OnboardingPage()));
 
               },
             ),

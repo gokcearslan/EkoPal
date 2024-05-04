@@ -11,6 +11,10 @@ class MySharingsPage extends StatefulWidget {
 
   @override
   _MySharingsPageState createState() => _MySharingsPageState();
+
+  final bool showAppBar;
+
+  const MySharingsPage({Key? key, this.showAppBar = true}) : super(key: key);
 }
 
 class _MySharingsPageState extends State<MySharingsPage> {
@@ -34,14 +38,11 @@ class _MySharingsPageState extends State<MySharingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Paylaşım Kategorileri',
-          style: TextStyle(
-            fontSize: 26,
-          ),),
+      appBar: widget.showAppBar ? AppBar(  // Conditional display of AppBar
+        title: const Text('Paylaşım Kategorileri', style: TextStyle(fontSize: 26)),
         centerTitle: true,
         backgroundColor: appBarColor,
-      ),
+      ) : null,
       body:SafeArea(
       child: GridView.builder(
         padding: const EdgeInsets.all(20),

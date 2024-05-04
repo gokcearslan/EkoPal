@@ -18,8 +18,14 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: kahve,
-        title: Text('Şifre Sıfırla'),
+        title: const Text(
+          'Şifreni Sıfırla!',
+          style: TextStyle(
+            fontSize: 26,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: appBarColor,
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -27,20 +33,44 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
           key: _formKey,
           child: Column(
             children: [
-              TextFormField(
-                controller: _emailController,
-                keyboardType: TextInputType.emailAddress,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'E-posta adresi boş olamaz';
-                  }
-                  return Validator.validateEmail(email: value);
-                },
-                decoration: InputDecoration(
-                  labelText: 'E-posta Adresiniz',
+              SizedBox(height:15),
+              Container(
+                width: double.infinity,
+                child: TextFormField(
+                  controller: _emailController,
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'E-posta adresi boş olamaz';
+                    }
+                    return Validator.validateEmail(email: value);
+                  },
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.black,
+                  ),
+                  decoration: InputDecoration(
+                    hintText: 'Şifrenizi sıfırlamak için mail adresinizi giriniz.',
+                    labelText: 'E-posta Adresiniz',
+                    labelStyle: TextStyle(
+                      fontSize: 20,
+                      color: textColor,
+                    ),
+                    hintStyle: TextStyle(
+                      fontSize: 15,
+                      color: textColor,
+                    ),
+                    fillColor: backgroundColor,
+                    filled: true,
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+                  ),
                 ),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 60),
               ElevatedButton(
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
@@ -96,7 +126,14 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                     ? CircularProgressIndicator(color: bej)
                     : Text('Şifre Sıfırlama Talebi Gönder'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: kahve, // Set button color
+                  backgroundColor: backgroundColor, // Use background color for the button
+                  foregroundColor: textColor, // Use text color for the button text
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  textStyle: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  elevation: 10, // Add shadow depth
                 ),
               ),
             ],
