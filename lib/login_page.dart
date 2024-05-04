@@ -1,4 +1,5 @@
 import 'package:ekopal/main.dart';
+import 'package:ekopal/services/UserManager.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -43,12 +44,16 @@ class _LoginPageState extends State<LoginPage> {
       );
 
       if (userCredential.user != null) {
+        // Set the user ID in UserManager after successful login
+        UserManager().login(userCredential.user!.uid);
+        print("logindeki user id şudur: " +userCredential.user!.uid);
+
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => MainApp()),
         );
       }
     } catch (e) {
-      _showErrorDialog("Hatali Sifre.");
+      _showErrorDialog("Şifreniz yanlış.");
     } finally {
       setState(() => _isProcessing = false);
     }
@@ -166,7 +171,6 @@ class _LoginPageState extends State<LoginPage> {
                                         value: '@ieu.edu.tr',
                                         child: Text('@ieu.edu.tr'),
                                       ),
-                                      // Add more entries here for other domains
                                     ];
                                   },
                                   icon: Icon(Icons.arrow_drop_down),
@@ -228,7 +232,7 @@ class _LoginPageState extends State<LoginPage> {
                                         await login();
                                       }
                                     },
-                                    child: Text('Giriş', style: TextStyle(color: Colors.white)), // Assuming 'bej' is a defined color
+                                    child: Text('Giriş', style: TextStyle(color: Colors.white)),
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: buttonColor,
                                       shape: RoundedRectangleBorder(
@@ -276,7 +280,7 @@ class _LoginPageState extends State<LoginPage> {
                                   child: Text(
                                     'Kaydolun.',
                                     style: TextStyle(
-                                      color: Colors.blue, // Replace with your preferred color, e.g., kahve if you have such a color
+                                      color: Colors.blue,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),

@@ -39,7 +39,7 @@ class _PostsPageState extends State<PostsPage> {
           ),
         ),
         centerTitle: true,
-        backgroundColor: appBarColor, // Make sure appBarColor is defined somewhere
+        backgroundColor: appBarColor,
       ),
       body: SafeArea(
         child: Padding(
@@ -57,15 +57,15 @@ class _PostsPageState extends State<PostsPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => PostCreationPage()), // Ensure AskQuestionPage is created
+            MaterialPageRoute(builder: (context) => PostCreationPage()),
           );
         },
-        backgroundColor: lightButtonColor, // Make sure lightButtonColor is defined
+        backgroundColor: lightButtonColor,
         child: const Material(
           color: Colors.transparent,
           child: Icon(
             Icons.add,
-            color: textColor, // Make sure textColor is defined
+            color: textColor,
           ),
         ),
       ),

@@ -58,7 +58,7 @@ class AdvertisementService {
       'advertisementName': advertisement.advertisementName,
       'advertisementType': advertisement.advertisementType,
       'advertisementDetails': advertisement.advertisementDetails,
-      'userId': advertisement.userId,  // Adding the userId field
+      'userId': advertisement.userId,
 
     })
         .then((value) => print('Advertisement added to Firestore'))
@@ -90,13 +90,12 @@ class DuyuruService {
   Future<void> addDuyuru(Duyuru duyuru) {
 
 
-    // Include the userId in the document
     return duyurular
         .add({
       'duyuruName': duyuru.duyuruName,
       'duyuruType': duyuru.duyuruType,
       'duyuruDetails': duyuru.duyuruDetails,
-      'userId': duyuru.userId,  // Adding the userId field
+      'userId': duyuru.userId,
     })
         .then((value) => print('Duyuru added to Firestore'))
         .catchError((error) => print('Failed to add duyuru: $error'));
@@ -117,6 +116,8 @@ class PostService {
       'upvotes': 0,
       'downvotes': 0,
       'userId': post.userId,
+      'votedUsers': {},
+
     })
         .then((value) => print('Gönderi başarıyla paylaşıldı.'))
         .catchError((error) => print('Gönderi paylaşılırken bir sorun oluştu: $error'));
@@ -136,43 +137,6 @@ class PostService {
     }
   }
 
-
-  // post için vote
-  Future<void> upvotePost(String postId) async {
-    return posts.doc(postId).update({
-      'upvotes': FieldValue.increment(1),
-    }).catchError((error) {
-      throw Exception("Failed to upvote: $error");
-    });
-  }
-
-  Future<void> downvotePost(String postId) async {
-    return posts.doc(postId).update({
-      'downvotes': FieldValue.increment(1),
-    }).catchError((error) {
-      throw Exception("Failed to downvote: $error");
-    });
-  }
-
-
-  //en çok oy alan 5 postu görüntüleme
-  Future<List<Post>> getTopPosts() async {
-    try {
-      QuerySnapshot querySnapshot = await posts
-          .orderBy('upvotes', descending: true)
-          .limit(5)
-          .get();
-
-      List<Post> postList = querySnapshot.docs.map((doc) {
-        return Post.fromFirestore(doc);
-      }).toList();
-
-      return postList;
-    } catch (e) {
-      print("Error fetching top posts: $e");
-      return [];
-    }
-  }
 }
 
 //soru cevap
