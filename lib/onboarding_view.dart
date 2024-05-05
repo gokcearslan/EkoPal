@@ -1,11 +1,24 @@
 import 'package:ekopal/colors.dart';
+import 'package:ekopal/login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 //Son sayfaya Giriş butonu eklenecek
 //indicator eklenecek
 //login öncesine koyulacak
 
-
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'EKOPAL',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: OnboardingPage(),
+    );
+  }
+}
 
 class  OnboardingPage extends StatefulWidget {
   const OnboardingPage ({super.key});
@@ -18,65 +31,78 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   final controller =OnboardingItems();
   final pageController=PageController();
+  bool isLastPage=false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-
-      bottomSheet: Row(
+      bottomSheet: Container(
+        color:backgroundColor,
+        padding:EdgeInsets.symmetric(horizontal:100 ,vertical: 60),
+        child: isLastPage? getStarted(): Row(
         children: [
           TextButton(
               onPressed: ()=>pageController.jumpToPage(controller.items.length-1),
-              child: Text("Atla")),
-          //INDICATOR EKLENECEK -g
-         /*
-          SmootingPageIndicator(
+              child: Text("Atla",
+              style: TextStyle(fontSize: 20),)),
+
+          SmoothPageIndicator(
             controller:pageController,
-            caount:controller.items.length,
-            onDotCliked:(index)=>pageController.animateToPage(index,
-                   duration:const Duration(milliseconds:600),
+            count:controller.items.length,
+            onDotClicked:(index)=>pageController.animateToPage(index,
+            duration:const Duration(milliseconds:600),curve: Curves.easeIn),
             effect:const WormEffect(
                     dotHeight:12,
                     dotWidth:12,
                     activeDotColor:buttonColor,
                 ),
           ),
-          */
+
 
           TextButton(onPressed:()=>pageController.nextPage(
               duration:const Duration(milliseconds:600),
               curve: Curves.easeIn),
-              child: Text("İleri"))
+              child: Text("İleri",
+                style: TextStyle(fontSize: 20),)),
         ],
       ),
-
+      ),
       body: Container(
         margin: const EdgeInsets.symmetric(horizontal: 15),
         child: PageView.builder(
+          onPageChanged: (index)=>setState(()=>isLastPage=controller.items.length-1==index),
           itemCount: controller.items.length,
           controller: pageController,
           itemBuilder: (context, index) {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.network(controller.items[index].image),
+                Container(
+                  height: 300,
+                  width: double.infinity,
+                  child: Image.network(
+                    controller.items[index].image,
+                    fit: BoxFit.cover,
+                  ),
+                ),
                 Text(controller.items[index].title,
                   style: TextStyle(
-                    fontSize: 24, // Set font size
-                    color: Colors.blue[900], // Set text color
-                    fontWeight: FontWeight.bold, // Set font weight
+                    fontSize: 24,
+                    color: Colors.blue[900],
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 SizedBox(height: 20),
                 Text(controller.items[index].description,
                   style: const TextStyle(
-                    fontSize: 16, // Set font size
-                    color:textColor, // Set text color
+                    fontSize: 16,
+                    color:textColor,
                   ),
                   textAlign: TextAlign.center,
                 ),
               ],
+
             );
           },
         ),
@@ -84,7 +110,26 @@ class _OnboardingPageState extends State<OnboardingPage> {
     );
   }
 
+ Widget getStarted(){
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color:buttonColor,
+      ),
+      width:MediaQuery.of(context).size.width*3,
+      height: 55,
+      child: TextButton(
+        onPressed: () async {
 
+
+          Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>LoginPage()));
+        },
+        child: Text("Uygulamaya Giriş Yap!",
+              style:TextStyle(color:textColor),),)
+   );
+
+
+ }
 
 
 }
@@ -94,11 +139,13 @@ class OnboardingItems{
   List<OnboardingInfo> items= [
     OnboardingInfo(title: "Aklına Takılan soruların mı var?",
         description: "EkoPal sayesinde aklındaki soruları kolayca sorabilir, "
-            "anında tecrübeli kişiler tarafından yanıtlar alabilir, seninle aynı soruları olan insanlarla birlik oluşturabilirsin",
+            "anında tecrübeli kişiler tarafından yanıtlar alabilir, "
+            "seninle aynı soruları olan insanlarla birlik oluşturabilirsin",
         image: "https://i.pinimg.com/564x/59/09/05/5909051abd57ab7d03eb72883f723c12.jpg"),
 
     OnboardingInfo(title: "Neye ihtiyacın var?",
-        description: "EkoPal sayesinde arağın her şey tek bir yerde. Kolayca çalışmak için projeler, stajlar bulabilir, aradğın kitaba rahatlıkla ulaşabilirsin.",
+        description: "Dersin için kitaba mı ihtiyacın var? Staj yapmak için bir yer mi arıyorsun? Projende birlikte çalışabileceğin takım arkadaşları mı arıyorsun?"
+            "EkoPal sayesinde aradğın her şey tek bir yerde. Kolayca çalışmak için projeler, stajlar bulabilir, aradğın kitaba rahatlıkla ulaşabilirsin.",
         image: "https://i.pinimg.com/originals/cd/54/d0/cd54d03bcd65a36fae7c0788ddc622d8.gif"),
 
     OnboardingInfo(title: "Üniversiten ile bağlantı kur",

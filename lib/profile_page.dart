@@ -5,11 +5,11 @@ import 'package:ekopal/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:ekopal/login_page.dart'; // Ensure this is the correct path.
-import 'package:ekopal/services/image_service.dart'; // Ensure this is the correct path.
+import 'package:ekopal/login_page.dart';
+import 'package:ekopal/services/image_service.dart';
 import 'package:image_picker/image_picker.dart';
-import 'change_password_page.dart'; // Ensure this is the correct path.
-import 'mySharingsPage.dart'; // Ensure this is the correct path.
+import 'change_password_page.dart';
+import 'mySharingsPage.dart';
 
 // YORUM(YANIT) VE OY VERME ÖZELLİKLERİ EKLENİNCE
 // PAYLAŞIM GİBİ ÇEKİLECEK -g

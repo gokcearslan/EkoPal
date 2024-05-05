@@ -9,18 +9,8 @@ import 'package:ekopal/register_page.dart';
 import 'package:ekopal/reset_password_page.dart'; // Import the reset password page
 import 'package:ekopal/validator.dart';
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'EKOPAL',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: LoginPage(),
-    );
-  }
-}
+import 'onboarding_view.dart';
+
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();

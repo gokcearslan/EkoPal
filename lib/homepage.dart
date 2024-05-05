@@ -194,18 +194,12 @@ class _HomePageState extends State<HomePage> {
             ListTile(
               title: Text('Çıkış'),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
-
-              },
-            ),
-            //ONBOARD DENEME İÇİN
-            ListTile(
-              title: Text('onboard'),
-              onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => OnboardingPage()));
 
               },
             ),
+            //ONBOARD DENEME İÇİN
+
           ],
         ),
       ),
