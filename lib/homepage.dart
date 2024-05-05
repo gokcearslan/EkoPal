@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ekopal/login_page.dart';
+import 'package:ekopal/services/user_provider.dart';
 import 'package:ekopal/sharings_advertisement.dart';
 import 'package:ekopal/sharings_announcements.dart';
 import 'package:ekopal/sharings_events.dart';
@@ -27,15 +28,20 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String? _profileImageUrl;
+
   late String userName = "";
   late String userEmail = "";
   int _selectedIndex = 0;
   bool _isProfileExpanded = false;
+  final UserProvider _userProvider = UserProvider();
 
   @override
   void initState() {
     super.initState();
     fetchUser();
+    _fetchProfileImage();
+
   }
 
   void fetchUser() {
@@ -50,6 +56,12 @@ class _HomePageState extends State<HomePage> {
     } catch (e) {
       print(e);
     }
+  }
+  Future<void> _fetchProfileImage() async {
+    String? imageUrl = await _userProvider.getUserProfileImage();
+    setState(() {
+      _profileImageUrl = imageUrl;
+    });
   }
 
   void _toggleProfileExpansion() {
@@ -100,12 +112,12 @@ class _HomePageState extends State<HomePage> {
             Column(
               children: [
                 Container(
-                  color: buttonColor,
+                  color: Colors.purple,
                   padding: EdgeInsets.all(16.0),
                   child: ExpansionTile(
-                    title: Center( // Center widget added here
+                    title: Center(
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center, // Center the Row horizontally
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           GestureDetector(
                             onTap: () {
@@ -115,13 +127,13 @@ class _HomePageState extends State<HomePage> {
                               );
                             },
                             child: SizedBox(
-                              width: 170,
+                              width: 100,
                               height: 100,
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(50.0),
-                                child: widget.base64Image != null
+                                child: _profileImageUrl != null
                                     ? Image.network(
-                                  widget.base64Image!,
+                                  _profileImageUrl!,
                                   fit: BoxFit.cover,
                                 )
                                     : Placeholder(),
