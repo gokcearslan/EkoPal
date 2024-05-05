@@ -27,7 +27,7 @@ class FireAuth {
         'name': name,
         'email': email,
         //'password': password,
-       // 'formcount': 0,
+        // 'formcount': 0,
         'base64Image': base64Image,
         'role':role,
       });

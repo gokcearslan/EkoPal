@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:ekopal/login_page.dart'; // Ensure this is the correct path.
 import 'package:ekopal/services/image_service.dart'; // Ensure this is the correct path.
+import 'package:image_picker/image_picker.dart';
 import 'change_password_page.dart'; // Ensure this is the correct path.
 import 'mySharingsPage.dart'; // Ensure this is the correct path.
 
@@ -28,14 +29,22 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
   bool _isSendingVerification = false;
   bool _isSigningOut = false;
   User? _currentUser;
+  String? _imageUrl;
 
   @override
   void initState() {
     super.initState();
     _currentUser = FirebaseAuth.instance.currentUser;
-    fetchImage();
+    _fetchProfileImage(); // Fetch the profile image URL
     fetchUser();
     _tabController = TabController(length: 3, vsync: this);
+  }
+  Future<void> _fetchProfileImage() async {
+    String userId = _currentUser?.uid ?? '';
+    String? url = await _imageService.getImageUrlFromFirestore(userId);
+    setState(() {
+      _imageUrl = url;
+    });
   }
 
   @override
@@ -60,7 +69,7 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
       print('Böyle bir kullanıcı bulunmamaktadır!');
     }
   }
-
+/*
   Future<void> fetchImage() async {
     String? base64Image = await _imageService.getImageFromFirestore(
         _currentUser!.uid);
@@ -69,16 +78,51 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
     });
   }
 
+
+ */
+  void _showEditImageActionSheet(BuildContext context) {
+    final action = CupertinoActionSheet(
+      title: Text("Picture", style: TextStyle(fontSize: 15.0, color: Color(0xFF001489))),
+      message: Text("Select a picture", style: TextStyle(fontSize: 15.0, color: Color(0xFF001489).withOpacity(0.7))),
+      actions: [
+        CupertinoActionSheetAction(
+          child: Text("Camera", style: TextStyle(color: Color(0xFF001489))),
+          onPressed: () {
+            Navigator.pop(context);
+            _imageService.pickAndUploadImage(ImageSource.camera).then((_) {
+              _fetchProfileImage(); // Refresh the image URL after uploading
+            });
+          },
+        ),
+        CupertinoActionSheetAction(
+          child: Text("Gallery", style: TextStyle(color: Color(0xFF001489))),
+          onPressed: () {
+            Navigator.pop(context);
+            _imageService.pickAndUploadImage(ImageSource.gallery).then((_) {
+              _fetchProfileImage(); // Refresh the image URL after uploading
+            });
+          },
+        ),
+      ],
+      cancelButton: CupertinoActionSheetAction(
+        child: Text("Close", style: TextStyle(color: Colors.red)),
+        isDestructiveAction: true,
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ),
+    );
+
+    showCupertinoModalPopup(
+      context: context,
+      builder: (BuildContext context) => action,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery
-        .of(context)
-        .size
-        .width;
-    var height = MediaQuery
-        .of(context)
-        .size
-        .height;
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
 
     return Scaffold(
       appBar: AppBar(
@@ -113,11 +157,9 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
               color: Colors.black12,
               shape: BoxShape.circle,
               border: Border.all(color: somon, width: 1),
-              image: _base64Image?.isNotEmpty ?? false
+              image: _imageUrl != null
                   ? DecorationImage(
-                image: MemoryImage(Uint8List.fromList(
-                  base64Decode(_base64Image!),
-                )),
+                image: NetworkImage(_imageUrl!),
                 fit: BoxFit.cover,
               )
                   : null,
@@ -132,68 +174,13 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
               decoration: BoxDecoration(
                 color: Color(0xfff2f9fe),
                 shape: BoxShape.circle,
-                border: Border.all(
-                    color: Color(0xFF001489), width: 1),
+                border: Border.all(color: Color(0xFF001489), width: 1),
               ),
               child: IconButton(
-                onPressed: () async {
-                  final action = CupertinoActionSheet(
-                    title: Text(
-                      "Picture",
-                      style: TextStyle(
-                        fontSize: 15.0,
-                        color: Color(0xFF001489),
-                      ),
-                    ),
-                    message: Text(
-                      "Select a picture",
-                      style: TextStyle(
-                        fontSize: 15.0,
-                        color: Color(0xFF001489)
-                            .withOpacity(0.7),
-                      ),
-                    ),
-                    actions: <Widget>[
-                      CupertinoActionSheetAction(
-                        child: Text(
-                          "Camera",
-                          style: TextStyle(
-                              color: Color(0xFF001489)),
-                        ),
-                        isDefaultAction: true,
-                        onPressed: () {
-                          Navigator.pop(context);
-                          _imageService
-                              .pickAndSetImageFromCamera();
-                        },
-                      ),
-                      CupertinoActionSheetAction(
-                        child: Text(
-                          "Gallery",
-                          style: TextStyle(
-                              color: Color(0xFF001489)),
-                        ),
-                        isDefaultAction: true,
-                        onPressed: () {
-                          Navigator.pop(context);
-                          _imageService
-                              .pickAndSetImageFromGallery();
-                        },
-                      ),
-                    ],
-                    cancelButton:
-                    CupertinoActionSheetAction(
-                      child: Text("Close"),
-                      isDestructiveAction: true,
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  );
-                  showCupertinoModalPopup(
-                      context: context,
-                      builder: (context) => action);
+                onPressed: ()  {
+                  _showEditImageActionSheet(context);
                 },
+
                 icon: Icon(
                   Icons.edit,
                   color: Color(0xFF001489),
@@ -364,29 +351,5 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
     );
   }
 
-/*
-   Widget buildProfileImage() {
-    var width = MediaQuery.of(context).size.width;
-    return Container(
-      width: width * 0.3,
-      height: width * 0.3,
-      decoration: BoxDecoration(
-        color: Colors.black12,
-        shape: BoxShape.circle,
-        border: Border.all(color: somon, width: 1), // Make sure 'Colors.somon' is defined or replace it with a valid color
-        image: _base64Image?.isNotEmpty ?? false
-            ? DecorationImage(
-          image: MemoryImage(base64Decode(_base64Image!)),
-          fit: BoxFit.cover,
-        )
-            : DecorationImage(
-          image: AssetImage('assets/images/default_avatar.png'), // Make sure this path is correct
-          fit: BoxFit.cover,
-        ),
-      ),
-    );
-  }
-}
 
-   */
 }
