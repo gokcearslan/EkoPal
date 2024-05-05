@@ -562,7 +562,7 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
               foregroundColor: textColor,
               backgroundColor: backgroundColor,
               textStyle: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-              padding: const EdgeInsets.symmetric(horizontal: 118, vertical: 11),
+              padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 13),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
@@ -719,7 +719,7 @@ class _DuyuruWidgetState extends State<DuyuruWidget> {
               foregroundColor: textColor,
               backgroundColor: backgroundColor,
               textStyle: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-              padding: EdgeInsets.symmetric(horizontal: 118, vertical: 11),
+              padding: EdgeInsets.symmetric(horizontal: 100, vertical: 13),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
