@@ -151,6 +151,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                                 suffixIcon: PopupMenuButton<String>(
                                   onSelected: _appendDomain,
+                                  color:backgroundColor,
                                   itemBuilder: (BuildContext context) {
                                     return <PopupMenuEntry<String>>[
                                       const PopupMenuItem<String>(

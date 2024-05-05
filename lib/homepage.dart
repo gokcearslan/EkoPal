@@ -62,7 +62,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(45),
+        preferredSize: Size.fromHeight(75),
         child: AppBar(
           title: InkWell(
             onTap: () {
@@ -71,18 +71,18 @@ class _HomePageState extends State<HomePage> {
             child: Text(
               'EkoPal',
               style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w400,
-                fontSize: 40,
+                color: Colors.black,
+               fontWeight: FontWeight.normal,
+                fontSize: 55,
               ),
             ),
           ),
           centerTitle: true,
-          backgroundColor: Colors.purple,
+          backgroundColor: appBarColor,
           leading: Builder(
             builder: (BuildContext context) {
               return IconButton(
-                icon: const Icon(Icons.menu, color: Colors.white),
+                icon: const Icon(Icons.menu, color: textColor),
                 onPressed: () {
                   Scaffold.of(context).openDrawer();
                 },
@@ -211,10 +211,10 @@ class _HomePageState extends State<HomePage> {
           color: Colors.transparent,
           child: Icon(
             Icons.add,
-            color: koyuSomon,
+            color: textColor,
           ),
         ),
-        backgroundColor: floatingcolor,
+        backgroundColor: lightButtonColor,
       ),
 
     );
