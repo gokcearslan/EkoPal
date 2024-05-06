@@ -112,11 +112,12 @@ class _HomePageState extends State<HomePage> {
             Column(
               children: [
                 Container(
-                  color: Colors.purple,
+                  color: appBarColor,
                   padding: EdgeInsets.all(16.0),
                   child: ExpansionTile(
                     title: Center(
                       child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           GestureDetector(
@@ -127,10 +128,10 @@ class _HomePageState extends State<HomePage> {
                               );
                             },
                             child: SizedBox(
-                              width: 100,
-                              height: 100,
+                              width: 172,
+                              height: 180,
                               child: ClipRRect(
-                                borderRadius: BorderRadius.circular(50.0),
+                                borderRadius: BorderRadius.circular(40.0),
                                 child: _profileImageUrl != null
                                     ? Image.network(
                                   _profileImageUrl!,
@@ -146,7 +147,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     children: [
                       Card(
-                        elevation: 2,
+                        //elevation: 2,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
                         color: buttonColor,
                         child: Padding(
@@ -163,15 +164,15 @@ class _HomePageState extends State<HomePage> {
                                 },
                                 child: Text(
                                   userName,
-                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                                 ),
                               ),
                               SizedBox(height: 4.0),
                               Text(
                                 userEmail,
-                                style: TextStyle(fontSize: 12.0),
+                                style: TextStyle(fontSize: 15.0),
                               ),
-                              SizedBox(height: 8.0),
+
                             ],
                           ),
                         ),
