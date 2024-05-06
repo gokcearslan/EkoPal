@@ -34,6 +34,8 @@ class _HomePageState extends State<HomePage> {
   late String userEmail = "";
   int _selectedIndex = 0;
   bool _isProfileExpanded = false;
+  bool _isSigningOut = false;
+
   final UserProvider _userProvider = UserProvider();
 
   @override
@@ -204,15 +206,41 @@ class _HomePageState extends State<HomePage> {
 
               },
             ),
-            ListTile(
-              title: Text('Çıkış'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => OnboardingPage()));
-
+            ElevatedButton(
+              onPressed: () async {
+                setState(() {
+                  _isSigningOut = true;
+                });
+                await FirebaseAuth.instance.signOut();
+                setState(() {
+                  _isSigningOut = false;
+                });
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => OnboardingPage(),
+                  ),
+                );
               },
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text('Çıkış',
+                      style: TextStyle(color: Colors.white)),
+                  SizedBox(width: 8),
+                  Icon(Icons.exit_to_app, color: Colors.white),
+                ],
+              ),
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 10,
+                ),
+                backgroundColor: buttonColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
             ),
-            //ONBOARD DENEME İÇİN
-
           ],
         ),
       ),
