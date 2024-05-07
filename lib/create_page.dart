@@ -160,102 +160,102 @@ class _IlanWidgetState extends State<IlanWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 20),
-      Container(
-        width: double.infinity,
-        child: TextFormField(
-          controller: _advertisementNameController,
-          style: const TextStyle(
-            fontSize: 20,
-            color: Colors.black,
-          ),
-          decoration: InputDecoration(
-            labelText: 'İlan başlığı',
-            labelStyle: TextStyle(
-              fontSize: 20,
-              color: textColor,
-            ),
-            fillColor: backgroundColor,
-            filled: true,
-            border: OutlineInputBorder(
-              borderSide: BorderSide.none,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 10), // Increase padding to make the field larger
-          ),
-        ),
-      ),
-          SizedBox(height: 20),
-        Container(
-          width: double.infinity,
-          child: TextFormField(
-            controller: _advertisementDetailsController,
-            style: const TextStyle(
-              fontSize: 20,
-              color: Colors.black,
-            ),
-            decoration: InputDecoration(
-              labelText: 'İlan detayları',
-              labelStyle: TextStyle(
+          Container(
+            width: double.infinity,
+            child: TextFormField(
+              controller: _advertisementNameController,
+              style: const TextStyle(
                 fontSize: 20,
-                color: textColor,
+                color: Colors.black,
               ),
-             // icon: Icon(Icons.details), // Icon next to the label
-              hintText: 'Gelecek olan kişinin payına düşen kira, oda sayısı, eşyalı/eşyasız olma durumu vb. bilgileri giriniz.',
-              hintStyle: TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
+              decoration: InputDecoration(
+                labelText: 'İlan başlığı',
+                labelStyle: TextStyle(
+                  fontSize: 20,
+                  color: textColor,
+                ),
+                fillColor: backgroundColor,
+                filled: true,
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 10), // Increase padding to make the field larger
               ),
-              hintMaxLines: 3,
-              fillColor: backgroundColor,
-              filled: true,
-              border: OutlineInputBorder(
-                borderSide: BorderSide.none,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 10),
             ),
-            maxLines: null,
-            minLines: 3,
-            keyboardType: TextInputType.multiline,
           ),
-        ),
           SizedBox(height: 20),
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            color: backgroundColor,
-          ),
-          child: DropdownButtonHideUnderline(
-            child: DropdownButton<String>(
-              hint: Text('İlan türünü seçiniz'),
-              value: _selectedType,
-              onChanged: (String? newValue) {
-                if (newValue != null) {
-                  setState(() {
-                    _selectedType = newValue;
-                  });
-                }
-              },
-              dropdownColor: backgroundColor,
-              items: ad_types.map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(
-                    value,
-                    style: TextStyle(color: textColor, fontSize: 21),
-                  ),
-                );
-              }).toList(),
-              style: TextStyle(color: textColor, fontSize: 21),
-              icon: Icon(Icons.arrow_drop_down, color: textColor),
-              iconSize: 24,
-              elevation: 16,
-              isExpanded: true,
+          Container(
+            width: double.infinity,
+            child: TextFormField(
+              controller: _advertisementDetailsController,
+              style: const TextStyle(
+                fontSize: 20,
+                color: Colors.black,
+              ),
+              decoration: InputDecoration(
+                labelText: 'İlan detayları',
+                labelStyle: TextStyle(
+                  fontSize: 20,
+                  color: textColor,
+                ),
+                // icon: Icon(Icons.details), // Icon next to the label
+                hintText: 'Gelecek olan kişinin payına düşen kira, oda sayısı, eşyalı/eşyasız olma durumu vb. bilgileri giriniz.',
+                hintStyle: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey,
+                ),
+                hintMaxLines: 3,
+                fillColor: backgroundColor,
+                filled: true,
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+              ),
+              maxLines: null,
+              minLines: 3,
+              keyboardType: TextInputType.multiline,
             ),
           ),
-        ),
-        SizedBox(height: 20),
+          SizedBox(height: 20),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: backgroundColor,
+            ),
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<String>(
+                hint: Text('İlan türünü seçiniz'),
+                value: _selectedType,
+                onChanged: (String? newValue) {
+                  if (newValue != null) {
+                    setState(() {
+                      _selectedType = newValue;
+                    });
+                  }
+                },
+                dropdownColor: backgroundColor,
+                items: ad_types.map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(
+                      value,
+                      style: TextStyle(color: textColor, fontSize: 21),
+                    ),
+                  );
+                }).toList(),
+                style: TextStyle(color: textColor, fontSize: 21),
+                icon: Icon(Icons.arrow_drop_down, color: textColor),
+                iconSize: 24,
+                elevation: 16,
+                isExpanded: true,
+              ),
+            ),
+          ),
+          SizedBox(height: 20),
           //FOTO EKLEME YERİ
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -312,7 +312,7 @@ class _IlanWidgetState extends State<IlanWidget> {
             },
             style: ElevatedButton.styleFrom(
               foregroundColor: textColor,
-             backgroundColor: backgroundColor,
+              backgroundColor: backgroundColor,
               textStyle: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               padding: EdgeInsets.symmetric(horizontal: 118, vertical: 11),
               shape: RoundedRectangleBorder(
@@ -377,7 +377,7 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
         if (pickedDateTime.isAfter(now)) {
           setState(() {
             _eventDateController.text = DateFormat('dd-MM-yyyy – HH:mm').format(pickedDateTime);
-                //DateFormat('yyyy-MM-dd – HH:mm').format(pickedDateTime);
+            //DateFormat('yyyy-MM-dd – HH:mm').format(pickedDateTime);
           });
         } else {
           ScaffoldMessenger.of(context).showSnackBar(

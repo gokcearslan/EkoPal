@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ekopal/services/advertisement_model.dart';
 import 'package:ekopal/services/firebase_service.dart';
@@ -18,20 +20,32 @@ class ViewAdvertisements extends StatefulWidget {
 
 class _ViewAdvertisementsState extends State<ViewAdvertisements> {
   List<Advertisement>? advertisements;
+  StreamSubscription<List<Advertisement>>? adsSubscription;
 
   @override
   void initState() {
     super.initState();
-    fetchAdvertisements();
-
+    adsSubscription = AdvertisementService().getAdvertisementsStream().listen(
+            (updatedAdvertisements) {
+          if (mounted) {
+            setState(() {
+              advertisements = updatedAdvertisements;
+            });
+          }
+        },
+        onError: (err) {
+          // Handle any errors that occur in the stream.
+          print('Error listening to advertisement updates: $err');
+        }
+    );
+  }
+  @override
+  void dispose() {
+    adsSubscription?.cancel(); // Always cancel the subscription to avoid memory leaks
+    super.dispose();
   }
 
-  fetchAdvertisements() async {
-    advertisements = await AdvertisementService().getAdvertisements();
-    if (mounted) {
-      setState(() {});
-    }
-  }
+
 
 
   @override

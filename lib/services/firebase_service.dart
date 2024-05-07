@@ -65,22 +65,23 @@ class AdvertisementService {
         .catchError((error) => print('Failed to add advertisement: $error'));
   }
 
-  Future<List<Advertisement>> getAdvertisements() async {
-    try {
-      QuerySnapshot querySnapshot = await advertisements.get();
-      List<Advertisement> advertisementList = querySnapshot.docs.map((doc) {
+  Stream<List<Advertisement>> getAdvertisementsStream() {
+    return advertisements.snapshots().map((snapshot) {
+      return snapshot.docs.map((doc) {
+        var data = doc.data() as Map<String, dynamic>?; // Explicitly cast to a nullable map
+        if (data == null) {
+          // Handle the case where data is null if necessary
+          return null;
+        }
+        // Safely access the data fields with null checks or provide default values
         return Advertisement(
-          advertisementName: doc['advertisementName'],
-          advertisementType: doc['advertisementType'],
-          advertisementDetails: doc['advertisementDetails'],
-          userId: doc['userId'],
+          advertisementName: data['advertisementName'] as String? ?? 'Unknown', // Provide default value if null
+          advertisementType: data['advertisementType'] as String? ?? 'Unknown',
+          advertisementDetails: data['advertisementDetails'] as String? ?? 'No details provided',
+          userId: data['userId'] as String? ?? 'No user',
         );
-      }).toList();
-      return advertisementList;
-    } catch (e) {
-      print("Error fetching ads: $e");
-      return [];
-    }
+      }).where((ad) => ad != null).cast<Advertisement>().toList(); // Remove null entries and cast back to Advertisement
+    });
   }
 }
 
