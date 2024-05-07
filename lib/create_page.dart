@@ -598,6 +598,8 @@ class _DuyuruWidgetState extends State<DuyuruWidget> {
   TextEditingController _duyuruDetailsController = TextEditingController();
   TextEditingController _duyuruTypeController = TextEditingController();
 
+  final _formKey = GlobalKey<FormState>();
+
 
   void _clearTextFields() {
     _DuyuruNameController.clear();
@@ -610,6 +612,8 @@ class _DuyuruWidgetState extends State<DuyuruWidget> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(0),
+    child: Form(
+    key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -617,8 +621,13 @@ class _DuyuruWidgetState extends State<DuyuruWidget> {
           Container(
             width: double.infinity,
             child: TextFormField(
-              controller: _DuyuruNameController,
-              style: const TextStyle(
+              controller:_DuyuruNameController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Bu alan boş bırakılamaz';
+                }
+                return null;
+              },              style: const TextStyle(
                 fontSize: 20,
                 color: Colors.black,
               ),
@@ -642,8 +651,13 @@ class _DuyuruWidgetState extends State<DuyuruWidget> {
           SizedBox(
             width: double.infinity,
             child: TextFormField(
-              controller: _duyuruDetailsController,
-              style: const TextStyle(
+              controller:_duyuruDetailsController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Bu alan boş bırakılamaz';
+                }
+                return null;
+              },              style: const TextStyle(
                 fontSize: 20,
                 color: Colors.black,
               ),
@@ -670,8 +684,13 @@ class _DuyuruWidgetState extends State<DuyuruWidget> {
           SizedBox(
             width: double.infinity,
             child: TextFormField(
-              controller: _duyuruTypeController,
-              style: const TextStyle(
+              controller:_duyuruTypeController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Bu alan boş bırakılamaz';
+                }
+                return null;
+              },              style: const TextStyle(
                 fontSize: 20,
                 color: Colors.black,
               ),
@@ -708,19 +727,21 @@ class _DuyuruWidgetState extends State<DuyuruWidget> {
           const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
-              String? userId = FirebaseAuth.instance.currentUser?.uid;
-              if (userId == null) {
-                print('No user logged in');
-                return;
+              if (_formKey.currentState!.validate()) {
+                String? userId = FirebaseAuth.instance.currentUser?.uid;
+                if (userId == null) {
+                  print('No user logged in');
+                  return;
+                }
+                Duyuru duyuru = Duyuru(
+                  duyuruName: _DuyuruNameController.text,
+                  duyuruType: _duyuruTypeController.text,
+                  duyuruDetails: _duyuruDetailsController.text,
+                  userId: userId,
+                );
+                DuyuruService().addDuyuru(duyuru);
+                _clearTextFields();
               }
-              Duyuru duyuru = Duyuru(
-                duyuruName: _DuyuruNameController.text,
-                duyuruType: _duyuruTypeController.text,
-                duyuruDetails: _duyuruDetailsController.text,
-                userId: userId,
-              );
-              DuyuruService().addDuyuru(duyuru);
-              _clearTextFields();
             },
             style: ElevatedButton.styleFrom(
               foregroundColor: textColor,
@@ -734,8 +755,10 @@ class _DuyuruWidgetState extends State<DuyuruWidget> {
             ),
             child: Text('Duyuru Oluştur'),
           ),
+
         ],
       ),
+    ),
     );
   }
 
