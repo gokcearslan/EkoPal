@@ -146,20 +146,15 @@ class SoruCevapService {
         .catchError((error) => print('Failed to add Soru: $error'));
   }
 
-  Future<List<SoruCevap>> getSoruCevap() async {
-    try {
-      QuerySnapshot querySnapshot = await soruCevapCollection.get();
-      List<SoruCevap> soruCevapList = querySnapshot.docs.map((doc) {
+  Stream<List<SoruCevap>> getSoruCevapStream() {
+    return soruCevapCollection.snapshots().map((snapshot) {
+      return snapshot.docs.map((doc) {
+        var data = doc.data() as Map<String, dynamic>;
         return SoruCevap(
-          soru: doc['soru'],
-          soruDetails: doc['soruDetails'],
-          userId: doc['userId'],
+          soru: data['soru'] as String,
+          soruDetails: data['soruDetails'] as String,
+          userId: data['userId'] as String,
         );
       }).toList();
-      return soruCevapList;
-    } catch (e) {
-      print("Error fetching Soru: $e");
-      return [];
-    }
-  }
-}
+    });
+  }}

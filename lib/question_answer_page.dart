@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:ekopal/question_answ_create_page.dart';
 import 'package:ekopal/services/firebase_service.dart';
 import 'package:flutter/material.dart';
@@ -14,19 +16,32 @@ class DisplayQuestionsPage extends StatefulWidget {
 class _DisplayQuestionsPageState extends State<DisplayQuestionsPage> {
   List<SoruCevap>? soruCeap;
   SoruCevapService _soruCevapService = SoruCevapService();
+  StreamSubscription<List<SoruCevap>>? soruCeapSubscription;
 
   @override
   void initState() {
     super.initState();
-    fetchSoruCevap();
+    soruCeapSubscription = _soruCevapService.getSoruCevapStream().listen(
+            (updatedSoruCevap) {
+          if (mounted) {
+            setState(() {
+              soruCeap = updatedSoruCevap;
+            });
+          }
+        },
+        onError: (error) {
+          print("Error fetching soru cevap stream: $error");
+        }
+    );
   }
 
-  void fetchSoruCevap() async {
-    soruCeap = await _soruCevapService.getSoruCevap();
-    if (mounted) {
-      setState(() {});
-    }
+  @override
+  void dispose() {
+    soruCeapSubscription?.cancel();  // Cancel the stream subscription on dispose
+    super.dispose();
   }
+
+
 
   @override
   Widget build(BuildContext context) {
