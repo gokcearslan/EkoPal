@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -16,16 +18,27 @@ class EventsPage extends StatefulWidget {
 class _EventsPageState extends State<EventsPage> {
   List<Event>? events;
   String? userRole;
+  StreamSubscription<List<Event>>? eventsSubscription;
+
 
 
   @override
   void initState() {
     super.initState();
-    fetchEvents();
     fetchUserRole();
-
+    eventsSubscription = EventService().getEventsStream().listen(
+            (updatedEvents) {
+          if (mounted) {
+            setState(() {
+              events = updatedEvents;
+            });
+          }
+        },
+        onError: (error) {
+          print("Error fetching events stream: $error");
+        }
+    );
   }
-
   Future<void> fetchUserRole() async {
     User? user = FirebaseAuth.instance.currentUser;
 
@@ -40,14 +53,12 @@ class _EventsPageState extends State<EventsPage> {
       }
     }
   }
-
-
-  fetchEvents() async {
-    events = await EventService().getEvents();
-    if (mounted) {
-      setState(() {});
-    }
+  @override
+  void dispose() {
+    eventsSubscription?.cancel(); // Cancel the subscription
+    super.dispose();
   }
+
 
   @override
   Widget build(BuildContext context) {

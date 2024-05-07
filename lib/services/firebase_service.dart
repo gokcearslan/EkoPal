@@ -25,26 +25,22 @@ class EventService {
         .then((value) => print('Event added to Firestore'))
         .catchError((error) => print('Failed to add event: $error'));
   }
-  Future<List<Event>> getEvents() async {
-    try {
-      QuerySnapshot querySnapshot = await events.get();
-      List<Event> eventList = querySnapshot.docs.map((doc) {
+  Stream<List<Event>> getEventsStream() {
+    return events.snapshots().map((snapshot) {
+      return snapshot.docs.map((doc) {
+        var data = doc.data() as Map<String, dynamic>?; // Cast with null safety
+        if (data == null) return null; // Check for null data and handle it appropriately
+
         return Event(
-          eventName: doc['eventName'],
-          eventDate: doc['eventDate'],
-          organizer: doc['organizer'],
-          location: doc['location'],
-          additionalInfo: doc['additionalInfo'],
-          userId: doc['userId'],
-
-
+          eventName: data['eventName'] as String? ?? 'No Name', // Provide default values
+          eventDate: data['eventDate'] as String? ?? 'No Date',
+          organizer: data['organizer'] as String? ?? 'No Organizer',
+          location: data['location'] as String? ?? 'No Location',
+          additionalInfo: data['additionalInfo'] as String? ?? 'No Additional Info',
+          userId: data['userId'] as String? ?? 'No User ID',
         );
-      }).toList();
-      return eventList;
-    } catch (e) {
-      print("Error fetching events: $e");
-      return [];
-    }
+      }).where((event) => event != null).cast<Event>().toList(); // Remove nulls and ensure type safety
+    });
   }
 }
 
