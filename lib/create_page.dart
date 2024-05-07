@@ -267,9 +267,7 @@ class _IlanWidgetState extends State<IlanWidget> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Add validation check here
                 if (_formKey.currentState!.validate()) {
-                  // Only save data if the form is valid
                   String? userId = FirebaseAuth.instance.currentUser?.uid;
                   if (userId == null) {
                     print('No user logged in');
@@ -371,6 +369,8 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(0),
+    child: Form(
+    key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -378,7 +378,13 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
           SizedBox(
             width: double.infinity,
             child: TextFormField(
-              controller: _eventNameController,
+              controller:_eventNameController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Bu alan boş bırakılamaz';
+                }
+                return null;
+              },
               style: const TextStyle(
                 fontSize: 20,
                 color: Colors.black,
@@ -404,7 +410,13 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
           SizedBox(
             width: double.infinity,
             child: TextFormField(
-              controller: _eventDateController,
+              controller:_eventDateController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Bu alan boş bırakılamaz';
+                }
+                return null;
+              },
               style: const TextStyle(
                 fontSize: 20,
                 color: Colors.black,
@@ -433,7 +445,12 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
             width: double.infinity,
             child: TextFormField(
               controller: _organizerController,
-              style: const TextStyle(
+                validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Bu alan boş bırakılamaz';
+              }
+              return null;
+            },              style: const TextStyle(
                 fontSize: 20,
                 color: Colors.black,
               ),
@@ -458,7 +475,12 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
             width: double.infinity,
             child: TextFormField(
               controller: _locationController,
-              style: const TextStyle(
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Bu alan boş bırakılamaz';
+                }
+                return null;
+              },              style: const TextStyle(
                 fontSize: 20,
                 color: Colors.black,
               ),
@@ -482,7 +504,13 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
           SizedBox(
             width: double.infinity,
             child: TextFormField(
-              controller: _additionalInfoController,
+              controller:_additionalInfoController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Bu alan boş bırakılamaz';
+                }
+                return null;
+              },
               style: const TextStyle(
                 fontSize: 20,
                 color: Colors.black,
@@ -521,21 +549,23 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
 
           ElevatedButton(
             onPressed: () {
-              String? userId = FirebaseAuth.instance.currentUser?.uid;
-              if (userId == null) {
-                print('No user logged in');
-                return;
-              }
-              Event event = Event(
-                eventName: _eventNameController.text,
-                eventDate: _eventDateController.text,
-                organizer: _organizerController.text,
-                location: _locationController.text,
-                additionalInfo: _additionalInfoController.text,
-                userId: userId,
-              );
-              EventService().addEvent(event);
-              _clearTextFields();
+             if (_formKey.currentState!.validate()) {
+               String? userId = FirebaseAuth.instance.currentUser?.uid;
+               if (userId == null) {
+                 print('No user logged in');
+                 return;
+               }
+               Event event = Event(
+                 eventName: _eventNameController.text,
+                 eventDate: _eventDateController.text,
+                 organizer: _organizerController.text,
+                 location: _locationController.text,
+                 additionalInfo: _additionalInfoController.text,
+                 userId: userId,
+               );
+               EventService().addEvent(event);
+               _clearTextFields();
+             }
             },
             style: ElevatedButton.styleFrom(
               foregroundColor: textColor,
@@ -551,6 +581,7 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
           ),
         ],
       ),
+    ),
     );
   }
 
