@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:ekopal/postCard.dart';
 import 'package:ekopal/post_create_page.dart';
 import 'package:flutter/material.dart';
@@ -14,18 +16,29 @@ class PostsPage extends StatefulWidget {
 class _PostsPageState extends State<PostsPage> {
   List<Post>? posts;
   PostService _postService = PostService();
+  StreamSubscription<List<Post>>? postsSubscription;
 
   @override
   void initState() {
     super.initState();
-    fetchPosts();
+    postsSubscription = _postService.getPostsStream().listen(
+            (updatedPosts) {
+          if (mounted) {
+            setState(() {
+              posts = updatedPosts;
+            });
+          }
+        },
+        onError: (error) {
+          print("Error fetching posts stream: $error");
+        }
+    );
   }
 
-  void fetchPosts() async {
-    posts = await _postService.getPosts();
-    if (mounted) {
-      setState(() {});
-    }
+  @override
+  void dispose() {
+    postsSubscription?.cancel();
+    super.dispose();
   }
 
   @override

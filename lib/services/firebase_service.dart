@@ -120,18 +120,12 @@ class PostService {
         .catchError((error) => print('Gönderi paylaşılırken bir sorun oluştu: $error'));
   }
 
-  Future<List<Post>> getPosts() async {
-    try {
-      QuerySnapshot querySnapshot = await posts.get();
-      List<Post> postList = querySnapshot.docs.map((doc) {
+  Stream<List<Post>> getPostsStream() {
+    return posts.snapshots().map((snapshot) {
+      return snapshot.docs.map((doc) {
         return Post.fromFirestore(doc);
       }).toList();
-      print("Fetched posts: $postList"); // Debug line
-      return postList;
-    } catch (e) {
-      print("Error fetching posts: $e");
-      return [];
-    }
+    });
   }
 
 }
