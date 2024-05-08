@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ekopal/login_page.dart';
+import 'package:ekopal/postCard.dart';
+import 'package:ekopal/services/post_model.dart';
 import 'package:ekopal/services/user_provider.dart';
 import 'package:ekopal/sharings_advertisement.dart';
 import 'package:ekopal/sharings_announcements.dart';
@@ -296,7 +298,6 @@ class _HomePageContentState extends State<HomePageContent> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-
           Padding(
             padding: const EdgeInsets.only(left: 16.0, top: 16.0, right: 16.0),
             child: Align(
@@ -324,9 +325,69 @@ class _HomePageContentState extends State<HomePageContent> {
           ),
           if (announcementData != null)
             AnnouncementCard(data: announcementData!),
-          // You might want to add some more content here or handle the case when data is not available
+          Padding(
+            padding: const EdgeInsets.only(left: 16.0, top: 16.0, right: 16.0),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Popüler Gönderiler',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+              ),
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            height: 2.0,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.blue, Colors.orange, Colors.brown],
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+              ),
+            ),
+          ),
+          StreamBuilder<List<Post>>(
+            stream: fetchTopUpvotedPostsStream(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              }
+
+              if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                return Text("No posts found");
+              }
+
+              return ListView.builder(
+                shrinkWrap: true, // Important to ensure no conflicts within Column
+                physics: NeverScrollableScrollPhysics(), // to disable scrolling within the list
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  return PostCard(
+                      key: ValueKey(snapshot.data![index].id),
+                      post: snapshot.data![index]
+                  );
+                },
+              );
+            },
+          ),
         ],
       ),
     );
   }
+
+  Stream<List<Post>> fetchTopUpvotedPostsStream() {
+    return FirebaseFirestore.instance
+        .collection('posts')
+        .orderBy('upvotes', descending: true)
+        .limit(3)
+        .snapshots()
+        .map((snapshot) {
+      return snapshot.docs.map((doc) => Post.fromFirestore(doc)).toList();
+    });
+  }
+
 }
