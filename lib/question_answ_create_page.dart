@@ -15,6 +15,9 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
   TextEditingController _soruController = TextEditingController();
   TextEditingController _soruDetailsController = TextEditingController();
 
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+
   void _submitQuestion() {
     Navigator.of(context).pop();  // To close the screen after submitting
   }
@@ -28,9 +31,7 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         centerTitle: true,
-
         backgroundColor:appBarColor,
-
         title: const Text('Sorun varsa, Gönder!',
           style: TextStyle(
             fontSize: 26,
@@ -40,11 +41,19 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
       body:SafeArea(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
+      child: Form(
+      key: _formKey,
+       child: SingleChildScrollView(
         child: Column(
           children: [
-            TextField(
-              controller: _soruController,
-              decoration: InputDecoration(
+            TextFormField(
+              controller:_soruController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Bu alan boş bırakılamaz';
+                }
+                return null;
+              },              decoration: InputDecoration(
                 labelText: 'Soru Başlığı',
                 hintText: 'Soruyu özetleyen bir başlık seçin.',
                 border: OutlineInputBorder(
@@ -54,9 +63,14 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
               textInputAction: TextInputAction.next,
             ),
             SizedBox(height: 20),
-            TextField(
-              controller: _soruDetailsController,
-              decoration: InputDecoration(
+            TextFormField(
+              controller:_soruDetailsController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Bu alan boş bırakılamaz';
+                }
+                return null;
+              },              decoration: InputDecoration(
                 labelText: 'Soru İçeriği',
                 hintText: 'Sorunuzdan kısaca bahsedin.',
                 border: OutlineInputBorder(
@@ -85,24 +99,24 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
               width: double.infinity, // makes the button stretch to full width
               child: ElevatedButton(
                 onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    String? userId = FirebaseAuth.instance.currentUser?.uid;
 
-                  String? userId = FirebaseAuth.instance.currentUser?.uid;
+                    if (userId == null) {
+                      print('No user logged in');
+                      return;
+                    }
 
-                  if (userId == null) {
-                    print('No user logged in');
-                    return;
+                    SoruCevap soruCevap = SoruCevap(
+                      soru: _soruController.text,
+                      soruDetails: _soruDetailsController.text,
+                      userId: userId,
+                    );
+                    SoruCevapService().addSoruCevap(soruCevap);
+                    _soruController.clear();
+                    _submitQuestion();
                   }
-
-                  SoruCevap soruCevap = SoruCevap(
-                    soru: _soruController.text,
-                    soruDetails: _soruDetailsController.text,
-                    userId: userId,
-                  );
-                  SoruCevapService().addSoruCevap(soruCevap);
-                  _soruController.clear();
-                  _submitQuestion();
                 },
-
                 child: Text('Sorum var!',style: TextStyle(
                   color: Colors.black,fontSize:22),
                 ),
@@ -115,6 +129,8 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
             ),
           ],
         ),
+      ),
+      ),
       ),
       ),
     );
