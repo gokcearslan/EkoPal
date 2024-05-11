@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ekopal/colors.dart';
+import 'package:ekopal/usersvotes_display.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -341,8 +342,9 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
           controller: _tabController,
           children: [
             MySharingsPage(showAppBar: false),
-            Text('Content for Comments'),
             Text('Content for Votes'),
+            UserVotesPage(),
+
           ],
         ),
       ),
