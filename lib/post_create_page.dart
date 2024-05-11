@@ -13,8 +13,10 @@ class PostCreationPage extends StatefulWidget {
 
 class _PostCreationPageState extends State<PostCreationPage> {
   final TextEditingController _postContentController = TextEditingController();
-  final TextEditingController _postTitleController = TextEditingController(); // New controller for post title
+  final TextEditingController _postTitleController = TextEditingController();
   final PostService _postService = PostService();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
 
   //random id yaratma
   void _createPost(String userId) async {
@@ -27,7 +29,7 @@ class _PostCreationPageState extends State<PostCreationPage> {
       final post = Post(id: id, PostContent: postContent, postTitle: postTitle,userId: userId);
 
       await _postService.addPost(post).then((value) {
-        print("Postunuz başarıyla paylaşıldı");
+      print("Postunuz başarıyla paylaşıldı");
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Postunuz başarıyla paylaşıldı')));
       }).catchError((error) {
         print("Paylaşma sırasında bir hata oluştu: $error");
@@ -55,9 +57,10 @@ class _PostCreationPageState extends State<PostCreationPage> {
     OutlineInputBorder borderStyle = OutlineInputBorder(
       borderRadius: BorderRadius.circular(10),
       borderSide: BorderSide(
-        color: colorScheme.onSurface.withOpacity(0.5), // Adjust the opacity as you see fit
+        color: colorScheme.onSurface.withOpacity(0.5),
       ),
     );
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -71,94 +74,107 @@ class _PostCreationPageState extends State<PostCreationPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            TextField(
-              controller: _postTitleController,
-              decoration: InputDecoration(
-                hintText: 'Başlık',
-                hintStyle: TextStyle(color: colorScheme.onSurface.withOpacity(0.5)),
-                filled: true,
-                fillColor: colorScheme.surface,
-                border: borderStyle,
-                enabledBorder: borderStyle,
-                focusedBorder: borderStyle.copyWith(
-                  borderSide: const BorderSide(
-                    color: backgroundColor,
-                    width: 3.0,
-                  ),
-                ),
-                prefixIcon: Icon(Icons.title, color: colorScheme.onSurface),
-              ),
-            ),
-            SizedBox(height: 20),
-            TextField(
-              controller: _postContentController,
-              decoration: InputDecoration(
-                hintText: 'İçeriğin ne hakkında?',
-                hintStyle: TextStyle(color: colorScheme.onSurface.withOpacity(0.5)),
-                filled: true,
-                fillColor: colorScheme.surface,
-                border: borderStyle,
-                enabledBorder: borderStyle,
-                focusedBorder: borderStyle.copyWith(
-                  borderSide: const BorderSide(
-                    color: backgroundColor,
-                    width: 3.0,
-                  ),
-                ),
-                prefixIcon: Icon(Icons.short_text, color: colorScheme.onSurface),
-              ),
-              minLines: 5,
-              maxLines: null,
-              keyboardType: TextInputType.multiline,
-            ),
-            SizedBox(height: 20),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        child: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.image, color: colorScheme.onSurface),
-                  onPressed: () {}, // TODO: Implement your image upload logic
+                TextFormField(
+                  controller: _postTitleController,
+                  decoration: InputDecoration(
+                    hintText: 'Başlık',
+                    hintStyle: TextStyle(color: colorScheme.onSurface.withOpacity(0.5)),
+                    filled: true,
+                    fillColor: colorScheme.surface,
+                    border: borderStyle,
+                    enabledBorder: borderStyle,
+                    focusedBorder: borderStyle.copyWith(
+                      borderSide: BorderSide(
+                        color: backgroundColor,
+                        width: 3.0,
+                      ),
+                    ),
+                    prefixIcon: Icon(Icons.title, color: colorScheme.onSurface),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Başlık boş bırakılamaz';
+                    }
+                    return null;
+                  },
                 ),
-                // Add more icons if needed
+                SizedBox(height: 20),
+                TextFormField(
+                  controller: _postContentController,
+                  decoration: InputDecoration(
+                    hintText: 'İçeriğin ne hakkında?',
+                    hintStyle: TextStyle(color: colorScheme.onSurface.withOpacity(0.5)),
+                    filled: true,
+                    fillColor: colorScheme.surface,
+                    border: borderStyle,
+                    enabledBorder: borderStyle,
+                    focusedBorder: borderStyle.copyWith(
+                      borderSide: BorderSide(
+                        color: backgroundColor,
+                        width: 3.0,
+                      ),
+                    ),
+                    prefixIcon: Icon(Icons.short_text, color: colorScheme.onSurface),
+                  ),
+                  minLines: 5,
+                  maxLines: null,
+                  keyboardType: TextInputType.multiline,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'İçerik boş bırakılamaz';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 20),
+                //FOTO EKLEME YERİ
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    IconButton(
+                      icon: Icon(Icons.image, color: colorScheme.onSurface),
+                      onPressed: () {}, // TODO: Implement your image upload logic
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Center(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        String? userId = FirebaseAuth.instance.currentUser?.uid;
+                        if (userId == null) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('No user logged in')));
+                          return;
+                        }
+                        _createPost(userId);
+                      }
+                    },
+                    child: Text('Oluştur'),
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: textColor,
+                      backgroundColor: backgroundColor,
+                      textStyle: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      padding: EdgeInsets.symmetric(horizontal: 140, vertical: 12),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      elevation: 10,
+                    ),
+                  ),
+                ),
               ],
             ),
-            SizedBox(height: 20),
-            Center(
-              child: ElevatedButton(
-
-                onPressed: () async {
-                  String? userId = FirebaseAuth.instance.currentUser?.uid;
-
-                  if (userId == null) {
-                    print('No user logged in');
-                    return;
-                  }
-                  _createPost(userId);
-                },
-                child: Text('     Oluştur     '),
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: textColor,
-                  backgroundColor: backgroundColor,
-                  textStyle: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  padding: EdgeInsets.symmetric(horizontal: 118, vertical: 12),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  elevation: 10,
-                ),
-              ),
-            ),
-
-          ],
+          ),
         ),
       ),
     );
   }
-
-
 
 }
