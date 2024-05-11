@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ekopal/EkoBotPage.dart';
 import 'package:ekopal/login_page.dart';
 import 'package:ekopal/postCard.dart';
 import 'package:ekopal/services/post_model.dart';
@@ -108,7 +109,33 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       backgroundColor: Colors.white,
-      body: _selectedIndex == 0 ? HomePageContent(base64Image: widget.base64Image, userName: userName) : ProfilePage(),
+      body: Stack(
+        children: [
+          _selectedIndex == 0 ? HomePageContent(base64Image: widget.base64Image, userName: userName) : ProfilePage(),
+          Positioned(
+            top: 3,
+            right: 20,
+            child: FloatingActionButton(
+              onPressed: () {
+                // Navigation logic to EkoBot page
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => EkoBotPage()));
+              },
+              child: Container(
+               width: 80,  // Standard FAB size
+               height: 80,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    image: NetworkImage('https://i.pinimg.com/736x/48/46/2e/48462eb8ccb2d4463d2e31499abe10b7.jpg'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              backgroundColor: Colors.grey, // Make the button blend with the icon
+            ),
+          ),
+        ],
+      ),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
