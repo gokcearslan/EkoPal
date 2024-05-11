@@ -333,7 +333,7 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
         unselectedLabelStyle: TextStyle(fontSize: 14),
         tabs: [
           Tab(text: 'Paylaşımlarım'),
-          Tab(text: 'Yorumlarım'),
+          Tab(text: 'Yanıtlarım'),
           Tab(text: 'Oylarım'),
         ],
       ),
@@ -342,7 +342,7 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
           controller: _tabController,
           children: [
             MySharingsPage(showAppBar: false),
-            Text('Content for Votes'),
+            Text('Content for comments'),
             UserVotesPage(),
 
           ],
