@@ -39,99 +39,99 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
         ),
       ),
       body:SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-      child: Form(
-      key: _formKey,
-       child: SingleChildScrollView(
-        child: Column(
-          children: [
-            TextFormField(
-              controller:_soruController,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Bu alan boş bırakılamaz';
-                }
-                return null;
-              },              decoration: InputDecoration(
-                labelText: 'Soru Başlığı',
-                hintText: 'Soruyu özetleyen bir başlık seçin.',
-                border: OutlineInputBorder(
-                    borderSide: BorderSide(color:backgroundColor)),
-              ),
-              maxLength: 45, //maz karakter sınırı
-              textInputAction: TextInputAction.next,
-            ),
-            SizedBox(height: 20),
-            TextFormField(
-              controller:_soruDetailsController,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Bu alan boş bırakılamaz';
-                }
-                return null;
-              },              decoration: InputDecoration(
-                labelText: 'Soru İçeriği',
-                hintText: 'Sorunuzdan kısaca bahsedin.',
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(color: backgroundColor),
-                ),
-                alignLabelWithHint: true,
-              ),
-              maxLines: 6,
-              textInputAction: TextInputAction.newline,
-            ),
-            SizedBox(height: 20),
-            //FOTO EKLEME YERİ
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.add_photo_alternate, size: 50),
-                  onPressed: () {
-                    // Functionality to be implemented later
-                    print('Icon to add image pressed');
-                  },
-                ),
-              ],
-            ),
-            SizedBox(
-              width: double.infinity, // makes the button stretch to full width
-              child: ElevatedButton(
-                onPressed: () async {
-                  if (_formKey.currentState!.validate()) {
-                    String? userId = FirebaseAuth.instance.currentUser?.uid;
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  TextFormField(
+                    controller:_soruController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Bu alan boş bırakılamaz';
+                      }
+                      return null;
+                    },              decoration: InputDecoration(
+                    labelText: 'Soru Başlığı',
+                    hintText: 'Soruyu özetleyen bir başlık seçin.',
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(color:backgroundColor)),
+                  ),
+                    maxLength: 45, //maz karakter sınırı
+                    textInputAction: TextInputAction.next,
+                  ),
+                  SizedBox(height: 20),
+                  TextFormField(
+                    controller:_soruDetailsController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Bu alan boş bırakılamaz';
+                      }
+                      return null;
+                    },              decoration: InputDecoration(
+                    labelText: 'Soru İçeriği',
+                    hintText: 'Sorunuzdan kısaca bahsedin.',
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: backgroundColor),
+                    ),
+                    alignLabelWithHint: true,
+                  ),
+                    maxLines: 6,
+                    textInputAction: TextInputAction.newline,
+                  ),
+                  SizedBox(height: 20),
+                  //FOTO EKLEME YERİ
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      IconButton(
+                        icon: Icon(Icons.add_photo_alternate, size: 50),
+                        onPressed: () {
+                          // Functionality to be implemented later
+                          print('Icon to add image pressed');
+                        },
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    width: double.infinity, // makes the button stretch to full width
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          String? userId = FirebaseAuth.instance.currentUser?.uid;
 
-                    if (userId == null) {
-                      print('No user logged in');
-                      return;
-                    }
+                          if (userId == null) {
+                            print('No user logged in');
+                            return;
+                          }
 
-                    SoruCevap soruCevap = SoruCevap(
-                      soru: _soruController.text,
-                      soruDetails: _soruDetailsController.text,
-                      userId: userId,
-                    );
-                    SoruCevapService().addSoruCevap(soruCevap);
-                    _soruController.clear();
-                    _submitQuestion();
-                  }
-                },
-                child: Text('Sorum var!',style: TextStyle(
-                  color: Colors.black,fontSize:22),
-                ),
-                style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(vertical: 20),
-                  backgroundColor: buttonColor1, // button background color
+                          SoruCevap soruCevap = SoruCevap(
+                            soru: _soruController.text,
+                            soruDetails: _soruDetailsController.text,
+                            userId: userId,
+                          );
+                          SoruCevapService().addSoruCevap(soruCevap);
+                          _soruController.clear();
+                          _submitQuestion();
+                        }
+                      },
+                      child: Text('Sorum var!',style: TextStyle(
+                          color: Colors.black,fontSize:22),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.symmetric(vertical: 20),
+                        backgroundColor: buttonColor1,
 
-                ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
+          ),
         ),
-      ),
-      ),
-      ),
       ),
     );
   }
