@@ -6,17 +6,17 @@ import 'answer_toquestion_page.dart';
 import 'colors.dart';
 import 'display_answers_page.dart';
 
-class SoruCevapCard extends StatefulWidget {
+class displayAllAnswersCard extends StatefulWidget {
   final SoruCevap soruCevap;
 
-  SoruCevapCard({required this.soruCevap});
+  displayAllAnswersCard({required this.soruCevap});
 
   @override
-  _SoruCevapCardState createState() => _SoruCevapCardState();
+  _displayAllAnswersCardState createState() => _displayAllAnswersCardState();
 }
 
 
-class _SoruCevapCardState extends State<SoruCevapCard> {
+class _displayAllAnswersCardState extends State<displayAllAnswersCard> {
   String? imageUrl;
 
   @override
@@ -85,6 +85,8 @@ class _SoruCevapCardState extends State<SoruCevapCard> {
             child: Row(
               children: [
                 Expanded(
+
+
                   child: TextButton.icon(
                     onPressed: () {
                       Navigator.push(
@@ -92,35 +94,19 @@ class _SoruCevapCardState extends State<SoruCevapCard> {
                         MaterialPageRoute(builder: (context) => CreateAnswerPage(question: widget.soruCevap)),
                       );
                     },
-                    icon: Icon(Icons.comment, color: textColor),
-                    label: Text('Yanıt Ekle', style: TextStyle(color: textColor)),
+                    icon: Icon(Icons.add_comment, color: textColor),
+                    label: Text('Yanıtla', style: TextStyle(color: textColor)),
                     style: TextButton.styleFrom(
                       backgroundColor: Colors.transparent,
                       padding: EdgeInsets.symmetric(vertical: 12),
                     ),
                   ),
                 ),
-                SizedBox(width: 10), // Add space between buttons
-                Expanded(
-                  child: TextButton.icon(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => QuestionDetailsPage(question: widget.soruCevap)),
-                      );
-                    },
-                    icon: Icon(Icons.visibility, color: textColor),
-                    label: Text('Yanıtları Gör', style: TextStyle(color: textColor)),
-                    style: TextButton.styleFrom(
-                      backgroundColor: Colors.transparent,
-                      padding: EdgeInsets.symmetric(vertical: 12),
-                    ),
-                  ),
-                ),
+                SizedBox(width: 10),
               ],
             ),
           ),
-          SizedBox(height: 4), // Add some space after the buttons
+          SizedBox(height: 4),
 
         ],
       ),

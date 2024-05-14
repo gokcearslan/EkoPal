@@ -7,8 +7,6 @@ class SoruCevap {
   final String userId;
   final String createdBy;
 
-
-
   SoruCevap({required this.soru,
     required this.soruDetails,
     required this.userId,
@@ -25,5 +23,14 @@ class SoruCevap {
       createdBy: data['createdBy'],
 
     );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'soru': soru,
+      'soruDetails': soruDetails,
+      'userId': userId,
+      'createdBy': createdBy,
+    };
   }
 }

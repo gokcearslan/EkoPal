@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'UserManager.dart';
 import 'advertisement_model.dart';
+import 'answer_model.dart';
 import 'duyuru_model.dart';
 
 class EventService {
@@ -173,6 +174,34 @@ class SoruCevapService {
         .catchError((error) => print('Failed to add Soru: $error'));
   }
 
+  Future<void> addQuestion(SoruCevap question) {
+    return soruCevapCollection.add(question.toMap());
+  }
+
+  Stream<List<SoruCevap>> getQuestions() {
+    return soruCevapCollection.snapshots().map((snapshot) {
+      return snapshot.docs.map((doc) => SoruCevap.fromFirestore(doc)).toList();
+    });
+  }
+
+  Future<void> addAnswer(String questionId, Answer answer) {
+    return soruCevapCollection
+        .doc(questionId)
+        .collection('answers')
+        .add(answer.toMap());
+  }
+
+  Stream<List<Answer>> getAnswers(String questionId) {
+    return soruCevapCollection
+        .doc(questionId)
+        .collection('answers')
+        .orderBy('timestamp', descending: true)
+        .snapshots()
+        .map((snapshot) {
+      return snapshot.docs.map((doc) => Answer.fromFirestore(doc)).toList();
+    });
+  }
+
   Stream<List<SoruCevap>> getSoruCevapStream() {
     return soruCevapCollection.snapshots().map((snapshot) {
       return snapshot.docs.map((doc) {
@@ -185,4 +214,21 @@ class SoruCevapService {
         );
       }).toList();
     });
-  }}
+  }
+
+  Future<String?> findQuestionId(String title, String details, String createdBy) async {
+    QuerySnapshot query = await soruCevapCollection
+        .where('soru', isEqualTo: title)
+        .where('soruDetails', isEqualTo: details)
+        .where('createdBy', isEqualTo: createdBy)
+        .limit(1)
+        .get();
+
+    if (query.docs.isNotEmpty) {
+      return query.docs.first.id;
+    } else {
+      return null;
+    }
+  }
+
+}
