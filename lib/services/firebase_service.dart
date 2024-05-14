@@ -114,10 +114,8 @@ class PostService {
 
   Future<void> addPost(Post post) async {
 
-    // Fetch the user ID from UserManager
     String? userId = UserManager().userId;
 
-    // Fetch the user's name using the new method in PostService
     String? userName = await getUserName(userId!);
 
     return posts
@@ -151,12 +149,25 @@ class SoruCevapService {
   final CollectionReference soruCevapCollection =
   FirebaseFirestore.instance.collection('soru_cevap');
 
-  Future<void> addSoruCevap(SoruCevap soruCevap) {
+  Future<String?> getUserName(String userId) async {
+    DocumentSnapshot userProfile = await FirebaseFirestore.instance.collection('users').doc(userId).get();
+    return userProfile['name'];
+  }
+
+
+  Future<void> addSoruCevap(SoruCevap soruCevap) async {
+
+    String? userId = UserManager().userId;
+
+    String? userName = await getUserName(userId!);
+
+
     return soruCevapCollection
         .add({
       'soru': soruCevap.soru,
       'soruDetails': soruCevap.soruDetails,
       'userId': soruCevap.userId,
+      'createdBy': userName,
     })
         .then((value) => print('Soru ve açıklama added to Firestore'))
         .catchError((error) => print('Failed to add Soru: $error'));
@@ -170,6 +181,7 @@ class SoruCevapService {
           soru: data['soru'] as String,
           soruDetails: data['soruDetails'] as String,
           userId: data['userId'] as String,
+            createdBy: data['createdBy'] as String,
         );
       }).toList();
     });

@@ -34,7 +34,8 @@ class _SoruCevapCardState extends State<SoruCevapCard> {
             leading: CircleAvatar(
               backgroundImage: NetworkImage('https://via.placeholder.com/150'),
             ),
-            title: Text('Default User', style: TextStyle(fontWeight: FontWeight.bold)),
+            title: Text( widget.soruCevap.createdBy,
+                style: TextStyle(fontWeight: FontWeight.bold)),
             subtitle: Text(formattedDate),  // Display the formatted date as subtitle
           ),
           ClipRRect(

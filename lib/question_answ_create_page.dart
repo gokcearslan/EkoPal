@@ -22,6 +22,10 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
     Navigator.of(context).pop();  // To close the screen after submitting
   }
 
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -111,6 +115,7 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
                             soru: _soruController.text,
                             soruDetails: _soruDetailsController.text,
                             userId: userId,
+                            createdBy: "default name"
                           );
                           SoruCevapService().addSoruCevap(soruCevap);
                           _soruController.clear();
