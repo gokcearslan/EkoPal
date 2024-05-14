@@ -1,4 +1,5 @@
 import 'package:ekopal/HomePage.dart';
+import 'package:ekopal/services/UserManager.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'advertisements.dart';
@@ -8,6 +9,7 @@ import 'create_page.dart';
 import 'events_page.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await UserManager().loadUserId(); // Load user ID from shared_preferences
   await Firebase.initializeApp();
   runApp(MyApp());
 }

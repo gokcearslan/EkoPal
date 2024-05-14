@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ekopal/login_page.dart';
 import 'package:ekopal/main.dart';
+import 'package:ekopal/services/UserManager.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -46,13 +47,17 @@ class _RegisterPageState extends State<RegisterPage> {
       setState(() {
         _isProcessing = false;
       });
-      // Navigate to the home page or any other page after successful registration
-      Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(
-          builder: (context) => MainApp(),
-        ),
-        ModalRoute.withName('/'),
-      );
+
+      if (user != null) {
+        await UserManager().login(user.uid);
+        // Navigate to the home page or any other page after successful registration
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (context) => MainApp(),
+          ),
+          ModalRoute.withName('/'),
+        );
+      }
 
     }
   }

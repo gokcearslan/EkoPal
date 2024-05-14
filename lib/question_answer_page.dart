@@ -47,15 +47,12 @@ class _DisplayQuestionsPageState extends State<DisplayQuestionsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.close),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
+
         centerTitle: true,
 
         backgroundColor: appBarColor,
 
-        title: const Text('Sor ya da Cevapla',
+        title: const Text('Sor ve Cevapla',
           style: TextStyle(
             fontSize: 26,
           ),

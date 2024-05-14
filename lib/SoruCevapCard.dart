@@ -1,3 +1,4 @@
+import 'package:ekopal/services/UserManager.dart';
 import 'package:ekopal/services/question_ans_model.dart';
 import 'package:flutter/material.dart';
 
@@ -14,12 +15,28 @@ class SoruCevapCard extends StatefulWidget {
 
 
 class _SoruCevapCardState extends State<SoruCevapCard> {
+  String? imageUrl;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProfilePicture();
+  }
+
+  Future<void> _loadProfilePicture() async {
+    String? url = await UserManager().getProfilePictureUrl(widget.soruCevap.userId);
+    setState(() {
+      imageUrl = url;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     // Format the DateTime object to a readable string
     //String formattedDate = DateFormat('MMMM d, yyyy – h:mm a').format(widget.soruCevap.postedTime);
     String formattedDate="2 days ago";
+    const String defaultImageUrl = 'https://cdn-icons-png.flaticon.com/256/12989/12989000.png';
+
     return Card(
       margin: const EdgeInsets.all(16.0),
       shape: RoundedRectangleBorder(
@@ -32,7 +49,9 @@ class _SoruCevapCardState extends State<SoruCevapCard> {
         children: [
           ListTile(
             leading: CircleAvatar(
-              backgroundImage: NetworkImage('https://via.placeholder.com/150'),
+              backgroundImage: imageUrl != null
+                  ? NetworkImage(imageUrl!)
+                  : NetworkImage(defaultImageUrl),
             ),
             title: Text( widget.soruCevap.createdBy,
                 style: TextStyle(fontWeight: FontWeight.bold)),

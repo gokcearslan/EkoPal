@@ -17,6 +17,9 @@ class _PostCreationPageState extends State<PostCreationPage> {
   final PostService _postService = PostService();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  void _submitPostandNavigateToDisplayPosts() {
+    Navigator.of(context).pop();  // To close the screen after submitting
+  }
 
   //random id yaratma
   void _createPost(String userId) async {
@@ -37,8 +40,10 @@ class _PostCreationPageState extends State<PostCreationPage> {
       final post = Post(id: id, PostContent: postContent, postTitle: postTitle,userId: userId, createdBy: userName,);
 
       await _postService.addPost(post).then((value) {
+
       print("Postunuz başarıyla paylaşıldı");
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Postunuz başarıyla paylaşıldı')));
+
       }).catchError((error) {
         print("Paylaşma sırasında bir hata oluştu: $error");
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Paylaşma sırasında bir hata oluştu')));
@@ -46,6 +51,7 @@ class _PostCreationPageState extends State<PostCreationPage> {
 
       _postContentController.clear();
       _postTitleController.clear();
+      _submitPostandNavigateToDisplayPosts();
 
     } else {
       print("Bu alan boş kalamaz.");

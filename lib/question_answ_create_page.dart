@@ -1,4 +1,5 @@
 import 'package:ekopal/colors.dart';
+import 'package:ekopal/services/UserManager.dart';
 import 'package:ekopal/services/firebase_service.dart';
 import 'package:ekopal/services/question_ans_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,6 +15,7 @@ class AskQuestionPage extends StatefulWidget {
 class _AskQuestionPageState extends State<AskQuestionPage> {
   TextEditingController _soruController = TextEditingController();
   TextEditingController _soruDetailsController = TextEditingController();
+  final SoruCevapService _soruCevapService = SoruCevapService();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -21,10 +23,6 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
   void _submitQuestion() {
     Navigator.of(context).pop();  // To close the screen after submitting
   }
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -100,11 +98,13 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
                     ],
                   ),
                   SizedBox(
-                    width: double.infinity, // makes the button stretch to full width
+                    width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          String? userId = FirebaseAuth.instance.currentUser?.uid;
+
+                          await UserManager().loadUserId();
+                          String? userId = UserManager().userId;
 
                           if (userId == null) {
                             print('No user logged in');
@@ -112,13 +112,25 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
                           }
 
                           SoruCevap soruCevap = SoruCevap(
-                            soru: _soruController.text,
-                            soruDetails: _soruDetailsController.text,
-                            userId: userId,
-                            createdBy: "default name"
+                              soru: _soruController.text,
+                              soruDetails: _soruDetailsController.text,
+                              userId: userId,
+                              createdBy: "default name"
                           );
                           SoruCevapService().addSoruCevap(soruCevap);
+
+                          await _soruCevapService.addSoruCevap(soruCevap).then((value) {
+
+                            print("Sorunuz başarıyla paylaşıldı");
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Sorunuz başarıyla paylaşıldı")));
+
+                          }).catchError((error) {
+                            print("Paylaşma sırasında bir hata oluştu: $error");
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Paylaşma sırasında bir hata oluştu')));
+                          });
+
                           _soruController.clear();
+
                           _submitQuestion();
                         }
                       },

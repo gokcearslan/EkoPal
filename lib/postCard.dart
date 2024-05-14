@@ -21,19 +21,28 @@ class _PostCardState extends State<PostCard> {
   late Color downvoteColor;
   late Map<String, String> votedUsers;
   String? userId;
+  String? imageUrl;
+
 
 
   @override
   void initState() {
     super.initState();
-    userId = UserManager().userId; // Get the user ID from UserManager
+    userId = UserManager().userId;
+    _loadProfilePicture();
+
+    // Get the user ID from UserManager
     upvotes = widget.post.upvotes;
     downvotes = widget.post.downvotes;
     votedUsers = widget.post.votedUsers;
-    print("vote id isssss init: " + widget.post.id);
-
-
     updateVoteColors();
+  }
+
+  Future<void> _loadProfilePicture() async {
+    String? url = await UserManager().getProfilePictureUrl(widget.post.userId);
+    setState(() {
+      imageUrl = url;
+    });
   }
 
   void updateVoteColors() {
@@ -49,21 +58,6 @@ class _PostCardState extends State<PostCard> {
     }
   }
 
- /* void checkDocumentExistence(String postId) {
-    FirebaseFirestore.instance.collection('posts').doc(postId).get().then((
-        doc) {
-      if (doc.exists) {
-        print("Document definitely exists with data: ${doc.data()}");
-      } else {
-        print("Document definitely does not exist.");
-      }
-    }).catchError((e) {
-      print("Error fetching document: $e");
-    });
-  }
-
-
-  */
 
 
   Future<void> handleVote(bool isUpvote) async {
@@ -115,6 +109,7 @@ class _PostCardState extends State<PostCard> {
   @override
   Widget build(BuildContext context) {
     String formattedDate = "2 days ago";
+    const String defaultImageUrl = 'https://cdn-icons-png.flaticon.com/256/12989/12989000.png';
 
     return Card(
       margin: const EdgeInsets.all(16.0),
@@ -128,7 +123,9 @@ class _PostCardState extends State<PostCard> {
         children: [
           ListTile(
             leading: CircleAvatar(
-              backgroundImage: NetworkImage('https://via.placeholder.com/150'),
+              backgroundImage: imageUrl != null
+                  ? NetworkImage(imageUrl!)
+                  : NetworkImage(defaultImageUrl),
             ),
             title: Text(
                 widget.post.createdBy,

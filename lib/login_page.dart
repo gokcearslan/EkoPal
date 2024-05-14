@@ -42,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
       );
 
       if (userCredential.user != null) {
-        UserManager().login(userCredential.user!.uid);
+        await UserManager().login(userCredential.user!.uid); // Save user ID to UserManager and SharedPreferences
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => MainApp()),
         );

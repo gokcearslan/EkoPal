@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ekopal/EkoBotPage.dart';
 import 'package:ekopal/login_page.dart';
 import 'package:ekopal/postCard.dart';
+import 'package:ekopal/services/UserManager.dart';
 import 'package:ekopal/services/post_model.dart';
 import 'package:ekopal/services/user_provider.dart';
 import 'package:ekopal/sharings_advertisement.dart';
@@ -241,6 +242,7 @@ class _HomePageState extends State<HomePage> {
                   _isSigningOut = true;
                 });
                 await FirebaseAuth.instance.signOut();
+                await UserManager().logout(); // Clear user ID from UserManager and SharedPreferences
                 setState(() {
                   _isSigningOut = false;
                 });
