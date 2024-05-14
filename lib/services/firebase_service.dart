@@ -4,6 +4,7 @@ import 'package:ekopal/services/post_model.dart';
 import 'package:ekopal/services/question_ans_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'UserManager.dart';
 import 'advertisement_model.dart';
 import 'duyuru_model.dart';
 
@@ -102,9 +103,23 @@ class DuyuruService {
 }
 
 class PostService {
+
+
   final CollectionReference posts = FirebaseFirestore.instance.collection('posts');
 
-  Future<void> addPost(Post post) {
+  Future<String?> getUserName(String userId) async {
+    DocumentSnapshot userProfile = await FirebaseFirestore.instance.collection('users').doc(userId).get();
+    return userProfile['name'];
+  }
+
+  Future<void> addPost(Post post) async {
+
+    // Fetch the user ID from UserManager
+    String? userId = UserManager().userId;
+
+    // Fetch the user's name using the new method in PostService
+    String? userName = await getUserName(userId!);
+
     return posts
         .add({
       'id': post.id,
@@ -114,6 +129,7 @@ class PostService {
       'downvotes': 0,
       'userId': post.userId,
       'votedUsers': {},
+      'createdBy': userName,
 
     })
         .then((value) => print('Gönderi başarıyla paylaşıldı.'))

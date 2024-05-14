@@ -8,6 +8,7 @@ class Post {
   int downvotes;
   final String userId;
   Map<String, String> votedUsers;
+  final String createdBy;
 
   Post({
     required this.id,
@@ -17,6 +18,7 @@ class Post {
     this.downvotes=0,
     required this.userId,
     this.votedUsers = const {},
+    required this.createdBy,
 
   });
 
@@ -29,6 +31,7 @@ class Post {
       upvotes: data['upvotes'] ?? 0,
       downvotes: data['downvotes'] ?? 0,
       userId: data['userId'],
+      createdBy: data['createdBy'],
       votedUsers: Map<String, String>.from(data['votedUsers'] ?? {}),
 
     );

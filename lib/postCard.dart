@@ -131,7 +131,8 @@ class _PostCardState extends State<PostCard> {
               backgroundImage: NetworkImage('https://via.placeholder.com/150'),
             ),
             title: Text(
-                'Default User', style: TextStyle(fontWeight: FontWeight.bold)),
+                widget.post.createdBy,
+                style: TextStyle(fontWeight: FontWeight.bold)),
             subtitle: Text(formattedDate),
           ),
           ClipRRect(

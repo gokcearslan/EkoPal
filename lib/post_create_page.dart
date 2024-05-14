@@ -26,7 +26,15 @@ class _PostCreationPageState extends State<PostCreationPage> {
 
 
     if (postContent.isNotEmpty) {
-      final post = Post(id: id, PostContent: postContent, postTitle: postTitle,userId: userId);
+      String? userName = await _postService.getUserName(userId);
+
+      if (userName == null) {
+        print("User name could not be fetched");
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('User name could not be fetched')));
+        return;
+      }
+
+      final post = Post(id: id, PostContent: postContent, postTitle: postTitle,userId: userId, createdBy: userName,);
 
       await _postService.addPost(post).then((value) {
       print("Postunuz başarıyla paylaşıldı");
