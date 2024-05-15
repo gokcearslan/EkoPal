@@ -49,9 +49,10 @@ class _SharingViewAdsState extends State<SharingViewAds> {
     return Card(
       margin: EdgeInsets.all(16.0),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(32),
       ),
       elevation: 5.0,
+      color: cardColor,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
@@ -60,7 +61,7 @@ class _SharingViewAdsState extends State<SharingViewAds> {
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
               child: Image.network(
-                'https://mahimeta.com/wp-content/uploads/2021/07/5-Simple-Tips-to-Increase-Revenue-from-Website-Ads-Website.jpg',
+                'https://img3.idealista.com/blur/WEB_LISTING-M/0/id.pro.es.image.master/88/73/d4/908040653.jpg',
                 width: 120,
                 height: 120,
                 fit: BoxFit.cover,
@@ -80,7 +81,7 @@ class _SharingViewAdsState extends State<SharingViewAds> {
                   const SizedBox(height: 8),
                   Row(
                     children:[
-                      const Icon(Icons.arrow_circle_right_rounded, color: Colors.blueGrey), // Icon widget
+                      const Icon(Icons.arrow_circle_right_rounded, color: duyuruKoyuIcon), // Icon widget
                       const SizedBox(width: 10),
                       Text(
                         ad.advertisementType ?? 'Empty Value',
@@ -99,18 +100,6 @@ class _SharingViewAdsState extends State<SharingViewAds> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      IconButton(
-                        icon: Icon(
-                          ad.isFavorite ? Icons.star : Icons.star_border,
-                          color: ad.isFavorite ? Colors.amber : colorScheme.onSurfaceVariant,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            ad.isFavorite = !ad.isFavorite;
-                          });
-                        },
-                      ),
-
                       IconButton(
                         icon: Icon(
                           Icons.article_outlined,
