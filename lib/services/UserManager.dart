@@ -38,4 +38,16 @@ class UserManager {
     DocumentSnapshot userProfile = await FirebaseFirestore.instance.collection('users').doc(userId).get();
     return userProfile['name'];
   }
+
+
+  Future<String?> getUserRole() async {
+    if (userId == null) {
+      await loadUserId();
+      if (userId == null) {
+        return null;
+      }
+    }
+    DocumentSnapshot userProfile = await FirebaseFirestore.instance.collection('users').doc(userId).get();
+    return userProfile['role'];
+  }
 }

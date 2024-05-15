@@ -3,12 +3,10 @@ import 'package:ekopal/services/firebase_service.dart';
 import 'package:ekopal/services/question_ans_model.dart';
 import 'package:flutter/material.dart';
 
-import 'SoruCevapCard.dart';
 import 'answerCard.dart';
 import 'answer_toquestion_page.dart';
 import 'colors.dart';
 import 'displayAllAnswersCard.dart';
-
 
 class QuestionDetailsPage extends StatefulWidget {
   final SoruCevap question;
@@ -22,6 +20,7 @@ class QuestionDetailsPage extends StatefulWidget {
 class _QuestionDetailsPageState extends State<QuestionDetailsPage> {
   final SoruCevapService _questionService = SoruCevapService();
   String? questionId;
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -37,9 +36,9 @@ class _QuestionDetailsPageState extends State<QuestionDetailsPage> {
     );
     setState(() {
       questionId = id;
+      isLoading = false;
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +46,12 @@ class _QuestionDetailsPageState extends State<QuestionDetailsPage> {
       appBar: AppBar(
         title: Text('            Soru Detayları'),
         backgroundColor: appBarColor,
-
       ),
-      body: Column(
+      body: isLoading
+          ? Center(child: CircularProgressIndicator())
+          : questionId == null
+          ? Center(child: Text('Soru bulunamadı.'))
+          : Column(
         children: [
           Expanded(
             child: ListView(
