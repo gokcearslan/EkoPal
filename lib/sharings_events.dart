@@ -50,9 +50,11 @@ class _SharingViewEventsState extends State<SharingViewEvents> {
     return Card(
       margin: EdgeInsets.all(16.0),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(32),
       ),
       elevation: 5.0,
+      color:cardColor,
+
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
@@ -94,18 +96,7 @@ class _SharingViewEventsState extends State<SharingViewEvents> {
                     children: [
                       IconButton(
                         icon: Icon(
-                          event.isFavorite ? Icons.star : Icons.star_border,
-                          color: event.isFavorite ? Colors.amber : colorScheme.onSurfaceVariant,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            event.isFavorite = !event.isFavorite;
-                          });
-                        },
-                      ),
-                      IconButton(
-                        icon: Icon(
-                          Icons.info_outline,
+                          Icons.article_outlined,
                           color: colorScheme.onSurfaceVariant,
                         ),
                         onPressed: () {

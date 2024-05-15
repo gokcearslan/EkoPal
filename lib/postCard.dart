@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ekopal/colors.dart';
 import 'package:ekopal/services/UserManager.dart';
 import 'package:ekopal/services/voting_service.dart';
 import 'package:flutter/material.dart';
@@ -117,7 +118,7 @@ class _PostCardState extends State<PostCard> {
         borderRadius: BorderRadius.circular(16),
       ),
       elevation: 5,
-      color: Colors.white,
+      color: cardColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
