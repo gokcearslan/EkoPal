@@ -41,7 +41,7 @@ class _PostCreationPageState extends State<PostCreationPage> {
 
       await _postService.addPost(post).then((value) {
 
-      print("Postunuz başarıyla paylaşıldı");
+      print("Gönderiniz başarıyla paylaşıldı");
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Postunuz başarıyla paylaşıldı')));
 
       }).catchError((error) {

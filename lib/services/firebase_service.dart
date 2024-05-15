@@ -30,18 +30,18 @@ class EventService {
   Stream<List<Event>> getEventsStream() {
     return events.snapshots().map((snapshot) {
       return snapshot.docs.map((doc) {
-        var data = doc.data() as Map<String, dynamic>?; // Cast with null safety
-        if (data == null) return null; // Check for null data and handle it appropriately
+        var data = doc.data() as Map<String, dynamic>?;
+        if (data == null) return null;
 
         return Event(
-          eventName: data['eventName'] as String? ?? 'No Name', // Provide default values
+          eventName: data['eventName'] as String? ?? 'No Name',
           eventDate: data['eventDate'] as String? ?? 'No Date',
           organizer: data['organizer'] as String? ?? 'No Organizer',
           location: data['location'] as String? ?? 'No Location',
           additionalInfo: data['additionalInfo'] as String? ?? 'No Additional Info',
           userId: data['userId'] as String? ?? 'No User ID',
         );
-      }).where((event) => event != null).cast<Event>().toList(); // Remove nulls and ensure type safety
+      }).where((event) => event != null).cast<Event>().toList();
     });
   }
 }
@@ -66,19 +66,19 @@ class AdvertisementService {
   Stream<List<Advertisement>> getAdvertisementsStream() {
     return advertisements.snapshots().map((snapshot) {
       return snapshot.docs.map((doc) {
-        var data = doc.data() as Map<String, dynamic>?; // Explicitly cast to a nullable map
+        var data = doc.data() as Map<String, dynamic>?;
         if (data == null) {
-          // Handle the case where data is null if necessary
+
           return null;
         }
-        // Safely access the data fields with null checks or provide default values
+
         return Advertisement(
-          advertisementName: data['advertisementName'] as String? ?? 'Unknown', // Provide default value if null
+          advertisementName: data['advertisementName'] as String? ?? 'Unknown',
           advertisementType: data['advertisementType'] as String? ?? 'Unknown',
           advertisementDetails: data['advertisementDetails'] as String? ?? 'No details provided',
           userId: data['userId'] as String? ?? 'No user',
         );
-      }).where((ad) => ad != null).cast<Advertisement>().toList(); // Remove null entries and cast back to Advertisement
+      }).where((ad) => ad != null).cast<Advertisement>().toList();
     });
   }
 }
@@ -141,6 +141,16 @@ class PostService {
         return Post.fromFirestore(doc);
       }).toList();
     });
+  }
+
+
+  Future<void> deletePost(String postId) async {
+    try {
+      await posts.doc(postId).delete();
+      print('Gönderi silindi');
+    } catch (error) {
+      print('Gönderi silirken bir hata oluştu: $error');
+    }
   }
 
 }

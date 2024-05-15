@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ekopal/deletePostCard.dart';
 import 'package:ekopal/postCard.dart';
 import 'package:ekopal/services/post_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -41,6 +42,12 @@ class _SharingViewPostsState extends State<SharingViewPosts> {
 
   }
 
+  void _handlePostDelete(Post post) {
+    setState(() {
+      UserPosts?.remove(post);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,7 +72,10 @@ class _SharingViewPostsState extends State<SharingViewPosts> {
                 : ListView.builder(
               itemCount: UserPosts!.length,
               itemBuilder: (context, index) {
-                return PostCard(post: UserPosts![index]);
+                return deletePostCard(
+                  post: UserPosts![index],
+                  onDelete: () => _handlePostDelete(UserPosts![index]),
+                );
               },
             ),
           ),
@@ -74,12 +84,5 @@ class _SharingViewPostsState extends State<SharingViewPosts> {
       ),
     );
 }
-
-
-
-
-
-
-
 
 }
