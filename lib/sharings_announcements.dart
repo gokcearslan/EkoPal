@@ -43,7 +43,7 @@ class _SharingViewAnnouncementsState extends State<SharingViewAnnouncements> {
     final ThemeData theme = Theme.of(context);
     final ColorScheme colorScheme = theme.colorScheme;
 
-    String imageUrl = 'https://seeklogo.com/images/I/Izmir_Ekonomi_Universitesi-logo-1DBBF2BAF5-seeklogo.com.png';
+    String imageUrl = 'https://files.sikayetvar.com/lg/cmp/93/9386.png?1522650125';
     String duyuruName = duyuru.duyuruName ?? 'Unnamed Announcement';
     String duyuruDetails = duyuru.duyuruDetails ?? 'No details provided.';
 
@@ -83,7 +83,7 @@ class _SharingViewAnnouncementsState extends State<SharingViewAnnouncements> {
                 ),
 
                 IconButton(
-                  icon: Icon(Icons.edit, color: theme.colorScheme.secondary),
+                  icon: Icon(Icons.delete, color: Colors.deepPurple),
                   onPressed: () {
                     // Placeholder for future edit functionality
                     print('Edit button tapped');

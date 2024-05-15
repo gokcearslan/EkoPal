@@ -43,5 +43,7 @@ const Color buttonColor1= Color(0xFFC6C0E8);
 
 const Color lightButtonColor = Color(0xFFA0AAE5);
 const Color cardColor = Color(0xFFFAF7FE); //lila //E3E1EA //0xFFFAF7FE
+const Color duyuruIcon= Color(0xFF8C98E0);
+const Color duyuruKoyuIcon= Color(0xFF7079B3);
 
 

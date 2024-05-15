@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'announcementsDetails_page.dart';
 import 'colors.dart';
-import 'create_page.dart'; //
+import 'create_page.dart';
 
 class AnnouncementsPage extends StatefulWidget {
   @override
@@ -11,7 +11,6 @@ class AnnouncementsPage extends StatefulWidget {
 }
 
 class _AnnouncementsPageState extends State<AnnouncementsPage> {
-
   String? userRole;
 
   @override
@@ -26,9 +25,7 @@ class _AnnouncementsPageState extends State<AnnouncementsPage> {
     if (user != null) {
       DocumentSnapshot userDocSnapshot = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
 
-      // Check if the snapshot exists and contains data
       if (userDocSnapshot.exists && userDocSnapshot.data() != null) {
-        // Cast the data to a Map and then access the 'role'
         Map<String, dynamic> userData = userDocSnapshot.data()! as Map<String, dynamic>;
         setState(() {
           userRole = userData['role'] as String?;
@@ -40,48 +37,58 @@ class _AnnouncementsPageState extends State<AnnouncementsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:white,
+      backgroundColor: white,
       appBar: AppBar(
-        title: const Text("Duyurular",
-            style: TextStyle(
-              fontSize: 26,
-            ),
+        title: const Text(
+          "Duyurular",
+          style: TextStyle(
+            fontSize: 26,
+          ),
         ),
         centerTitle: true,
         backgroundColor: appBarColor,
       ),
-      body:SafeArea(
-      child: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('duyurular').snapshots(),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error.toString()}'));
-          }
+      body: SafeArea(
+        child: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance.collection('duyurular').snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error.toString()}'));
+            }
 
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          return ListView.builder(
-            itemCount: snapshot.data?.docs.length ?? 0,
-            itemBuilder: (context, index) {
-              DocumentSnapshot document = snapshot.data!.docs[index];
-              Map<String, dynamic>? data = document.data() as Map<String, dynamic>;
-              if (data == null) {
-                return Center(child: Text('Document data is null'));
-              }
-              return AnnouncementCard(data: data); //
-            },
-          );
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            return ListView.builder(
+              itemCount: snapshot.data?.docs.length ?? 0,
+              itemBuilder: (context, index) {
+                DocumentSnapshot document = snapshot.data!.docs[index];
+                Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+                if (data == null) {
+                  return Center(child: Text('Document data is null'));
+                }
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AnnouncementDetailsPage(data: data),
+                      ),
+                    );
+                  },
+                  child: AnnouncementCard(data: data),
+                );
+              },
+            );
+          },
+        ),
+      ),
+      floatingActionButton: userRole == 'staff'
+          ? FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => CreatePage(initialCategory: 'Duyuru')));
         },
-      ),
-      ),
-      //Create butonu floating
-
-    floatingActionButton: userRole == 'staff' ? FloatingActionButton(
-    onPressed: () {
-    Navigator.of(context).push(MaterialPageRoute(
-    builder: (context) => CreatePage(initialCategory: 'Duyuru')));
-    },
         child: Material(
           color: Colors.transparent,
           child: Icon(
@@ -90,32 +97,80 @@ class _AnnouncementsPageState extends State<AnnouncementsPage> {
           ),
         ),
         backgroundColor: lightButtonColor,
-    ) : null,
+      )
+          : null,
     );
-
   }
 }
-class AnnouncementCard extends StatelessWidget {
 
+class AnnouncementCard extends StatefulWidget {
   final Map<String, dynamic> data;
 
   const AnnouncementCard({Key? key, required this.data}) : super(key: key);
 
   @override
+  _AnnouncementCardState createState() => _AnnouncementCardState();
+}
+
+class _AnnouncementCardState extends State<AnnouncementCard> {
+  String? userName;
+  String? userEmail;
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchUserDetails();
+  }
+
+  Future<void> fetchUserDetails() async {
+    String userId = widget.data['userId']; // Ensure this key exists in your data
+    Map<String, String?> userInfo = await fetchUserInfo(userId);
+    setState(() {
+      userName = userInfo['name'];
+      userEmail = userInfo['email'];
+      isLoading = false;
+    });
+  }
+
+  Future<Map<String, String?>> fetchUserInfo(String userId) async {
+    try {
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(userId).get();
+      if (userDoc.exists) {
+        return {
+          'name': userDoc['name'],
+          'email': userDoc['email'],
+        };
+      } else {
+        return {
+          'name': null,
+          'email': null,
+        };
+      }
+    } catch (e) {
+      print("Error fetching user info: $e");
+      return {
+        'name': null,
+        'email': null,
+      };
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
 
-    String imageUrl = data['imageUrl'] as String? ?? 'https://seeklogo.com/images/I/Izmir_Ekonomi_Universitesi-logo-1DBBF2BAF5-seeklogo.com.png';
-    String duyuruName = data['duyuruName'] as String? ?? 'Unnamed Announcement';
-    String duyuruDetails = data['duyuruDetails'] as String? ?? 'No details provided.';
+    String imageUrl = widget.data['imageUrl'] as String? ?? 'https://files.sikayetvar.com/lg/cmp/93/9386.png?1522650125';
+    String duyuruName = widget.data['duyuruName'] as String? ?? 'Unnamed Announcement';
+    String duyuruDetails = widget.data['duyuruDetails'] as String? ?? 'No details provided.';
 
     return Card(
       margin: const EdgeInsets.all(16.0),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(28),
       ),
       elevation: 5.0,
-      color:cardColor,
+      color: cardColor,
       child: Theme(
         data: theme.copyWith(dividerColor: Colors.transparent),
         child: ExpansionTile(
@@ -130,7 +185,7 @@ class AnnouncementCard extends StatelessWidget {
             ),
           ),
           title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween, // Adjust this for alignment
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(
                 child: Text(
@@ -144,13 +199,6 @@ class AnnouncementCard extends StatelessWidget {
                 ),
               ),
 
-              IconButton(
-                icon: Icon(Icons.edit, color: theme.colorScheme.secondary),
-                onPressed: () {
-                  // Placeholder for future edit functionality
-                  print('Edit button tapped');
-                },
-              ),
             ],
           ),
           children: <Widget>[
@@ -158,6 +206,40 @@ class AnnouncementCard extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
               child: Text(duyuruDetails, style: theme.textTheme.bodyText2),
             ),
+            if (isLoading)
+              Center(child: CircularProgressIndicator())
+            else ...[
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(Icons.person, size: 24, color:duyuruKoyuIcon),
+                    SizedBox(width: 8),
+                    Text(
+                      userName ?? 'Bilinmiyor',
+                      style: theme.textTheme.bodyText2?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(Icons.email, size: 24, color: duyuruKoyuIcon),
+                    SizedBox(width: 8),
+                    Text(
+                      userEmail ?? 'Bilinmiyor',
+                      style: theme.textTheme.bodyText2,
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ],
         ),
       ),

@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'colors.dart';
 
 class AnnouncementDetailsPage extends StatelessWidget {
@@ -11,52 +9,51 @@ class AnnouncementDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:white,
-
+      backgroundColor: white,
       appBar: AppBar(
         title: Text(data['duyuruName']),
         centerTitle: true,
-        backgroundColor:white,
+        backgroundColor: white,
       ),
-      body:SafeArea(
-      child: Center( // Aligns the container to the center of the screen
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Container(
-              width: double.infinity, // Ensures the container takes up the full width
-              padding: EdgeInsets.all(24.0), // Internal padding within the container
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface, // Background color of the container
-                borderRadius: BorderRadius.circular(20.0), // Rounded corners
-                boxShadow: [ // Adds a subtle shadow for a lifted effect
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    spreadRadius: 5,
-                    blurRadius: 7,
-                    offset: Offset(0, 3),
-                  ),
-                ],
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    data['duyuruName'],
-                    style: Theme.of(context).textTheme.headlineMedium,
-                    textAlign: TextAlign.center, // Centers the title text
-                  ),
-                  SizedBox(height: 20), // Provides spacing between title and details
-                  Text(
-                    data['duyuruDetails'],
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                ],
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Container(
+                width: double.infinity,
+                padding: EdgeInsets.all(24.0),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.surface,
+                  borderRadius: BorderRadius.circular(20.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      data['duyuruName'],
+                      style: Theme.of(context).textTheme.headlineMedium,
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      data['duyuruDetails'],
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
         ),
-      ),
       ),
     );
   }
