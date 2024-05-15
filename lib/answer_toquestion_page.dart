@@ -108,7 +108,7 @@ class _CreateAnswerPageState extends State<CreateAnswerPage> {
                     '${widget.question.createdBy}',
                     style: TextStyle(color: Colors.blue),
                   ),
-                  Text(' adlı kişiye yanıt olarak'),
+                  Text(' adlı kişiye cevap veriyorsun'),
                 ],
               ),
               SizedBox(height: 10),
