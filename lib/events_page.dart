@@ -109,7 +109,7 @@ class _EventsPageState extends State<EventsPage> {
     return Card(
       margin: EdgeInsets.all(16.0),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(32),
       ),
       elevation: 5.0,
       color:cardColor,
