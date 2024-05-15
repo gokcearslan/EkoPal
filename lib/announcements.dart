@@ -216,12 +216,11 @@ class _AnnouncementCardState extends State<AnnouncementCard> {
                   children: [
                     Icon(Icons.person, size: 24, color:duyuruKoyuIcon),
                     SizedBox(width: 8),
-                    Text(
-                      userName ?? 'Bilinmiyor',
-                      style: theme.textTheme.bodyText2?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                Text(
+                  'Oluşturan: ${userName ?? 'Bilinmiyor'}',
+                  style: theme.textTheme.bodyText2?.copyWith(
+                  ),
+                ),
                   ],
                 ),
               ),
@@ -233,7 +232,7 @@ class _AnnouncementCardState extends State<AnnouncementCard> {
                     Icon(Icons.email, size: 24, color: duyuruKoyuIcon),
                     SizedBox(width: 8),
                     Text(
-                      userEmail ?? 'Bilinmiyor',
+                      'İletişim: ${userEmail ?? 'Bilinmiyor'}',
                       style: theme.textTheme.bodyText2,
                     ),
                   ],

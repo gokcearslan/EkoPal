@@ -106,7 +106,7 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
     return Card(
       margin: EdgeInsets.all(16.0),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(32),
       ),
       elevation: 5.0,
         color:cardColor,
@@ -157,7 +157,7 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      IconButton(
+                     /* IconButton(
                         icon: Icon(
                           ad.isFavorite ? Icons.star : Icons.star_border,
                           color: ad.isFavorite ? Colors.amber : colorScheme.onSurfaceVariant,
@@ -168,6 +168,10 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
                           });
                         },
                       ),
+
+
+                      */
+
                       IconButton(
                         icon: Icon(
                           Icons.article_outlined,
