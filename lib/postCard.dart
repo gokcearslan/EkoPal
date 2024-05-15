@@ -115,7 +115,7 @@ class _PostCardState extends State<PostCard> {
     return Card(
       margin: const EdgeInsets.all(16.0),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(26),
       ),
       elevation: 5,
       color: cardColor,
@@ -131,8 +131,10 @@ class _PostCardState extends State<PostCard> {
             title: Text(
                 widget.post.createdBy,
                 style: TextStyle(fontWeight: FontWeight.bold)),
-            subtitle: Text(formattedDate),
+           // subtitle: Text(formattedDate),
           ),
+          SizedBox(height: 6),
+
           ClipRRect(
             borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
             child: Image.network(

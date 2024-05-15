@@ -134,7 +134,7 @@ class _deletePostCardState extends State<deletePostCard> {
     return Card(
       margin: const EdgeInsets.all(16.0),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(29),
       ),
       elevation: 5,
       color: Colors.white,
@@ -146,12 +146,13 @@ class _deletePostCardState extends State<deletePostCard> {
               backgroundImage: imageUrl != null ? NetworkImage(imageUrl!) : NetworkImage(defaultImageUrl),
             ),
             title: Text(widget.post.createdBy, style: TextStyle(fontWeight: FontWeight.bold)),
-            subtitle: Text(formattedDate),
+            //subtitle: Text(formattedDate),
             trailing: IconButton(
               icon: Icon(Icons.delete, color: Colors.deepPurple),
               onPressed: _deletePost,
             ),
           ),
+          SizedBox(height: 6),
           ClipRRect(
             borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
             child: Image.network(

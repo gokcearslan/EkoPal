@@ -59,7 +59,7 @@ class _deleteSoruCevapCardState extends State<deleteSoruCevapCard> {
     return Card(
       margin: const EdgeInsets.all(16.0),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(30),
       ),
       elevation: 5,
       color: cardColor,
@@ -71,12 +71,14 @@ class _deleteSoruCevapCardState extends State<deleteSoruCevapCard> {
               backgroundImage: imageUrl != null ? NetworkImage(imageUrl!) : NetworkImage(defaultImageUrl),
             ),
             title: Text(widget.soruCevap.createdBy, style: TextStyle(fontWeight: FontWeight.bold)),
-            subtitle: Text(formattedDate),
+           // subtitle: Text(formattedDate),
             trailing: IconButton(
               icon: Icon(Icons.delete, color: Colors.deepPurple),
               onPressed: _deleteQuestion,
             ),
           ),
+          SizedBox(height: 6),
+
           ClipRRect(
             borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
             child: Image.network(

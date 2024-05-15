@@ -31,14 +31,14 @@ class _AnswerCardState extends State<AnswerCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 16.0),
+      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 28.0),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(28),
       ),
       elevation: 2,
       color: cardColor, // Slightly different color to distinguish from question card
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(10.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -52,10 +52,10 @@ class _AnswerCardState extends State<AnswerCard> {
                 widget.answer.createdBy,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              subtitle: Text('Timestamp here'),
+              //subtitle: Text('Timestamp here'),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              padding: const EdgeInsets.symmetric(vertical: 5.0),
               child: Text(
                 widget.answer.answer,
                 style: Theme.of(context).textTheme.bodyLarge,

@@ -42,7 +42,7 @@ class _SoruCevapCardState extends State<SoruCevapCard> {
     return Card(
       margin: const EdgeInsets.all(16.0),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(28),
       ),
       elevation: 5,
       color:cardColor,
@@ -58,7 +58,10 @@ class _SoruCevapCardState extends State<SoruCevapCard> {
             title: Text( widget.soruCevap.createdBy,
                 style: TextStyle(fontWeight: FontWeight.bold)),
             //subtitle: Text(formattedDate),  // Display the formatted date as subtitle
+
           ),
+          SizedBox(height: 6),
+
           ClipRRect(
             borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
             child: Image.network(

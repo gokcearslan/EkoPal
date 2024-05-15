@@ -42,7 +42,7 @@ class _displayAllAnswersCardState extends State<displayAllAnswersCard> {
     return Card(
       margin: const EdgeInsets.all(16.0),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(28),
       ),
       elevation: 5,
       color:cardColor,
