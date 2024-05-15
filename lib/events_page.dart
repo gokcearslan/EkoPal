@@ -153,7 +153,7 @@ class _EventsPageState extends State<EventsPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      IconButton(
+                      /*IconButton(
                         icon: Icon(
                           event.isFavorite ? Icons.star : Icons.star_border,
                           color: event.isFavorite ? Colors.amber : colorScheme.onSurfaceVariant,
@@ -164,6 +164,10 @@ class _EventsPageState extends State<EventsPage> {
                           });
                         },
                       ),
+
+                       */
+
+
                       IconButton(
                         icon: Icon(
                           Icons.article_outlined,

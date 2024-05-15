@@ -138,7 +138,7 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
                   SizedBox(height: 8),
                   Row(
                     children:[
-                      Icon(Icons.arrow_circle_right_rounded, color: Colors.blueGrey), // Icon widget
+                      Icon(Icons.arrow_circle_right_rounded, color: duyuruKoyuIcon), // Icon widget
                       SizedBox(width: 10),
                       Text(
                         ad.advertisementType ?? 'Empty Value',
