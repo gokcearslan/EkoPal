@@ -1,8 +1,8 @@
 import 'package:ekopal/services/event_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ekopal/services/firebase_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import 'colors.dart';
 import 'detailed_event_page.dart';
 
@@ -15,6 +15,8 @@ class _SharingViewEventsState extends State<SharingViewEvents> {
 
   List<Event> _userEvents = [];
   bool _isEventsLoaded = true;
+  final EventService _eventService = EventService();
+
 
   @override
   void initState() {
@@ -40,6 +42,21 @@ class _SharingViewEventsState extends State<SharingViewEvents> {
         .catchError((error) => print("Failed to fetch user posts: $error"))
         .whenComplete(() => setState(() => _isEventsLoaded = false));
 
+  }
+
+  Future<void> _deleteEvent(Event event) async {
+    String? eventId = await _eventService.findEventId(event.eventName, event.eventDate, event.userId);
+    if (eventId != null) {
+      await _eventService.deleteEvent(eventId).then((value) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Etkinlik başarıyla silindi")));
+        setState(() {
+          _userEvents.remove(event);
+        });
+      }).catchError((error) {
+        print("Silme sırasında bir hata oluştu: $error");
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Silme sırasında bir hata oluştu')));
+      });
+    }
   }
 
 
@@ -114,7 +131,7 @@ class _SharingViewEventsState extends State<SharingViewEvents> {
                       IconButton(
                         icon: Icon(Icons.delete, color: Colors.deepPurple),
                         onPressed: () {
-                          // Placeholder for future edit functionality
+                          _deleteEvent(event);
                           print('Edit button tapped');
                         },
                       ),

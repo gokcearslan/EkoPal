@@ -44,6 +44,30 @@ class EventService {
       }).where((event) => event != null).cast<Event>().toList();
     });
   }
+
+  Future<String?> findEventId(String eventName, String eventDate, String userId) async {
+    QuerySnapshot query = await events
+        .where('eventName', isEqualTo: eventName)
+        .where('eventDate', isEqualTo: eventDate)
+        .where('userId', isEqualTo: userId)
+        .limit(1)
+        .get();
+
+    if (query.docs.isNotEmpty) {
+      return query.docs.first.id;
+    } else {
+      return null;
+    }
+  }
+
+  Future<void> deleteEvent(String eventId) async {
+    try {
+      await events.doc(eventId).delete();
+      print('Event deleted successfully');
+    } catch (error) {
+      print('Failed to delete event: $error');
+    }
+  }
 }
 
 class AdvertisementService {
