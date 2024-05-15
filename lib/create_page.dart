@@ -7,7 +7,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import 'advertisements.dart';
+import 'advertisements_view_page.dart';
+import 'announcements.dart';
 import 'colors.dart';
+import 'events_page.dart';
 
 class CreatePage extends StatefulWidget {
 
@@ -279,7 +283,18 @@ class _IlanWidgetState extends State<IlanWidget> {
                       advertisementDetails: _advertisementDetailsController.text,
                       userId: userId
                   );
-                  AdvertisementService().addAdvertisement(a);
+                  AdvertisementService().addAdvertisement(a)..then((value) {
+                    print("İlan başarıyla paylaşıldı");
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("İlan başarıyla paylaşıldı")));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ViewAdvertisements()),
+                    );
+                  }).catchError((error) {
+                    print("Paylaşma sırasında bir hata oluştu: $error");
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Paylaşma sırasında bir hata oluştu')));
+                  });
+
                   _clearTextFields();
                 }
               },
@@ -563,7 +578,18 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
                  additionalInfo: _additionalInfoController.text,
                  userId: userId,
                );
-               EventService().addEvent(event);
+               EventService().addEvent(event).then((value) {
+                 print("Etkinlik başarıyla paylaşıldı");
+                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Etkinlik başarıyla paylaşıldı")));
+                 Navigator.push(
+                   context,
+                   MaterialPageRoute(builder: (context) => EventsPage()),
+                 );
+               }).catchError((error) {
+                 print("Paylaşma sırasında bir hata oluştu: $error");
+                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Paylaşma sırasında bir hata oluştu')));
+               });
+
                _clearTextFields();
              }
             },
@@ -739,7 +765,18 @@ class _DuyuruWidgetState extends State<DuyuruWidget> {
                   duyuruDetails: _duyuruDetailsController.text,
                   userId: userId,
                 );
-                DuyuruService().addDuyuru(duyuru);
+                DuyuruService().addDuyuru(duyuru).then((value) {
+                  print("Duyuru başarıyla paylaşıldı");
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Duyuru başarıyla paylaşıldı")));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AnnouncementsPage()),
+                  );
+                }).catchError((error) {
+                  print("Paylaşma sırasında bir hata oluştu: $error");
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Paylaşma sırasında bir hata oluştu')));
+                });
+
                 _clearTextFields();
               }
             },
