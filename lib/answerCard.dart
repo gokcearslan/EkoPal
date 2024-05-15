@@ -30,6 +30,11 @@ class _AnswerCardState extends State<AnswerCard> {
 
   @override
   Widget build(BuildContext context) {
+
+    String timestamp = widget.answer.timestamp.toString().substring(0, 10);
+    List<String> parts = timestamp.split('-');
+    String formattedDate = '${parts[2]}-${parts[1]}-${parts[0]}';
+
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 28.0),
       shape: RoundedRectangleBorder(
@@ -52,7 +57,9 @@ class _AnswerCardState extends State<AnswerCard> {
                 widget.answer.createdBy,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              //subtitle: Text('Timestamp here'),
+              subtitle: Text(formattedDate),
+              //subtitle: Text(widget.answer.timestamp.toString().substring(0,10)),
+
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 5.0),
