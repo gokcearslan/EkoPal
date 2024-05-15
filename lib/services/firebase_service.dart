@@ -81,6 +81,29 @@ class AdvertisementService {
       }).where((ad) => ad != null).cast<Advertisement>().toList();
     });
   }
+  Future<String?> findAdvertisementId(String advertisementName, String advertisementDetails, String userId) async {
+    QuerySnapshot query = await advertisements
+        .where('advertisementName', isEqualTo: advertisementName)
+        .where('advertisementDetails', isEqualTo: advertisementDetails)
+        .where('userId', isEqualTo: userId)
+        .limit(1)
+        .get();
+
+    if (query.docs.isNotEmpty) {
+      return query.docs.first.id;
+    } else {
+      return null;
+    }
+  }
+
+  Future<void> deleteAdvertisement(String advertisementId) async {
+    try {
+      await advertisements.doc(advertisementId).delete();
+      print('Advertisement deleted successfully');
+    } catch (error) {
+      print('Failed to delete advertisement: $error');
+    }
+  }
 }
 
 class DuyuruService {

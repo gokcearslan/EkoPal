@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ekopal/services/advertisement_model.dart';
+import 'package:ekopal/services/firebase_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,8 @@ class SharingViewAds extends StatefulWidget {
 class _SharingViewAdsState extends State<SharingViewAds> {
   List<Advertisement> _userAdvertisement = [];
   bool _isLoaded=true;
+  final AdvertisementService _advertisementService = AdvertisementService();
+
 
   @override
   void initState() {
@@ -41,6 +44,22 @@ class _SharingViewAdsState extends State<SharingViewAds> {
         .whenComplete(() => setState(() => _isLoaded = false));
 
   }
+
+  Future<void> _deleteAdvertisement(Advertisement ad) async {
+    String? adId = await _advertisementService.findAdvertisementId(ad.advertisementName, ad.advertisementDetails, ad.userId);
+    if (adId != null) {
+      await _advertisementService.deleteAdvertisement(adId).then((value) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("İlan başarıyla silindi")));
+        setState(() {
+          _userAdvertisement.remove(ad);
+        });
+      }).catchError((error) {
+        print("Silme sırasında bir hata oluştu: $error");
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Silme sırasında bir hata oluştu')));
+      });
+    }
+  }
+
 
   Widget buildAdCard(Advertisement ad) {
     final ThemeData theme = Theme.of(context);
@@ -121,8 +140,8 @@ class _SharingViewAdsState extends State<SharingViewAds> {
                       IconButton(
                         icon: Icon(Icons.delete, color: Colors.deepPurple),
                         onPressed: () {
-                          // Placeholder for future edit functionality
-                          print('Edit button tapped');
+                          _deleteAdvertisement(ad);
+                          print('delete button tapped');
                         },
                       ),
                     ],
