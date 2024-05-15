@@ -91,13 +91,16 @@ class _SharingViewEventsState extends State<SharingViewEvents> {
                     event.eventDate, // Date information
                     style: theme.textTheme.bodyText2,
                   ),
+                  SizedBox(height: 27),
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       IconButton(
                         icon: Icon(
                           Icons.article_outlined,
-                          color: colorScheme.onSurfaceVariant,
+                          //color: colorScheme.onSurfaceVariant,
+                            color: Colors.deepPurple
                         ),
                         onPressed: () {
                           Navigator.push(
@@ -106,6 +109,13 @@ class _SharingViewEventsState extends State<SharingViewEvents> {
                               builder: (context) => DetailedEventPage(event: event),
                             ),
                           );
+                        },
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.delete, color: Colors.deepPurple),
+                        onPressed: () {
+                          // Placeholder for future edit functionality
+                          print('Edit button tapped');
                         },
                       ),
                     ],

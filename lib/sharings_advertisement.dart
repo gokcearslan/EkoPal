@@ -89,6 +89,7 @@ class _SharingViewAdsState extends State<SharingViewAds> {
                         //add_home_work_outlined
 
                       ),
+
                     ],
                   ),
                   const SizedBox(height: 16),
@@ -97,13 +98,15 @@ class _SharingViewAdsState extends State<SharingViewAds> {
                     ad.advertisementDetails,
                     style: theme.textTheme.bodyMedium,
                   ),
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       IconButton(
                         icon: Icon(
                           Icons.article_outlined,
-                          color: colorScheme.onSurfaceVariant,
+                          //color: colorScheme.onSurfaceVariant,
+                            color: Colors.deepPurple
                         ),
                         onPressed: () {
                           Navigator.push(
@@ -113,6 +116,13 @@ class _SharingViewAdsState extends State<SharingViewAds> {
                                   AdvertisementDetailsPage(ad: ad),
                             ),
                           );
+                        },
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.delete, color: Colors.deepPurple),
+                        onPressed: () {
+                          // Placeholder for future edit functionality
+                          print('Edit button tapped');
                         },
                       ),
                     ],
