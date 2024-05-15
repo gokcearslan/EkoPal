@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ekopal/SoruCevapCard.dart';
+import 'package:ekopal/deleteSoruCevapCard.dart';
 import 'package:ekopal/services/question_ans_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +42,14 @@ class _SharingViewQuestionsState extends State<SharingViewQuestions> {
         .whenComplete(() => setState(() => _isLoaded = false));
 
   }
+
+  void _handleQuestionDelete(SoruCevap question) {
+    setState(() {
+      UserQuestions?.remove(question);
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,7 +74,10 @@ class _SharingViewQuestionsState extends State<SharingViewQuestions> {
                   : ListView.builder(
                 itemCount: UserQuestions!.length,
                 itemBuilder: (context, index) {
-                  return SoruCevapCard(soruCevap: UserQuestions![index]);
+                  return deleteSoruCevapCard(
+                    soruCevap: UserQuestions![index],
+                    onDelete: () => _handleQuestionDelete(UserQuestions![index]),
+                  );
                 },
               ),
             ),

@@ -117,7 +117,7 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
                               userId: userId,
                               createdBy: "default name"
                           );
-                          SoruCevapService().addSoruCevap(soruCevap);
+
 
                           await _soruCevapService.addSoruCevap(soruCevap).then((value) {
 

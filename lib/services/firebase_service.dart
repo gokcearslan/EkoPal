@@ -241,4 +241,14 @@ class SoruCevapService {
     }
   }
 
+  Future<void> deleteQuestion(String questionId) async {
+    try {
+      await soruCevapCollection.doc(questionId).delete();
+      print('Question deleted successfully');
+    } catch (error) {
+      print('Failed to delete question: $error');
+    }
+  }
+
+
 }
