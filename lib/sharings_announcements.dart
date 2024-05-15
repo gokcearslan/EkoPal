@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ekopal/services/duyuru_model.dart';
+import 'package:ekopal/services/firebase_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +15,8 @@ class _SharingViewAnnouncementsState extends State<SharingViewAnnouncements> {
 
   List<Duyuru> _userAnnouncements = [];
   bool _isLoading = true;
+  final DuyuruService _duyuruService = DuyuruService();
+
   @override
   void initState() {
     super.initState();
@@ -38,6 +41,23 @@ class _SharingViewAnnouncementsState extends State<SharingViewAnnouncements> {
         .catchError((error) => print("Failed to fetch user posts: $error"))
         .whenComplete(() => setState(() => _isLoading = false));
   }
+
+  Future<void> _deleteAnnouncement(Duyuru duyuru) async {
+    String? duyuruId = await _duyuruService.findDuyuruId(duyuru.duyuruName, duyuru.duyuruDetails, duyuru.userId);
+    if (duyuruId != null) {
+      await _duyuruService.deleteDuyuru(duyuruId).then((value) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Duyuru başarıyla silindi")));
+        setState(() {
+          _userAnnouncements.remove(duyuru);
+        });
+      }).catchError((error) {
+        print("Silme sırasında bir hata oluştu: $error");
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Silme sırasında bir hata oluştu')));
+      });
+    }
+  }
+
+
 
   Widget buildAnnouncementCard(Duyuru duyuru) {
     final ThemeData theme = Theme.of(context);
@@ -85,8 +105,8 @@ class _SharingViewAnnouncementsState extends State<SharingViewAnnouncements> {
                 IconButton(
                   icon: Icon(Icons.delete, color: Colors.deepPurple),
                   onPressed: () {
-                    // Placeholder for future edit functionality
-                    print('Edit button tapped');
+                    _deleteAnnouncement(duyuru);
+                    print('Delete button tapped');
                   },
                 ),
               ],

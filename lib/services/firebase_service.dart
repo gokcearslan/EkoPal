@@ -123,6 +123,30 @@ class DuyuruService {
         .catchError((error) => print('Failed to add duyuru: $error'));
   }
 
+  Future<String?> findDuyuruId(String duyuruName, String duyuruDetails, String userId) async {
+    QuerySnapshot query = await duyurular
+        .where('duyuruName', isEqualTo: duyuruName)
+        .where('duyuruDetails', isEqualTo: duyuruDetails)
+        .where('userId', isEqualTo: userId)
+        .limit(1)
+        .get();
+
+    if (query.docs.isNotEmpty) {
+      return query.docs.first.id;
+    } else {
+      return null;
+    }
+  }
+
+  Future<void> deleteDuyuru(String duyuruId) async {
+    try {
+      await duyurular.doc(duyuruId).delete();
+      print('Duyuru deleted successfully');
+    } catch (error) {
+      print('Failed to delete duyuru: $error');
+    }
+  }
+
 
 }
 
