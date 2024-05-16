@@ -90,7 +90,7 @@ class _HomePageState extends State<HomePage> {
               'EkoPal',
               style: TextStyle(
                 color: Colors.black,
-               fontWeight: FontWeight.normal,
+                fontWeight: FontWeight.normal,
                 fontSize: 55,
               ),
             ),
@@ -129,7 +129,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
-        ),
+      ),
       backgroundColor: Colors.white,
       body: Stack(
         children: [
@@ -162,144 +162,144 @@ class _HomePageState extends State<HomePage> {
       ),
       drawer: Drawer(
 
-          child: ListView(
-              padding: EdgeInsets.zero,
-              children: <Widget>[
-                Column(
-                  children: [
-                    SafeArea(
-                      child: Container(
-                        color: appBarColor,
-                        padding: EdgeInsets.all(16.0),
-                        child: ExpansionTile(
-                          title: Center(
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => ProfilePage()),
-                                    );
-                                  },
-                                  child: SizedBox(
-                                    width: 172,
-                                    height: 180,
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(40.0),
-                                      child: _profileImageUrl != null
-                                          ? Image.network(
-                                        _profileImageUrl!,
-                                        fit: BoxFit.cover,
-                                      )
-                                          : Placeholder(),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(width: 20),
-                              ],
-                            ),
-                          ),
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            Column(
+              children: [
+                SafeArea(
+                  child: Container(
+                    color: appBarColor,
+                    padding: EdgeInsets.all(16.0),
+                    child: ExpansionTile(
+                      title: Center(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => ProfilePage()),
-                                    );
-                                  },
-                                  child: Text(
-                                    userName,
-                                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                                  ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => ProfilePage()),
+                                );
+                              },
+                              child: SizedBox(
+                                width: 172,
+                                height: 180,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(40.0),
+                                  child: _profileImageUrl != null
+                                      ? Image.network(
+                                    _profileImageUrl!,
+                                    fit: BoxFit.cover,
+                                  )
+                                      : Placeholder(),
                                 ),
-                                SizedBox(height: 4.0),
-                                Text(
-                                  userEmail,
-                                  style: TextStyle(fontSize: 15.0),
-                                ),
-                              ],
+                              ),
                             ),
+                            SizedBox(width: 20),
                           ],
                         ),
                       ),
-                    ),
-                  ],
-                ),
-
-                ListTile(
-                  title: Text('Paylaşımlarım'),
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => MySharingsPage()));
-                  },
-                ),
-                ListTile(
-                  title: Text('Gönderiler'),
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => PostsPage()));
-                  },
-                ),
-                ListTile(
-                  title: Text('Soru-Cevap'),
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => DisplayQuestionsPage()));
-
-                  },
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center, // Center the button horizontally
-                  children: [
-                    ElevatedButton(
-                      onPressed: () async {
-                        setState(() {
-                          _isSigningOut = true;
-                        });
-                        await FirebaseAuth.instance.signOut();
-                        await UserManager().logout();
-                        setState(() {
-                          _isSigningOut = false;
-                        });
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => OnboardingPage(),
-                          ),
-                        );
-                      },
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            'Çıkış',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          SizedBox(width: 8),
-                          Icon(Icons.exit_to_app, color: Colors.white, size: 16),
-                        ],
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 16,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => ProfilePage()),
+                                );
+                              },
+                              child: Text(
+                                userName,
+                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                              ),
+                            ),
+                            SizedBox(height: 4.0),
+                            Text(
+                              userEmail,
+                              style: TextStyle(fontSize: 15.0),
+                            ),
+                          ],
                         ),
-                        backgroundColor: buttonColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20), // Adjusted border radius for a smaller button
-                        ),
-                        minimumSize: Size(280, 20),
-                      ),
+                      ],
                     ),
-                  ],
-                )
+                  ),
+                ),
               ],
-              ),
+            ),
+
+            ListTile(
+              title: Text('Paylaşımlarım'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => MySharingsPage()));
+              },
+            ),
+            ListTile(
+              title: Text('Gönderiler'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => PostsPage()));
+              },
+            ),
+            ListTile(
+              title: Text('Soru-Cevap'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => DisplayQuestionsPage()));
+
+              },
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center, // Center the button horizontally
+              children: [
+                ElevatedButton(
+                  onPressed: () async {
+                    setState(() {
+                      _isSigningOut = true;
+                    });
+                    await FirebaseAuth.instance.signOut();
+                    await UserManager().logout();
+                    setState(() {
+                      _isSigningOut = false;
+                    });
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => OnboardingPage(),
+                      ),
+                    );
+                  },
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Çıkış',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      SizedBox(width: 8),
+                      Icon(Icons.exit_to_app, color: Colors.white, size: 16),
+                    ],
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 16,
+                    ),
+                    backgroundColor: buttonColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20), // Adjusted border radius for a smaller button
+                    ),
+                    minimumSize: Size(280, 20),
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
       ),
 
 

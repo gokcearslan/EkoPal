@@ -159,147 +159,147 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
         ],
       ),
       body: Column(
-        children: [
-          SizedBox(height: 20),
-      Stack(
-        children: [
-          Container(
-            width: width * 0.3,
-            height: width * 0.3,
-            decoration: BoxDecoration(
-              color: Colors.black12,
-              shape: BoxShape.circle,
-              border: Border.all(color: somon, width: 1),
-              image: _imageUrl != null
-                  ? DecorationImage(
-                image: NetworkImage(_imageUrl!),
-                fit: BoxFit.cover,
-              )
-                  : null,
-            ),
-          ),
-          Positioned(
-            right: width * 0.01,
-            bottom: height * 0.05,
-            child: Container(
-              width: width * 0.15,
-              height: height * 0.07,
-              decoration: BoxDecoration(
-                color: Color(0xfff2f9fe),
-                shape: BoxShape.circle,
-                border: Border.all(color: Color(0xFF001489), width: 1),
-              ),
-              child: IconButton(
-                onPressed: ()  {
-                  _showEditImageActionSheet(context);
-                },
+          children: [
+            SizedBox(height: 20),
+            Stack(
+              children: [
+                Container(
+                  width: width * 0.3,
+                  height: width * 0.3,
+                  decoration: BoxDecoration(
+                    color: Colors.black12,
+                    shape: BoxShape.circle,
+                    border: Border.all(color: somon, width: 1),
+                    image: _imageUrl != null
+                        ? DecorationImage(
+                      image: NetworkImage(_imageUrl!),
+                      fit: BoxFit.cover,
+                    )
+                        : null,
+                  ),
+                ),
+                Positioned(
+                  right: width * 0.01,
+                  bottom: height * 0.05,
+                  child: Container(
+                    width: width * 0.15,
+                    height: height * 0.07,
+                    decoration: BoxDecoration(
+                      color: Color(0xfff2f9fe),
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Color(0xFF001489), width: 1),
+                    ),
+                    child: IconButton(
+                      onPressed: ()  {
+                        _showEditImageActionSheet(context);
+                      },
 
-                icon: Icon(
-                  Icons.edit,
-                  color: Color(0xFF001489),
-                  size: width * 0.05,
+                      icon: Icon(
+                        Icons.edit,
+                        color: Color(0xFF001489),
+                        size: width * 0.05,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 16),
+            Align(
+              alignment: Alignment.center,
+              child: Text(name, style: TextStyle(
+                  color: Colors.black, fontSize: 35, fontWeight: FontWeight.bold)),
+            ),
+            SizedBox(height: 10),
+            _currentUser?.emailVerified == true
+                ? Text(
+              'Email onaylandı',
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 16.0,
+              ),
+            )
+                : Text(
+              'Mail onaylanmadı',
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 16.0,
+              ),
+            ),
+            SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: _currentUser != null && !_currentUser!.emailVerified
+                  ? () async {
+                setState(() {
+                  _isSendingVerification = true;
+                });
+                await _currentUser!.sendEmailVerification();
+                setState(() {
+                  _isSendingVerification = false;
+                });
+              }
+                  : null,
+              child: _isSendingVerification
+                  ? CircularProgressIndicator()
+                  : Text(
+                'Maili onayla',
+                style: TextStyle(color: Colors.white),
+              ),
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 10,
+                ),
+                backgroundColor: Colors.purple,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
                 ),
               ),
             ),
-          ),
-        ],
-      ),
-      SizedBox(height: 16),
-      Align(
-        alignment: Alignment.center,
-        child: Text(name, style: TextStyle(
-            color: Colors.black, fontSize: 35, fontWeight: FontWeight.bold)),
-      ),
-      SizedBox(height: 10),
-      _currentUser?.emailVerified == true
-          ? Text(
-        'Email onaylandı',
-        style: TextStyle(
-          color: Colors.black,
-          fontWeight: FontWeight.bold,
-          fontSize: 16.0,
-        ),
-      )
-          : Text(
-        'Mail onaylanmadı',
-        style: TextStyle(
-          color: Colors.black,
-          fontWeight: FontWeight.bold,
-          fontSize: 16.0,
-        ),
-      ),
-      SizedBox(height: 10),
-      ElevatedButton(
-        onPressed: _currentUser != null && !_currentUser!.emailVerified
-            ? () async {
-          setState(() {
-            _isSendingVerification = true;
-          });
-          await _currentUser!.sendEmailVerification();
-          setState(() {
-            _isSendingVerification = false;
-          });
-        }
-            : null,
-        child: _isSendingVerification
-            ? CircularProgressIndicator()
-            : Text(
-          'Maili onayla',
-          style: TextStyle(color: Colors.white),
-        ),
-        style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.symmetric(
-            horizontal: 20,
-            vertical: 10,
-          ),
-          backgroundColor: Colors.purple,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-        ),
-      ),
-      SizedBox(height: 16),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          ElevatedButton(
-            onPressed: () {
-              if (_currentUser != null && _currentUser!.emailVerified) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ChangePasswordPage(),
+            SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    if (_currentUser != null && _currentUser!.emailVerified) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ChangePasswordPage(),
+                        ),
+                      );
+                    }
+                  },
+                  child: Text(
+                    'Şifreni değiştir',
+                    style: TextStyle(color: Colors.white),
                   ),
-                );
-              }
-            },
-            child: Text(
-              'Şifreni değiştir',
-              style: TextStyle(color: Colors.white),
-            ),
-            style: _currentUser != null && _currentUser!.emailVerified
-                ? ElevatedButton.styleFrom(
-              padding: EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 10,
-              ),
-              backgroundColor: Colors.purple,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-            )
-                : ElevatedButton.styleFrom(
-              padding: EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 10,
-              ),
-              backgroundColor: Colors.purple.withOpacity(0.5),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-            ),
-          ),
-          /*
+                  style: _currentUser != null && _currentUser!.emailVerified
+                      ? ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 10,
+                    ),
+                    backgroundColor: Colors.purple,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  )
+                      : ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 10,
+                    ),
+                    backgroundColor: Colors.purple.withOpacity(0.5),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                ),
+                /*
           ElevatedButton(
             onPressed: () async {
               setState(() {
@@ -336,34 +336,34 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
             ),
           ),
           */
-        ],
-      ),
+              ],
+            ),
 
-      SizedBox(height: 20),
-      TabBar(
-        controller: _tabController,
-        indicatorColor: buttonColor,
-        labelColor: textColor,
-        labelStyle: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-        unselectedLabelStyle: TextStyle(fontSize: 14),
-        tabs: [
-          Tab(text: 'Paylaşımlarım'),
-          Tab(text: 'Yanıtlarım'),
-          Tab(text: 'Oylarım'),
-        ],
-      ),
-      Expanded(
-        child: TabBarView(
-          controller: _tabController,
-          children: [
-            MySharingsPage(showAppBar: false),
-            Text('yanıtları çekemedim'),
-            UserVotesPage(),
+            SizedBox(height: 20),
+            TabBar(
+              controller: _tabController,
+              indicatorColor: buttonColor,
+              labelColor: textColor,
+              labelStyle: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+              unselectedLabelStyle: TextStyle(fontSize: 14),
+              tabs: [
+                Tab(text: 'Paylaşımlarım'),
+                Tab(text: 'Yanıtlarım'),
+                Tab(text: 'Oylarım'),
+              ],
+            ),
+            Expanded(
+              child: TabBarView(
+                controller: _tabController,
+                children: [
+                  MySharingsPage(showAppBar: false),
+                  Text('yanıtları çekemedim'),
+                  UserVotesPage(),
 
-          ],
-        ),
-      ),
-    ]
+                ],
+              ),
+            ),
+          ]
       ),
     );
   }

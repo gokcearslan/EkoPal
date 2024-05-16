@@ -291,7 +291,7 @@ class SoruCevapService {
           soru: data['soru'] as String,
           soruDetails: data['soruDetails'] as String,
           userId: data['userId'] as String,
-            createdBy: data['createdBy'] as String,
+          createdBy: data['createdBy'] as String,
         );
       }).toList();
     });
@@ -320,6 +320,4 @@ class SoruCevapService {
       print('Failed to delete question: $error');
     }
   }
-
-
 }
