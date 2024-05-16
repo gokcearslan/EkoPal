@@ -12,8 +12,7 @@ import 'package:image_picker/image_picker.dart';
 import 'change_password_page.dart';
 import 'mySharingsPage.dart';
 
-// YORUM(YANIT) VE OY VERME ÖZELLİKLERİ EKLENİNCE
-// PAYLAŞIM GİBİ ÇEKİLECEK -g
+// YORUM(YANIT) PAYLAŞIM GİBİ ÇEKİLECEK -g
 //email conform buradan kaldırılacak
 
 
@@ -36,7 +35,7 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
   void initState() {
     super.initState();
     _currentUser = FirebaseAuth.instance.currentUser;
-    _fetchProfileImage(); // Fetch the profile image URL
+    _fetchProfileImage();
     fetchUser();
     _tabController = TabController(length: 3, vsync: this);
   }
@@ -83,11 +82,11 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
  */
   void _showEditImageActionSheet(BuildContext context) {
     final action = CupertinoActionSheet(
-      title: Text("Picture", style: TextStyle(fontSize: 15.0, color: Color(0xFF001489))),
-      message: Text("Select a picture", style: TextStyle(fontSize: 15.0, color: Color(0xFF001489).withOpacity(0.7))),
+      title: Text("Resim", style: TextStyle(fontSize: 15.0, color: Color(0xFF001489))),
+      message: Text("Bir resim seçiniz", style: TextStyle(fontSize: 15.0, color: Color(0xFF001489).withOpacity(0.7))),
       actions: [
         CupertinoActionSheetAction(
-          child: Text("Camera", style: TextStyle(color: Color(0xFF001489))),
+          child: Text("Kamera", style: TextStyle(color: Color(0xFF001489))),
           onPressed: () {
             Navigator.pop(context);
             _imageService.pickAndUploadImage(ImageSource.camera).then((_) {
@@ -96,7 +95,7 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
           },
         ),
         CupertinoActionSheetAction(
-          child: Text("Gallery", style: TextStyle(color: Color(0xFF001489))),
+          child: Text("Galeri", style: TextStyle(color: Color(0xFF001489))),
           onPressed: () {
             Navigator.pop(context);
             _imageService.pickAndUploadImage(ImageSource.gallery).then((_) {
@@ -106,7 +105,7 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
         ),
       ],
       cancelButton: CupertinoActionSheetAction(
-        child: Text("Close", style: TextStyle(color: Colors.red)),
+        child: Text("Kapat", style: TextStyle(color: Colors.red)),
         isDestructiveAction: true,
         onPressed: () {
           Navigator.pop(context);
@@ -137,13 +136,26 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
         backgroundColor: appBarColor,
         actions: <Widget>[
 
-          //Edit profil özelliği eklenecek
+
           IconButton(
-            icon: Icon(Icons.edit, color: Colors.black),
-            onPressed: () {
-              // Navigate to the edit profile page or open edit mode
+            icon: Icon(Icons.exit_to_app, color: Colors.black),
+            onPressed: () async {
+              setState(() {
+                _isSigningOut = true;
+              });
+              await FirebaseAuth.instance.signOut();
+              setState(() {
+                _isSigningOut = false;
+              });
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => LoginPage(),
+                ),
+              );
             },
           ),
+
+
         ],
       ),
       body: Column(
@@ -201,7 +213,7 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
       SizedBox(height: 10),
       _currentUser?.emailVerified == true
           ? Text(
-        'Email confirmed',
+        'Email onaylandı',
         style: TextStyle(
           color: Colors.black,
           fontWeight: FontWeight.bold,
@@ -209,7 +221,7 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
         ),
       )
           : Text(
-        'Email could not be confirmed',
+        'Mail onaylanmadı',
         style: TextStyle(
           color: Colors.black,
           fontWeight: FontWeight.bold,
@@ -232,7 +244,7 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
         child: _isSendingVerification
             ? CircularProgressIndicator()
             : Text(
-          'Confirm Email',
+          'Maili onayla',
           style: TextStyle(color: Colors.white),
         ),
         style: ElevatedButton.styleFrom(
@@ -262,7 +274,7 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
               }
             },
             child: Text(
-              'Change Password',
+              'Şifreni değiştir',
               style: TextStyle(color: Colors.white),
             ),
             style: _currentUser != null && _currentUser!.emailVerified
@@ -287,6 +299,7 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
               ),
             ),
           ),
+          /*
           ElevatedButton(
             onPressed: () async {
               setState(() {
@@ -305,7 +318,7 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('Logout',
+                Text('Çıkış',
                     style: TextStyle(color: Colors.white)),
                 SizedBox(width: 8),
                 Icon(Icons.exit_to_app, color: Colors.white),
@@ -322,8 +335,10 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
               ),
             ),
           ),
+          */
         ],
       ),
+
       SizedBox(height: 20),
       TabBar(
         controller: _tabController,
@@ -342,7 +357,7 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
           controller: _tabController,
           children: [
             MySharingsPage(showAppBar: false),
-            Text('Content for comments'),
+            Text('yanıtları çekemedim'),
             UserVotesPage(),
 
           ],
