@@ -2,6 +2,7 @@ import 'package:ekopal/HomePage.dart';
 import 'package:ekopal/services/UserManager.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'advertisements.dart';
 import 'announcements.dart';
 import 'bottom_bar.dart';
@@ -24,6 +25,17 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
+      supportedLocales: [
+        const Locale('en', 'US'), // English
+        const Locale('tr', 'TR'), // Turkish
+      ],
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+
+
       home:MainApp(),
 
     );

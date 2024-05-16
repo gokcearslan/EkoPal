@@ -343,42 +343,59 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
   }
 
   Future<void> _selectDateAndTime(BuildContext context) async {
-    final DateTime now = DateTime.now();
-    final DateTime? pickedDate = await showDatePicker(
+    final DateTime simdi = DateTime.now();
+    final DateTime? secilenTarih = await showDatePicker(
       context: context,
-      initialDate: now,
-      firstDate: now,
+      initialDate: simdi,
+      firstDate: simdi,
       lastDate: DateTime(2101),
+      locale: const Locale('tr', 'TR'), // Set the locale to Turkish
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData.light(), // You can customize the theme here if needed
+          child: child!,
+        );
+      },
     );
 
-    if (pickedDate != null) {
-      final TimeOfDay? pickedTime = await showTimePicker(
+    if (secilenTarih != null) {
+      final TimeOfDay? secilenSaat = await showTimePicker(
         context: context,
-        initialTime: TimeOfDay(hour: now.hour, minute: now.minute),
+        initialTime: TimeOfDay(hour: simdi.hour, minute: simdi.minute),
+        builder: (BuildContext context, Widget? child) {
+          return MediaQuery(
+            data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true), // Ensure 24-hour format
+            child: Localizations.override(
+              context: context,
+              locale: const Locale('tr', 'TR'), // Set the locale to Turkish for time picker
+              child: child!,
+            ),
+          );
+        },
       );
 
-      if (pickedTime != null) {
-        final DateTime pickedDateTime = DateTime(
-          pickedDate.year,
-          pickedDate.month,
-          pickedDate.day,
-          pickedTime.hour,
-          pickedTime.minute,
+      if (secilenSaat != null) {
+        final DateTime secilenTarihVeSaat = DateTime(
+          secilenTarih.year,
+          secilenTarih.month,
+          secilenTarih.day,
+          secilenSaat.hour,
+          secilenSaat.minute,
         );
 
-        if (pickedDateTime.isAfter(now)) {
+        if (secilenTarihVeSaat.isAfter(simdi)) {
           setState(() {
-            _eventDateController.text = DateFormat('dd-MM-yyyy – HH:mm').format(pickedDateTime);
-            //DateFormat('yyyy-MM-dd – HH:mm').format(pickedDateTime);
+            _eventDateController.text = DateFormat('dd-MM-yyyy – HH:mm', 'tr_TR').format(secilenTarihVeSaat);
           });
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Geçmiş Tarihler için etkinlik oluşturulamaz!')),
+            SnackBar(content: Text('Geçmiş tarihler için etkinlik oluşturulamaz!')),
           );
         }
       }
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
