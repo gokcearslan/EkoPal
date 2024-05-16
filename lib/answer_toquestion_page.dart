@@ -75,7 +75,7 @@ class _CreateAnswerPageState extends State<CreateAnswerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('           Yanıt Gönder'),
+        title: Text('Yanıt Gönder'),
         leading: IconButton(
           icon: Icon(Icons.close),
           onPressed: () => Navigator.of(context).pop(),
@@ -96,6 +96,7 @@ class _CreateAnswerPageState extends State<CreateAnswerPage> {
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           child: Column(
             children: [
               Row(
@@ -117,12 +118,13 @@ class _CreateAnswerPageState extends State<CreateAnswerPage> {
                 decoration: InputDecoration(
                   hintText: 'Bir cevap yazarak yardım edin!',
                   border: InputBorder.none,
+                  errorStyle: TextStyle(color: Colors.red),
                 ),
                 maxLines: null,
                 style: TextStyle(color: Colors.black),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Yanıt boş bırakılamaz';
+                    return 'Bu alan boş kalamaz';
                   }
                   return null;
                 },
@@ -133,4 +135,5 @@ class _CreateAnswerPageState extends State<CreateAnswerPage> {
       ),
     );
   }
+
 }
