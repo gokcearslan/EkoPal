@@ -34,9 +34,9 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
   void initState() {
     super.initState();
     _currentUser = FirebaseAuth.instance.currentUser;
-    _fetchProfileImage();
+    _fetchProfileImage(); // Fetch the profile image URL
     fetchUser();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
   }
   Future<void> _fetchProfileImage() async {
     String userId = _currentUser?.uid ?? '';
@@ -81,30 +81,30 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
  */
   void _showEditImageActionSheet(BuildContext context) {
     final action = CupertinoActionSheet(
-      title: Text("Resim", style: TextStyle(fontSize: 15.0, color: Color(0xFF001489))),
-      message: Text("Bir resim seçiniz", style: TextStyle(fontSize: 15.0, color: Color(0xFF001489).withOpacity(0.7))),
+      title: Text("Picture", style: TextStyle(fontSize: 15.0, color: Color(0xFF001489))),
+      message: Text("Select a picture", style: TextStyle(fontSize: 15.0, color: Color(0xFF001489).withOpacity(0.7))),
       actions: [
         CupertinoActionSheetAction(
-          child: Text("Kamera", style: TextStyle(color: Color(0xFF001489))),
+          child: Text("Camera", style: TextStyle(color: Color(0xFF001489))),
           onPressed: () {
             Navigator.pop(context);
-            _imageService.pickAndUploadImage(ImageSource.camera).then((_) {
+            _imageService.pickAndUploadImage(ImageSource.camera, 'profile_images/${FirebaseAuth.instance.currentUser?.uid}', 'users', FirebaseAuth.instance.currentUser?.uid ?? '').then((_) {
               _fetchProfileImage(); // Refresh the image URL after uploading
             });
           },
         ),
         CupertinoActionSheetAction(
-          child: Text("Galeri", style: TextStyle(color: Color(0xFF001489))),
+          child: Text("Gallery", style: TextStyle(color: Color(0xFF001489))),
           onPressed: () {
             Navigator.pop(context);
-            _imageService.pickAndUploadImage(ImageSource.gallery).then((_) {
+            _imageService.pickAndUploadImage(ImageSource.gallery, 'profile_images/${FirebaseAuth.instance.currentUser?.uid}', 'users', FirebaseAuth.instance.currentUser?.uid ?? '').then((_) {
               _fetchProfileImage(); // Refresh the image URL after uploading
             });
           },
         ),
       ],
       cancelButton: CupertinoActionSheetAction(
-        child: Text("Kapat", style: TextStyle(color: Colors.red)),
+        child: Text("Close", style: TextStyle(color: Colors.red)),
         isDestructiveAction: true,
         onPressed: () {
           Navigator.pop(context);

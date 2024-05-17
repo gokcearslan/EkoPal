@@ -22,6 +22,18 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
   List<Advertisement>? advertisements;
   StreamSubscription<List<Advertisement>>? adsSubscription;
 
+
+  Stream<List<Advertisement>> getAdvertisementsStream() {
+    return FirebaseFirestore.instance.collection('advertisements')
+        .snapshots()
+        .map((snapshot) {
+      snapshot.docs.forEach((doc) {
+        print('Doc dataprinted Hereeeeeeeeeeeeeeeeeeeeeeeeee: ${doc.data()}'); // Log each document's data
+      });
+      return snapshot.docs.map((doc) => Advertisement.fromMap(doc.data() as Map<String, dynamic>)).toList();
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -37,7 +49,26 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
           // Handle any errors that occur in the stream.
           print('Error listening to advertisement updates: $err');
         }
+
     );
+
+    Future<String?> fetchAdvertisementImageUrl(String documentId) async {
+      try {
+        DocumentSnapshot doc = await FirebaseFirestore.instance.collection('advertisements').doc(documentId).get();
+        if (doc.exists) {
+          Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+          return data['imageUrl'];  // Make sure 'imageUrl' is the correct field name
+        } else {
+          print("No such advertisement found");
+          return null;
+        }
+      } catch (e) {
+        print("Failed to fetch advertisement image URL: $e");
+        return null;
+      }
+    }
+
+
   }
   @override
   void dispose() {
@@ -60,17 +91,17 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
 
     return Scaffold(
       backgroundColor:white,
-        appBar: AppBar(
-          title: const Text(
-            'İlanlar',
-            style: TextStyle(
-              fontSize: 26,
-            ),
+      appBar: AppBar(
+        title: const Text(
+          'İlanlar',
+          style: TextStyle(
+            fontSize: 26,
           ),
-          centerTitle: true,
-          backgroundColor: appBarColor,
         ),
-        body:SafeArea(
+        centerTitle: true,
+        backgroundColor: appBarColor,
+      ),
+      body:SafeArea(
         child: advertisements == null
             ? Center(child: CircularProgressIndicator())
             : ListView.builder(
@@ -79,29 +110,36 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
             return buildAdCard(advertisements![index]);
           },
         ),
-        ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => CreatePage(initialCategory: 'İlan')));
-          },
-          child: Material(
-            color: Colors.transparent,
-            child: Icon(
-              Icons.add,
-              color: textColor,
-            ),
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => CreatePage(initialCategory: 'İlan')));
+        },
+        child: Material(
+          color: Colors.transparent,
+          child: Icon(
+            Icons.add,
+            color: textColor,
           ),
-          backgroundColor: lightButtonColor,
         ),
+        backgroundColor: lightButtonColor,
+      ),
 
-        );
+    );
   }
 
 
   Widget buildAdCard(Advertisement ad) {
+
     final ThemeData theme = Theme.of(context);
     final ColorScheme colorScheme = theme.colorScheme;
+    print('Loading image for URLLLLLLLLLLLLLLLLLLL: ${ad.imageUrl}');  // Log the image URL being loaded
+    print('Loading image for URLLLLLLLLLLLLLLLLLLL: ${ad.advertisementDetails}');  // Log the image URL being loaded
+    print('Loading image for URLLLLLLLLLLLLLLLLLLL: ${ad.advertisementName}');  // Log the image URL being loaded
+    print('Loading image for URLLLLLLLLLLLLLLLLLLL: ${ad.advertisementType}');  // Log the image URL being loaded
+
+
 
     return Card(
       margin: EdgeInsets.all(16.0),
@@ -109,21 +147,26 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
         borderRadius: BorderRadius.circular(32),
       ),
       elevation: 5.0,
-        color:cardColor,
+      color:cardColor,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Image.network(
-                'https://img3.idealista.com/blur/WEB_LISTING-M/0/id.pro.es.image.master/88/73/d4/908040653.jpg',
-                width: 120,
-                height: 120,
-                fit: BoxFit.cover,
+            if (ad.imageUrl != null) // Check if the imageUrl exists
+
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.network(
+                  ad.imageUrl!, // Use the imageUrl from the Advertisement object
+                  width: 120,
+                  height: 120,
+                  fit: BoxFit.cover,
+                  errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+                    return Text('Unable to load image');  // Error handling for failed image loads
+                  },
+                ),
               ),
-            ),
             SizedBox(width: 16),
             Expanded(
               child: Column(
@@ -157,7 +200,7 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                     /* IconButton(
+                      /* IconButton(
                         icon: Icon(
                           ad.isFavorite ? Icons.star : Icons.star_border,
                           color: ad.isFavorite ? Colors.amber : colorScheme.onSurfaceVariant,

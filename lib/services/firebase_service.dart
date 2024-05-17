@@ -81,6 +81,8 @@ class AdvertisementService {
       'advertisementType': advertisement.advertisementType,
       'advertisementDetails': advertisement.advertisementDetails,
       'userId': advertisement.userId,
+      'imageUrl': advertisement.imageUrl,  // Ensure imageUrl is included
+
 
     })
         .then((value) => print('Advertisement added to Firestore'))
@@ -101,6 +103,8 @@ class AdvertisementService {
           advertisementType: data['advertisementType'] as String? ?? 'Unknown',
           advertisementDetails: data['advertisementDetails'] as String? ?? 'No details provided',
           userId: data['userId'] as String? ?? 'No user',
+          imageUrl: data['imageUrl'] as String?,  // Add this line to include imageUrl
+
         );
       }).where((ad) => ad != null).cast<Advertisement>().toList();
     });

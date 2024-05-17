@@ -9,33 +9,32 @@ import 'package:image/image.dart' as img_lib;
 class ImageService {
   final ImagePicker _picker = ImagePicker();
 
-  Future<void> pickAndUploadImage(ImageSource source) async {
+
+
+
+  Future<void> pickAndUploadImage(ImageSource source, String filePath, String collectionPath, String docId) async {
     final FirebaseAuth auth = FirebaseAuth.instance;
     final User? user = auth.currentUser;
     if (user == null) return;
 
     final XFile? pickedFile = await _picker.pickImage(source: source, maxHeight: 800, maxWidth: 800);
     if (pickedFile != null) {
-      final File imageFile = File(pickedFile.path);
-      final img_lib.Image? originalImage = img_lib.decodeImage(await imageFile.readAsBytes());
+      File imageFile = File(pickedFile.path);
+      img_lib.Image? originalImage = img_lib.decodeImage(await imageFile.readAsBytes());
 
       if (originalImage != null) {
-        // Resize and compress image
-        final img_lib.Image resized = img_lib.copyResize(originalImage, width: 1024, height: 1024);
-        final List<int> jpg = img_lib.encodeJpg(resized, quality: 70);
+        img_lib.Image resized = img_lib.copyResize(originalImage, width: 1024, height: 1024);
+        List<int> jpg = img_lib.encodeJpg(resized, quality: 70);
 
-        // Save the compressed image to a temporary file
-        final Directory tempDir = await getTemporaryDirectory();
-        final String targetPath = "${tempDir.path}/temp.jpg";
-        final File targetFile = File(targetPath)..writeAsBytesSync(jpg);
+        Directory tempDir = await getTemporaryDirectory();
+        String targetPath = "${tempDir.path}/temp.jpg";
+        File targetFile = File(targetPath)..writeAsBytesSync(jpg);
 
-        // Upload the image to Firebase Storage
-        final String filePath = 'profile_images/${user.uid}/${DateTime.now().millisecondsSinceEpoch}.jpg';
-        final TaskSnapshot snapshot = await FirebaseStorage.instance.ref(filePath).putFile(targetFile);
-        final String downloadUrl = await snapshot.ref.getDownloadURL();
+        String fullFilePath = '$filePath/${DateTime.now().millisecondsSinceEpoch}.jpg';
+        TaskSnapshot snapshot = await FirebaseStorage.instance.ref(fullFilePath).putFile(targetFile);
+        String downloadUrl = await snapshot.ref.getDownloadURL();
 
-        // Update Firestore with the image URL
-        await FirebaseFirestore.instance.collection('users').doc(user.uid).update({
+        await FirebaseFirestore.instance.collection(collectionPath).doc(docId).update({
           'imageUrl': downloadUrl,
         });
       }
