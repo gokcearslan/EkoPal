@@ -12,8 +12,7 @@ import 'package:image_picker/image_picker.dart';
 import 'change_password_page.dart';
 import 'mySharingsPage.dart';
 
-// YORUM(YANIT) PAYLAŞIM GİBİ ÇEKİLECEK -g
-//email conform buradan kaldırılacak
+
 
 
 class ProfilePage extends StatefulWidget {
