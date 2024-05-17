@@ -203,61 +203,6 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
                 ),
               ],
             ),
-            SizedBox(height: 16),
-            Align(
-              alignment: Alignment.center,
-              child: Text(name, style: TextStyle(
-                  color: Colors.black, fontSize: 35, fontWeight: FontWeight.bold)),
-            ),
-            SizedBox(height: 10),
-            _currentUser?.emailVerified == true
-                ? Text(
-              'Email onaylandı',
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 16.0,
-              ),
-            )
-                : Text(
-              'Mail onaylanmadı',
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 16.0,
-              ),
-            ),
-            SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: _currentUser != null && !_currentUser!.emailVerified
-                  ? () async {
-                setState(() {
-                  _isSendingVerification = true;
-                });
-                await _currentUser!.sendEmailVerification();
-                setState(() {
-                  _isSendingVerification = false;
-                });
-              }
-                  : null,
-              child: _isSendingVerification
-                  ? CircularProgressIndicator()
-                  : Text(
-                'Maili onayla',
-                style: TextStyle(color: Colors.white),
-              ),
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 10,
-                ),
-                backgroundColor: Colors.purple,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-              ),
-            ),
-            SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -282,7 +227,7 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
                       horizontal: 20,
                       vertical: 10,
                     ),
-                    backgroundColor: Colors.purple,
+                    backgroundColor: buttonColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
@@ -292,7 +237,7 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
                       horizontal: 20,
                       vertical: 10,
                     ),
-                    backgroundColor: Colors.purple.withOpacity(0.5),
+                    backgroundColor: buttonColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
@@ -338,7 +283,42 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
               ],
             ),
 
-            SizedBox(height: 20),
+            SizedBox(height: 5),
+            Align(
+              alignment: Alignment.center,
+              child: Text(name, style: TextStyle(
+                  color: Colors.black, fontSize: 35, fontWeight: FontWeight.bold)),
+            ),
+            SizedBox(height:5),
+            ElevatedButton(
+              onPressed: _currentUser != null && !_currentUser!.emailVerified
+                  ? () async {
+                setState(() {
+                  _isSendingVerification = true;
+                });
+                await _currentUser!.sendEmailVerification();
+                setState(() {
+                  _isSendingVerification = false;
+                });
+              }
+                  : null,
+              child: _isSendingVerification
+                  ? CircularProgressIndicator()
+                  : Text(
+                'Maili onayla',
+                style: TextStyle(color: Colors.white),
+              ),
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 10,
+                ),
+                backgroundColor: buttonColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
+            ),
             TabBar(
               controller: _tabController,
               indicatorColor: buttonColor,

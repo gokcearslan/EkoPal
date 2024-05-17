@@ -34,7 +34,7 @@ class OnboardingPage extends StatefulWidget {
       backgroundColor: Colors.white,
       bottomSheet: Container(
         color: Colors.white,
-        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 35),
+        padding: EdgeInsets.symmetric(horizontal: 14, vertical: 35),
         child: isLastPage
             ? getStarted()
             : Row(
@@ -78,7 +78,7 @@ class OnboardingPage extends StatefulWidget {
             itemCount: controller.items.length,
             controller: pageController,
             itemBuilder: (context, index) {
-              double imageContainerHeight = index == 0 ? 500: 300;  // Dynamic height adjustment
+              double imageContainerHeight = index == 0 ? 550: 300;  // Dynamic height adjustment
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

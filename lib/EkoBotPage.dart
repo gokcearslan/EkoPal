@@ -50,8 +50,7 @@ class _EkoBotPageState extends State<EkoBotPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Dialogflow CX Chatbot'),
-        backgroundColor: appBarColor,
-
+        backgroundColor: appBarColor
       ),
       body: Column(
         children: [
@@ -65,27 +64,54 @@ class _EkoBotPageState extends State<EkoBotPage> {
               },
             ),
           ),
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _controller,
-                    decoration: InputDecoration(
-                      labelText: "Ekobot'a sorunu sor!",
-                      border: OutlineInputBorder(),
+          _buildUserInput(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildUserInput() {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Container(
+        padding: EdgeInsets.only(left: 15, right: 15, bottom: 10),
+        child: Row(
+          children: [
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(30),
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 5,
+                      color: Colors.black12,
+                      spreadRadius: 2,
+                      offset: Offset(0, 2),
                     ),
+                  ],
+                ),
+                child: TextField(
+                  controller: _controller,
+                  decoration: InputDecoration(
+                    hintText: "Ekobot'a sorunu sor!",
+                    hintStyle: TextStyle(color: Colors.grey),
+                    border: InputBorder.none,
                   ),
                 ),
-                IconButton(
-                  icon: Icon(Icons.send),
-                  onPressed:  _sendMessage,
-                ),
-              ],
+              ),
             ),
-          ),
-        ],
+            SizedBox(width: 8),
+            GestureDetector(
+              onTap: _sendMessage,  // Connect this to your sendMessage method
+              child: CircleAvatar(
+                backgroundColor: appBarColor,
+                child: Icon(Icons.send, color: Colors.white),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -99,7 +125,7 @@ class _EkoBotPageState extends State<EkoBotPage> {
     String message = _controller.text;
     _controller.clear();
     setState(() {
-      _messages.add('You: $message');
+      _messages.add('Sen: $message');
     });
 
     // Using the updated location and agent ID
