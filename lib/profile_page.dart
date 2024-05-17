@@ -37,7 +37,7 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
     _currentUser = FirebaseAuth.instance.currentUser;
     _fetchProfileImage();
     fetchUser();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 2, vsync: this);
   }
   Future<void> _fetchProfileImage() async {
     String userId = _currentUser?.uid ?? '';
@@ -348,7 +348,7 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
               unselectedLabelStyle: TextStyle(fontSize: 14),
               tabs: [
                 Tab(text: 'Paylaşımlarım'),
-                Tab(text: 'Yanıtlarım'),
+               // Tab(text: 'Yanıtlarım'),
                 Tab(text: 'Oylarım'),
               ],
             ),
@@ -357,7 +357,7 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
                 controller: _tabController,
                 children: [
                   MySharingsPage(showAppBar: false),
-                  Text('yanıtları çekemedim'),
+                  //UserAnswersPage(questionId: '',),
                   UserVotesPage(),
 
                 ],

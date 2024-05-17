@@ -3,9 +3,6 @@ import 'package:ekopal/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-//Son sayfaya Giriş butonu eklenecek
-//indicator eklenecek
-//login öncesine koyulacak
 
 class MyApp extends StatelessWidget {
   @override
@@ -145,7 +142,7 @@ class OnboardingItems{
 
     OnboardingInfo(title: "Neye ihtiyacın var?",
         description: "Dersin için kitaba mı ihtiyacın var? Staj yapmak için bir yer mi arıyorsun? Projende birlikte çalışabileceğin takım arkadaşları mı arıyorsun?"
-            "EkoPal sayesinde aradğın her şey tek bir yerde. Kolayca çalışmak için projeler, stajlar bulabilir, aradğın kitaba rahatlıkla ulaşabilirsin.",
+            " EkoPal sayesinde aradığın her şey tek bir yerde. Kolayca çalışmak için projeler, stajlar bulabilir, aradığın kitaba rahatlıkla ulaşabilirsin.",
         image: "https://i.pinimg.com/originals/cd/54/d0/cd54d03bcd65a36fae7c0788ddc622d8.gif"),
 
     OnboardingInfo(title: "Üniversiten ile bağlantı kur",
