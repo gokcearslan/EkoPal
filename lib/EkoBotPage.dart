@@ -5,6 +5,8 @@ import 'package:googleapis_auth/auth_io.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:uuid/uuid.dart';
 
+import 'colors.dart';
+
 class EkoBotPage extends StatefulWidget {
   @override
   _EkoBotPageState createState() => _EkoBotPageState();
@@ -48,6 +50,8 @@ class _EkoBotPageState extends State<EkoBotPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Dialogflow CX Chatbot'),
+        backgroundColor: appBarColor,
+
       ),
       body: Column(
         children: [
@@ -69,7 +73,7 @@ class _EkoBotPageState extends State<EkoBotPage> {
                   child: TextField(
                     controller: _controller,
                     decoration: InputDecoration(
-                      labelText: 'Type your message',
+                      labelText: "Ekobot'a sorunu sor!",
                       border: OutlineInputBorder(),
                     ),
                   ),

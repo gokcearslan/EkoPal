@@ -86,14 +86,10 @@ class _HomePageState extends State<HomePage> {
             onTap: () {
               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MainApp()));
             },
-            child: Text(
-              'EkoPal',
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.normal,
-                fontSize: 55,
-              ),
-            ),
+            child: Image.asset(
+            'lib/assets/ekopalbir.png',
+            height: 55,
+          ),
           ),
           centerTitle: true,
           backgroundColor: appBarColor,
@@ -115,12 +111,12 @@ class _HomePageState extends State<HomePage> {
                   Navigator.of(context).push(MaterialPageRoute(builder: (context) => EkoBotPage()));
                 },
                 child: Container(
-                  width: 80,
-                  height: 90,
+                  width: 50,
+                  height: 70,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
-                      image: NetworkImage('https://i.pinimg.com/736x/48/46/2e/48462eb8ccb2d4463d2e31499abe10b7.jpg'),
+                      image: AssetImage('lib/assets/ekobot.png'),
                       fit: BoxFit.cover,
                     ),
                   ),

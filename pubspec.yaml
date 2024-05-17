@@ -80,6 +80,8 @@ flutter:
   assets:
     - assets/ekobotchatbotv3.json
     - assets/images/
+    - lib/assets/ekopalbir.png
+    - lib/assets/ekobot.png
 
 
 
