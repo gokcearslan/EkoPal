@@ -49,7 +49,8 @@ class _EkoBotPageState extends State<EkoBotPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Dialogflow CX Chatbot'),
+        title: Text('              EkoBot',
+            style: TextStyle(fontSize: 26)),
         backgroundColor: appBarColor
       ),
       body: Column(
