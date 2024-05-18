@@ -690,6 +690,7 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
               ),
             ),
             const SizedBox(height: 20),
+            /*
             //FOTO EKLEME YERİ
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -703,6 +704,7 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
                 ),
               ],
             ),
+            */
             const SizedBox(height: 20),
 
             ElevatedButton(
@@ -740,7 +742,7 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
                 foregroundColor: textColor,
                 backgroundColor: backgroundColor,
                 textStyle: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 13),
+                padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
