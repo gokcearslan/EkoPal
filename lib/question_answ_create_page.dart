@@ -84,19 +84,6 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
                     textInputAction: TextInputAction.newline,
                   ),
                   SizedBox(height: 20),
-                  //FOTO EKLEME YERİ
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      IconButton(
-                        icon: Icon(Icons.add_photo_alternate, size: 50),
-                        onPressed: () {
-                          // Functionality to be implemented later
-                          print('Icon to add image pressed');
-                        },
-                      ),
-                    ],
-                  ),
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(

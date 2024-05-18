@@ -81,11 +81,11 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
  */
   void _showEditImageActionSheet(BuildContext context) {
     final action = CupertinoActionSheet(
-      title: Text("Picture", style: TextStyle(fontSize: 15.0, color: Color(0xFF001489))),
-      message: Text("Select a picture", style: TextStyle(fontSize: 15.0, color: Color(0xFF001489).withOpacity(0.7))),
+      title: Text("Fotoğraf", style: TextStyle(fontSize: 15.0, color: Color(0xFF001489))),
+      message: Text("Fotoğraf Seçiniz", style: TextStyle(fontSize: 15.0, color: Color(0xFF001489).withOpacity(0.7))),
       actions: [
         CupertinoActionSheetAction(
-          child: Text("Camera", style: TextStyle(color: Color(0xFF001489))),
+          child: Text("Kamera", style: TextStyle(color: Color(0xFF001489))),
           onPressed: () {
             Navigator.pop(context);
             _imageService.pickAndUploadImage(ImageSource.camera, 'profile_images/${FirebaseAuth.instance.currentUser?.uid}', 'users', FirebaseAuth.instance.currentUser?.uid ?? '').then((_) {
@@ -94,7 +94,7 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
           },
         ),
         CupertinoActionSheetAction(
-          child: Text("Gallery", style: TextStyle(color: Color(0xFF001489))),
+          child: Text("Galeri", style: TextStyle(color: Color(0xFF001489))),
           onPressed: () {
             Navigator.pop(context);
             _imageService.pickAndUploadImage(ImageSource.gallery, 'profile_images/${FirebaseAuth.instance.currentUser?.uid}', 'users', FirebaseAuth.instance.currentUser?.uid ?? '').then((_) {
