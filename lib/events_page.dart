@@ -123,7 +123,7 @@ class _EventsPageState extends State<EventsPage> {
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
               child: Image.network(
-                'https://i.pinimg.com/564x/12/ad/fa/12adfa1035792c44248d3eab35212c91.jpg',
+                'https://files.sikayetvar.com/lg/cmp/93/9386.png?1522650125',
                 width: 120,
                 height: 120,
                 fit: BoxFit.cover,
