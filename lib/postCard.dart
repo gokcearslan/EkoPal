@@ -67,7 +67,7 @@ class _PostCardState extends State<PostCard> {
 
       return print ("User not found");
     }
-      //    checkDocumentExistence(widget.post.id);
+    //    checkDocumentExistence(widget.post.id);
 
     print("vote id is: " + widget.post.id);
 
@@ -110,7 +110,7 @@ class _PostCardState extends State<PostCard> {
   @override
   Widget build(BuildContext context) {
     String formattedDate = "2 days ago";
-    const String defaultImageUrl = 'https://cdn-icons-png.flaticon.com/256/12989/12989000.png';
+    const String defaultImageUrl = 'https://i.pinimg.com/564x/a5/a5/16/a5a516a2b4562f321723ac550e51f653.jpg';
 
     return Card(
       margin: const EdgeInsets.all(16.0),
@@ -131,19 +131,33 @@ class _PostCardState extends State<PostCard> {
             title: Text(
                 widget.post.createdBy,
                 style: TextStyle(fontWeight: FontWeight.bold)),
-           // subtitle: Text(formattedDate),
+            // subtitle: Text(formattedDate),
           ),
           SizedBox(height: 6),
 
           ClipRRect(
             borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-            child: Image.network(
-              'https://cdn.vectorstock.com/i/500p/28/89/a-question-mark-symbol-vector-1122889.jpg',
+            child: widget.post.imageUrl != null && widget.post.imageUrl!.isNotEmpty
+                ? Image.network(
+              widget.post.imageUrl!,
+              width: double.infinity,
+              height: 200,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) => Image.network(
+                'https://i.pinimg.com/564x/a5/a5/16/a5a516a2b4562f321723ac550e51f653.jpg',  // Fallback image
+                width: double.infinity,
+                height: 200,
+                fit: BoxFit.cover,
+              ),
+            )
+                : Image.network(
+              'https://i.pinimg.com/564x/a5/a5/16/a5a516a2b4562f321723ac550e51f653.jpg',  // Default image if no imageUrl
               width: double.infinity,
               height: 200,
               fit: BoxFit.cover,
             ),
           ),
+
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(

@@ -1,7 +1,11 @@
+import 'dart:io';  // Correct import for using File with local file system
+
 import 'package:ekopal/services/firebase_service.dart';
 import 'package:ekopal/services/post_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'dart:math';
 
 import 'colors.dart';
@@ -16,6 +20,8 @@ class _PostCreationPageState extends State<PostCreationPage> {
   final TextEditingController _postTitleController = TextEditingController();
   final PostService _postService = PostService();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String? _uploadedImageUrl; // State variable to hold the uploaded image URL
+
 
   void _submitPostandNavigateToDisplayPosts() {
     Navigator.of(context).pop();  // To close the screen after submitting
@@ -37,11 +43,13 @@ class _PostCreationPageState extends State<PostCreationPage> {
         return;
       }
 
-      final post = Post(id: id, PostContent: postContent, postTitle: postTitle,userId: userId, createdBy: userName,);
+      final post = Post(id: id, PostContent: postContent, postTitle: postTitle,userId: userId, createdBy: userName,
+        imageUrl: _uploadedImageUrl, // Include the image URL
+      );
 
       await _postService.addPost(post).then((value) {
 
-      print("Gönderiniz başarıyla paylaşıldı");
+        print("Gönderiniz başarıyla paylaşıldı");
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Postunuz başarıyla paylaşıldı')));
 
       }).catchError((error) {
@@ -56,6 +64,28 @@ class _PostCreationPageState extends State<PostCreationPage> {
     } else {
       print("Bu alan boş kalamaz.");
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Bu alan boş kalamaz.')));
+    }
+  }
+
+
+  Future<String?> uploadImage() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+
+    if (image != null) {
+      File imageFile = File(image.path);  // Ensure 'File' is from 'dart:io'
+      String fileName = 'postImages/${DateTime.now().millisecondsSinceEpoch}_${Uri.file(image.path).pathSegments.last}';
+      try {
+        TaskSnapshot snapshot = await FirebaseStorage.instance.ref(fileName).putFile(imageFile);
+        final String downloadUrl = await snapshot.ref.getDownloadURL();
+        return downloadUrl;
+      } catch (e) {
+        print("Failed to upload image: $e");
+        return null;
+      }
+    } else {
+      print("No image selected");
+      return null;
     }
   }
 
@@ -88,12 +118,46 @@ class _PostCreationPageState extends State<PostCreationPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
+
         child: Form(
           key: _formKey,
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    if (_uploadedImageUrl == null) // Display the IconButton only if no image has been uploaded
+                      IconButton(
+                        icon: Icon(Icons.add_photo_alternate, size: 50),
+                        onPressed: () async {
+                          String? imageUrl = await uploadImage();
+                          if (imageUrl != null) {
+                            setState(() {
+                              _uploadedImageUrl = imageUrl; // Save the uploaded image URL
+                            });
+                            //ScaffoldMessenger.of(context).showSnackBar(
+                            //  SnackBar(content: Text('Image uploaded successfully')),
+                            //);
+                          } else {
+                           // ScaffoldMessenger.of(context).showSnackBar(
+                             // SnackBar(content: Text('Failed to upload image')),
+                           // );
+                          }
+                        },
+                      ),
+                    if (_uploadedImageUrl != null) // Display the uploaded image if available
+                      Image.network(
+                        _uploadedImageUrl!,
+                        width: 350, // Specify a width for the image
+                        height: 300, // Specify a height for the image
+                        fit: BoxFit.cover, // Use BoxFit.cover to maintain aspect ratio while filling the bounds
+                      ),
+                  ],
+                ),
+                SizedBox(height: 20),
+
                 TextFormField(
                   controller: _postTitleController,
                   decoration: InputDecoration(
@@ -148,15 +212,7 @@ class _PostCreationPageState extends State<PostCreationPage> {
                 ),
                 SizedBox(height: 20),
                 //FOTO EKLEME YERİ
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    IconButton(
-                      icon: Icon(Icons.image, color: colorScheme.onSurface),
-                      onPressed: () {}, // TODO: Implement your image upload logic
-                    ),
-                  ],
-                ),
+
                 SizedBox(height: 20),
                 Center(
                   child: ElevatedButton(
@@ -175,7 +231,7 @@ class _PostCreationPageState extends State<PostCreationPage> {
                       foregroundColor: textColor,
                       backgroundColor: backgroundColor,
                       textStyle: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                      padding: EdgeInsets.symmetric(horizontal: 140, vertical: 12),
+                      padding: EdgeInsets.symmetric(horizontal: 140, vertical: 16),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),

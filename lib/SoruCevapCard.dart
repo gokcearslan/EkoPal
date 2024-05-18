@@ -65,7 +65,7 @@ class _SoruCevapCardState extends State<SoruCevapCard> {
           ClipRRect(
             borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
             child: Image.network(
-              'https://cdn.vectorstock.com/i/500p/28/89/a-question-mark-symbol-vector-1122889.jpg',
+              'https://i.pinimg.com/564x/86/d1/07/86d107cbbcf8f527bc9fcc374764a36a.jpg',
               width: double.infinity,
               height: 200,
               fit: BoxFit.cover,

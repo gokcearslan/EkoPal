@@ -14,19 +14,18 @@ class EventService {
   FirebaseFirestore.instance.collection('events');
 
   Future<void> addEvent(Event event) {
-    return events
-        .add({
+    return events.add({
       'eventName': event.eventName,
       'eventDate': event.eventDate,
       'organizer': event.organizer,
       'location': event.location,
       'additionalInfo': event.additionalInfo,
       'userId': event.userId,
-
     })
         .then((value) => print('Event added to Firestore'))
         .catchError((error) => print('Failed to add event: $error'));
   }
+
   Stream<List<Event>> getEventsStream() {
     return events.snapshots().map((snapshot) {
       return snapshot.docs.map((doc) {
@@ -44,6 +43,7 @@ class EventService {
       }).where((event) => event != null).cast<Event>().toList();
     });
   }
+
 
   Future<String?> findEventId(String eventName, String eventDate, String userId) async {
     QuerySnapshot query = await events
@@ -204,6 +204,8 @@ class PostService {
       'userId': post.userId,
       'votedUsers': {},
       'createdBy': userName,
+      'imageUrl': post.imageUrl,  // Include the imageUrl in Firestore document
+
 
     })
         .then((value) => print('Gönderi başarıyla paylaşıldı.'))
@@ -254,6 +256,7 @@ class SoruCevapService {
       'soruDetails': soruCevap.soruDetails,
       'userId': soruCevap.userId,
       'createdBy': userName,
+
     })
         .then((value) => print('Soru ve açıklama added to Firestore'))
         .catchError((error) => print('Failed to add Soru: $error'));
@@ -301,6 +304,7 @@ class SoruCevapService {
     });
   }
 
+
   Future<String?> findQuestionId(String title, String details, String createdBy) async {
     QuerySnapshot query = await soruCevapCollection
         .where('soru', isEqualTo: title)
@@ -324,4 +328,6 @@ class SoruCevapService {
       print('Failed to delete question: $error');
     }
   }
+
+
 }
