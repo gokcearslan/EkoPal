@@ -81,7 +81,7 @@ class AdvertisementService {
       'advertisementType': advertisement.advertisementType,
       'advertisementDetails': advertisement.advertisementDetails,
       'userId': advertisement.userId,
-      'imageUrl': advertisement.imageUrl,  // Ensure imageUrl is included
+      'imageUrl': advertisement.imageUrl,
 
 
     })
@@ -103,7 +103,7 @@ class AdvertisementService {
           advertisementType: data['advertisementType'] as String? ?? 'Unknown',
           advertisementDetails: data['advertisementDetails'] as String? ?? 'No details provided',
           userId: data['userId'] as String? ?? 'No user',
-          imageUrl: data['imageUrl'] as String?,  // Add this line to include imageUrl
+          imageUrl: data['imageUrl'] as String?,
 
         );
       }).where((ad) => ad != null).cast<Advertisement>().toList();
@@ -204,7 +204,7 @@ class PostService {
       'userId': post.userId,
       'votedUsers': {},
       'createdBy': userName,
-      'imageUrl': post.imageUrl,  // Include the imageUrl in Firestore document
+      'imageUrl': post.imageUrl,
 
 
     })

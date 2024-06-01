@@ -142,14 +142,14 @@ class _PostCardState extends State<PostCard> {
               height: 200,
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) => Image.network(
-                'https://i.pinimg.com/564x/a5/a5/16/a5a516a2b4562f321723ac550e51f653.jpg',  // Fallback image
+                'https://i.pinimg.com/564x/a5/a5/16/a5a516a2b4562f321723ac550e51f653.jpg',
                 width: double.infinity,
                 height: 200,
                 fit: BoxFit.cover,
               ),
             )
                 : Image.network(
-              'https://i.pinimg.com/564x/a5/a5/16/a5a516a2b4562f321723ac550e51f653.jpg',  // Default image if no imageUrl
+              'https://i.pinimg.com/564x/a5/a5/16/a5a516a2b4562f321723ac550e51f653.jpg',
               width: double.infinity,
               height: 200,
               fit: BoxFit.cover,

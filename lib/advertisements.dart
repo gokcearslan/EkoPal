@@ -182,7 +182,6 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
                       Text(
                         ad.advertisementType ?? 'Empty Value',
                         style: theme.textTheme.subtitle1,
-                        //add_home_work_outlined
 
                       ),
                     ],

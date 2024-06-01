@@ -119,7 +119,6 @@ class _EventsPageState extends State<EventsPage> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Left Column for the Image
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
               child: Image.network(

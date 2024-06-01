@@ -20,7 +20,7 @@ class Advertisement {
 
   factory Advertisement.fromFirestore(DocumentSnapshot doc) {
     Map data = doc.data() as Map;
-    print("Data from Firestore: $data"); // Log the data
+    print("Data from Firestore: $data");
     return Advertisement(
       advertisementName: data['advertisementName'],
       advertisementType: data['advertisementType'],
@@ -37,11 +37,11 @@ class Advertisement {
       'advertisementDetails': advertisementDetails,
       'userId': userId,
       'isFavorite': isFavorite,
-      'imageUrl': imageUrl,  // Include image URL in serialization
+      'imageUrl': imageUrl,
     };
   }
   factory Advertisement.fromMap(Map<String, dynamic> map) {
-    print("Data from Map: $map"); // Log the data
+    print("Data from Map: $map");
     return Advertisement(
       advertisementName: map['advertisementName'] ?? 'Default Name',
       advertisementType: map['advertisementType'],

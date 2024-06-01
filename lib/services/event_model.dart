@@ -24,7 +24,7 @@ class Event {
     Map data = doc.data() as Map;
 
     return Event(
-      eventName: data['eventName'] , // Use null-aware operators to handle missing fields
+      eventName: data['eventName'] ,
       eventDate: data['eventDate'] ,
       organizer: data['organizer'],
       location: data['location'] ,

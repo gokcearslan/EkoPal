@@ -124,7 +124,7 @@ class _CreatePageState extends State<CreatePage> {
     );
   }
 }
-///
+
 
 class IlanWidget extends StatefulWidget {
   @override
@@ -249,7 +249,7 @@ class _IlanWidgetState extends State<IlanWidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                if (_imageUrl == null)  // Display the IconButton only if _imageUrl is null
+                if (_imageUrl == null)
                   Flexible(
                     child: IconButton(
                       icon: Icon(Icons.add_photo_alternate, size: 50),
@@ -257,7 +257,7 @@ class _IlanWidgetState extends State<IlanWidget> {
                         _uploadAdvertisementImage(ImageSource.gallery).then((imageUrl) {
                           if (imageUrl != null) {
                             setState(() {
-                              _imageUrl = imageUrl;  // Store the uploaded image URL
+                              _imageUrl = imageUrl;
                             });
                           } else {
                             print("Failed to upload image or get URL.");
@@ -274,14 +274,14 @@ class _IlanWidgetState extends State<IlanWidget> {
                       },
                     ),
                   ),
-                if (_imageUrl != null)  // Display the image if _imageUrl is not null
+                if (_imageUrl != null)
                   Flexible(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ConstrainedBox(
                         constraints: BoxConstraints(
-                          maxWidth: 350,  // maximum width for the image
-                          maxHeight: 400,  // maximum height for the image
+                          maxWidth: 350,
+                          maxHeight: 400,
                         ),
                         child: Image.network(
                           _imageUrl!,
@@ -398,9 +398,7 @@ class _IlanWidgetState extends State<IlanWidget> {
                     'userId': FirebaseAuth.instance.currentUser?.uid,
                   }).then((_) {
                     print("Advertisement successfully posted.");
-                  //  ScaffoldMessenger.of(context).showSnackBar(
-                   //     SnackBar(content: Text("Advertisement successfully posted."))
-                    //);
+
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => ViewAdvertisements()),
@@ -465,10 +463,10 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
       initialDate: simdi,
       firstDate: simdi,
       lastDate: DateTime(2101),
-      locale: const Locale('tr', 'TR'), // Set the locale to Turkish
+      locale: const Locale('tr', 'TR'),
       builder: (BuildContext context, Widget? child) {
         return Theme(
-          data: ThemeData.light(), // You can customize the theme here if needed
+          data: ThemeData.light(),
           child: child!,
         );
       },
@@ -480,10 +478,10 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
         initialTime: TimeOfDay(hour: simdi.hour, minute: simdi.minute),
         builder: (BuildContext context, Widget? child) {
           return MediaQuery(
-            data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true), // Ensure 24-hour format
+            data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
             child: Localizations.override(
               context: context,
-              locale: const Locale('tr', 'TR'), // Set the locale to Turkish for time picker
+              locale: const Locale('tr', 'TR'),
               child: child!,
             ),
           );
@@ -680,21 +678,7 @@ class _EtkinlikWidgetState extends State<EtkinlikWidget> {
               ),
             ),
             const SizedBox(height: 20),
-            /*
-            //FOTO EKLEME YERİ
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.add_photo_alternate, size: 50),
-                  onPressed: () {
-                    // Functionality to be implemented later
-                    print('Icon to add image pressed');
-                  },
-                ),
-              ],
-            ),
-            */
+
             const SizedBox(height: 20),
 
             ElevatedButton(

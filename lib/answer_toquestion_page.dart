@@ -52,7 +52,6 @@ class _CreateAnswerPageState extends State<CreateAnswerPage> {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Yanıt başarıyla eklendi")));
 
           _answerController.clear();
-          //display comments sayfasına git
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => QuestionDetailsPage(question: widget.question)),

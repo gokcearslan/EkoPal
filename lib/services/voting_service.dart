@@ -30,11 +30,9 @@ class VoteManager {
         String? previousVote = votedUsers[userId];
 
         if (previousVote == 'up' && isUpvote) {
-          // User is removing upvote
           upvotes--;
           votedUsers.remove(userId);
         } else if (previousVote == 'down' && !isUpvote) {
-          // User is removing downvote
           downvotes--;
           votedUsers.remove(userId);
         } else {

@@ -26,8 +26,6 @@ class FireAuth {
       await FirebaseFirestore.instance.collection('users').doc(user!.uid).set({
         'name': name,
         'email': email,
-        //'password': password,
-        // 'formcount': 0,
         'base64Image': base64Image,
         'role':role,
       });
@@ -43,7 +41,8 @@ class FireAuth {
     }
     return user;
   }
-/////// Buraya bakilmasi lazim
+
+
   static Future<User?>signInUsingEmailPassword({
     required String email,
     required String password,

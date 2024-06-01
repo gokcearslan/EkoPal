@@ -22,12 +22,5 @@ class Duyuru {
     );
   }
 
-/*
-  Duyuru({
-    required this.duyuruName,
-    required this.duyuruType,
-    required this.duyuruDetails,
-  });
 
- */
 }

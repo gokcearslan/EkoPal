@@ -2,14 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Post {
   final String id;
-  final String PostContent;  // Adjusted naming convention for consistency
+  final String PostContent;
   final String postTitle;
   int upvotes;
   int downvotes;
   final String userId;
   Map<String, String> votedUsers;
   final String createdBy;
-  final String? imageUrl;  // Optional field for image URL
+  final String? imageUrl;
 
   Post({
     required this.id,
@@ -20,7 +20,7 @@ class Post {
     required this.userId,
     this.votedUsers = const {},
     required this.createdBy,
-    this.imageUrl,  // Initialize in constructor
+    this.imageUrl,
   });
 
   factory Post.fromFirestore(DocumentSnapshot doc) {
@@ -34,7 +34,7 @@ class Post {
       userId: data['userId'],
       createdBy: data['createdBy'],
       votedUsers: Map<String, String>.from(data['votedUsers'] ?? {}),
-      imageUrl: data['imageUrl'],  // Deserialize image URL from Firestore
+      imageUrl: data['imageUrl'],
     );
   }
 
@@ -48,7 +48,7 @@ class Post {
       'userId': userId,
       'createdBy': createdBy,
       'votedUsers': votedUsers,
-      'imageUrl': imageUrl,  // Serialize image URL to Firestore
+      'imageUrl': imageUrl,
     };
   }
 }
