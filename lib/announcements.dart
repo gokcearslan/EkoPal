@@ -124,7 +124,7 @@ class _AnnouncementCardState extends State<AnnouncementCard> {
   }
 
   Future<void> fetchUserDetails() async {
-    String userId = widget.data['userId']; // Ensure this key exists in your data
+    String userId = widget.data['userId'];
     Map<String, String?> userInfo = await fetchUserInfo(userId);
     setState(() {
       userName = userInfo['name'];

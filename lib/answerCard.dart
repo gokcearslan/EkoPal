@@ -41,7 +41,7 @@ class _AnswerCardState extends State<AnswerCard> {
         borderRadius: BorderRadius.circular(28),
       ),
       elevation: 2,
-      color: cardColor, // Slightly different color to distinguish from question card
+      color: cardColor,
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
@@ -58,8 +58,6 @@ class _AnswerCardState extends State<AnswerCard> {
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               subtitle: Text(formattedDate),
-              //subtitle: Text(widget.answer.timestamp.toString().substring(0,10)),
-
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 5.0),

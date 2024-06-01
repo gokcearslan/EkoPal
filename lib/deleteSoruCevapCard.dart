@@ -71,7 +71,6 @@ class _deleteSoruCevapCardState extends State<deleteSoruCevapCard> {
               backgroundImage: imageUrl != null ? NetworkImage(imageUrl!) : NetworkImage(defaultImageUrl),
             ),
             title: Text(widget.soruCevap.createdBy, style: TextStyle(fontWeight: FontWeight.bold)),
-           // subtitle: Text(formattedDate),
             trailing: IconButton(
               icon: Icon(Icons.delete, color: Colors.deepPurple),
               onPressed: _deleteQuestion,

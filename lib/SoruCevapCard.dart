@@ -1,7 +1,6 @@
 import 'package:ekopal/services/UserManager.dart';
 import 'package:ekopal/services/question_ans_model.dart';
 import 'package:flutter/material.dart';
-
 import 'answer_toquestion_page.dart';
 import 'colors.dart';
 import 'display_answers_page.dart';
@@ -34,8 +33,6 @@ class _SoruCevapCardState extends State<SoruCevapCard> {
 
   @override
   Widget build(BuildContext context) {
-    // Format the DateTime object to a readable string
-    //String formattedDate = DateFormat('MMMM d, yyyy – h:mm a').format(widget.soruCevap.postedTime);
     String formattedDate="2 days ago";
     const String defaultImageUrl = 'https://cdn-icons-png.flaticon.com/256/12989/12989000.png';
 
@@ -57,8 +54,6 @@ class _SoruCevapCardState extends State<SoruCevapCard> {
             ),
             title: Text( widget.soruCevap.createdBy,
                 style: TextStyle(fontWeight: FontWeight.bold)),
-            //subtitle: Text(formattedDate),  // Display the formatted date as subtitle
-
           ),
           SizedBox(height: 6),
 
@@ -103,7 +98,7 @@ class _SoruCevapCardState extends State<SoruCevapCard> {
                     ),
                   ),
                 ),
-                SizedBox(width: 10), // Add space between buttons
+                SizedBox(width: 10),
                 Expanded(
                   child: TextButton.icon(
                     onPressed: () {
@@ -123,7 +118,7 @@ class _SoruCevapCardState extends State<SoruCevapCard> {
               ],
             ),
           ),
-          SizedBox(height: 4), // Add some space after the buttons
+          SizedBox(height: 4),
 
         ],
       ),

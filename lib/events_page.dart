@@ -55,7 +55,7 @@ class _EventsPageState extends State<EventsPage> {
   }
   @override
   void dispose() {
-    eventsSubscription?.cancel(); // Cancel the subscription
+    eventsSubscription?.cancel();
     super.dispose();
   }
 
@@ -147,27 +147,12 @@ class _EventsPageState extends State<EventsPage> {
                   SizedBox(height: 16),
                   // Date Information
                   Text(
-                    event.eventDate, // Date information
+                    event.eventDate,
                     style: theme.textTheme.bodyText2,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      /*IconButton(
-                        icon: Icon(
-                          event.isFavorite ? Icons.star : Icons.star_border,
-                          color: event.isFavorite ? Colors.amber : colorScheme.onSurfaceVariant,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            event.isFavorite = !event.isFavorite;
-                          });
-                        },
-                      ),
-
-                       */
-
-
                       IconButton(
                         icon: Icon(
                           Icons.article_outlined,
@@ -192,16 +177,4 @@ class _EventsPageState extends State<EventsPage> {
       ),
     );
   }
-
-
-
-
-
-
-
-
-
-
-
-
 }

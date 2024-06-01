@@ -1,4 +1,3 @@
-import 'package:ekopal/colors.dart';
 import 'package:flutter/material.dart';
 
 class BottomBar extends StatelessWidget {
@@ -15,8 +14,6 @@ class BottomBar extends StatelessWidget {
       onTap: onItemSelected,
       elevation: 8.0,
       selectedItemColor: Colors.purple.withOpacity(0.7),
-      //selectedItemColor: duyuruKoyuIcon,
-
       unselectedItemColor: Colors.grey[600],
       iconSize: 30.0,
 

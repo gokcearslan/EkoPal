@@ -138,7 +138,7 @@ class _DetailedEventPageState extends State<DetailedEventPage> {
                       ],
                     ),
                   ),
-                  Divider(), // Divider after location information
+                  Divider(),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
                     child: isLoading

@@ -1,5 +1,4 @@
-import 'dart:io';  // Correct import for using File with local file system
-
+import 'dart:io';
 import 'package:ekopal/services/firebase_service.dart';
 import 'package:ekopal/services/post_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,7 +6,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:math';
-
 import 'colors.dart';
 
 class PostCreationPage extends StatefulWidget {
@@ -20,11 +18,11 @@ class _PostCreationPageState extends State<PostCreationPage> {
   final TextEditingController _postTitleController = TextEditingController();
   final PostService _postService = PostService();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String? _uploadedImageUrl; // State variable to hold the uploaded image URL
+  String? _uploadedImageUrl;
 
 
   void _submitPostandNavigateToDisplayPosts() {
-    Navigator.of(context).pop();  // To close the screen after submitting
+    Navigator.of(context).pop();
   }
 
   //random id yaratma
@@ -44,7 +42,7 @@ class _PostCreationPageState extends State<PostCreationPage> {
       }
 
       final post = Post(id: id, PostContent: postContent, postTitle: postTitle,userId: userId, createdBy: userName,
-        imageUrl: _uploadedImageUrl, // Include the image URL
+        imageUrl: _uploadedImageUrl,
       );
 
       await _postService.addPost(post).then((value) {
@@ -73,7 +71,7 @@ class _PostCreationPageState extends State<PostCreationPage> {
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
 
     if (image != null) {
-      File imageFile = File(image.path);  // Ensure 'File' is from 'dart:io'
+      File imageFile = File(image.path);
       String fileName = 'postImages/${DateTime.now().millisecondsSinceEpoch}_${Uri.file(image.path).pathSegments.last}';
       try {
         TaskSnapshot snapshot = await FirebaseStorage.instance.ref(fileName).putFile(imageFile);
@@ -128,31 +126,25 @@ class _PostCreationPageState extends State<PostCreationPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    if (_uploadedImageUrl == null) // Display the IconButton only if no image has been uploaded
+                    if (_uploadedImageUrl == null)
                       IconButton(
                         icon: Icon(Icons.add_photo_alternate, size: 50),
                         onPressed: () async {
                           String? imageUrl = await uploadImage();
                           if (imageUrl != null) {
                             setState(() {
-                              _uploadedImageUrl = imageUrl; // Save the uploaded image URL
+                              _uploadedImageUrl = imageUrl;
                             });
-                            //ScaffoldMessenger.of(context).showSnackBar(
-                            //  SnackBar(content: Text('Image uploaded successfully')),
-                            //);
                           } else {
-                           // ScaffoldMessenger.of(context).showSnackBar(
-                             // SnackBar(content: Text('Failed to upload image')),
-                           // );
                           }
                         },
                       ),
-                    if (_uploadedImageUrl != null) // Display the uploaded image if available
+                    if (_uploadedImageUrl != null)
                       Image.network(
                         _uploadedImageUrl!,
-                        width: 350, // Specify a width for the image
-                        height: 300, // Specify a height for the image
-                        fit: BoxFit.cover, // Use BoxFit.cover to maintain aspect ratio while filling the bounds
+                        width: 350,
+                        height: 300,
+                        fit: BoxFit.cover,
                       ),
                   ],
                 ),
@@ -211,8 +203,6 @@ class _PostCreationPageState extends State<PostCreationPage> {
                   },
                 ),
                 SizedBox(height: 20),
-                //FOTO EKLEME YERİ
-
                 SizedBox(height: 20),
                 Center(
                   child: ElevatedButton(

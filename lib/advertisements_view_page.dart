@@ -2,9 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'advertisement_details_page.dart';
-
-
 class ViewAds extends StatefulWidget {
   const ViewAds({Key? key}) : super(key: key);
 
@@ -105,12 +102,6 @@ class ViewAdvertisementCard extends StatelessWidget {
                           right: 0,
                           child: ElevatedButton(
                             onPressed: () {
-                              /*
-                              Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => AdvertisementDetailsPage(),
-                              ));
-
-                               */
                             },
                             child: Text('Button'),
                           ),

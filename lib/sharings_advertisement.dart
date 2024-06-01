@@ -100,13 +100,11 @@ class _SharingViewAdsState extends State<SharingViewAds> {
                   const SizedBox(height: 8),
                   Row(
                     children:[
-                      const Icon(Icons.arrow_circle_right_rounded, color: duyuruKoyuIcon), // Icon widget
+                      const Icon(Icons.arrow_circle_right_rounded, color: duyuruKoyuIcon),
                       const SizedBox(width: 10),
                       Text(
                         ad.advertisementType ?? 'Empty Value',
                         style: theme.textTheme.titleMedium,
-                        //add_home_work_outlined
-
                       ),
 
                     ],
@@ -124,7 +122,6 @@ class _SharingViewAdsState extends State<SharingViewAds> {
                       IconButton(
                         icon: Icon(
                           Icons.article_outlined,
-                          //color: colorScheme.onSurfaceVariant,
                             color: Colors.deepPurple
                         ),
                         onPressed: () {

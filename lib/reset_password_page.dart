@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:ekopal/colors.dart'; // Import your color constants
-import 'package:ekopal/validator.dart'; // Import your validator class
+import 'package:ekopal/colors.dart';
+import 'package:ekopal/validator.dart';
 
 class ResetPasswordPage extends StatefulWidget {
   @override
@@ -126,14 +126,14 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                     ? CircularProgressIndicator(color: bej)
                     : Text('Şifre Sıfırlama Talebi Gönder'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: backgroundColor, // Use background color for the button
-                  foregroundColor: textColor, // Use text color for the button text
+                  backgroundColor: backgroundColor,
+                  foregroundColor: textColor,
                   padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
                   textStyle: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                  elevation: 10, // Add shadow depth
+                  elevation: 10,
                 ),
               ),
             ],

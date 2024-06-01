@@ -26,8 +26,8 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       supportedLocales: [
-        const Locale('en', 'US'), // English
-        const Locale('tr', 'TR'), // Turkish
+        const Locale('en', 'US'),
+        const Locale('tr', 'TR'),
       ],
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,

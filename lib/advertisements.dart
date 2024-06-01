@@ -1,12 +1,9 @@
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ekopal/services/advertisement_model.dart';
 import 'package:ekopal/services/firebase_service.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'advertisement_details_page.dart';
 import 'colors.dart';
 import 'create_page.dart';
@@ -28,7 +25,7 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
         .snapshots()
         .map((snapshot) {
       snapshot.docs.forEach((doc) {
-        print('Doc dataprinted Hereeeeeeeeeeeeeeeeeeeeeeeeee: ${doc.data()}'); // Log each document's data
+        print('Doc dataprinted Hereeeeeeeeeeeeeeeeeeeeeeeeee: ${doc.data()}');
       });
       return snapshot.docs.map((doc) => Advertisement.fromMap(doc.data() as Map<String, dynamic>)).toList();
     });
@@ -46,7 +43,6 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
           }
         },
         onError: (err) {
-          // Handle any errors that occur in the stream.
           print('Error listening to advertisement updates: $err');
         }
 
@@ -57,7 +53,7 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
         DocumentSnapshot doc = await FirebaseFirestore.instance.collection('advertisements').doc(documentId).get();
         if (doc.exists) {
           Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-          return data['imageUrl'];  // Make sure 'imageUrl' is the correct field name
+          return data['imageUrl'];
         } else {
           print("No such advertisement found");
           return null;
@@ -72,7 +68,7 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
   }
   @override
   void dispose() {
-    adsSubscription?.cancel(); // Always cancel the subscription to avoid memory leaks
+    adsSubscription?.cancel();
     super.dispose();
   }
 
@@ -134,10 +130,10 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
 
     final ThemeData theme = Theme.of(context);
     final ColorScheme colorScheme = theme.colorScheme;
-    print('Loading image for URLLLLLLLLLLLLLLLLLLL: ${ad.imageUrl}');  // Log the image URL being loaded
-    print('Loading image for URLLLLLLLLLLLLLLLLLLL: ${ad.advertisementDetails}');  // Log the image URL being loaded
-    print('Loading image for URLLLLLLLLLLLLLLLLLLL: ${ad.advertisementName}');  // Log the image URL being loaded
-    print('Loading image for URLLLLLLLLLLLLLLLLLLL: ${ad.advertisementType}');  // Log the image URL being loaded
+    print('Loading image for URLLLLLLLLLLLLLLLLLLL: ${ad.imageUrl}');
+    print('Loading image for URLLLLLLLLLLLLLLLLLLL: ${ad.advertisementDetails}');
+    print('Loading image for URLLLLLLLLLLLLLLLLLLL: ${ad.advertisementName}');
+    print('Loading image for URLLLLLLLLLLLLLLLLLLL: ${ad.advertisementType}');
 
 
 
@@ -153,17 +149,17 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (ad.imageUrl != null) // Check if the imageUrl exists
+            if (ad.imageUrl != null)
 
               ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: Image.network(
-                  ad.imageUrl!, // Use the imageUrl from the Advertisement object
+                  ad.imageUrl!,
                   width: 120,
                   height: 120,
                   fit: BoxFit.cover,
                   errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
-                    return Text('Unable to load image');  // Error handling for failed image loads
+                    return Text('Unable to load image');
                   },
                 ),
               ),
@@ -181,7 +177,7 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
                   SizedBox(height: 8),
                   Row(
                     children:[
-                      Icon(Icons.arrow_circle_right_rounded, color: duyuruKoyuIcon), // Icon widget
+                      Icon(Icons.arrow_circle_right_rounded, color: duyuruKoyuIcon),
                       SizedBox(width: 10),
                       Text(
                         ad.advertisementType ?? 'Empty Value',
@@ -200,21 +196,6 @@ class _ViewAdvertisementsState extends State<ViewAdvertisements> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      /* IconButton(
-                        icon: Icon(
-                          ad.isFavorite ? Icons.star : Icons.star_border,
-                          color: ad.isFavorite ? Colors.amber : colorScheme.onSurfaceVariant,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            ad.isFavorite = !ad.isFavorite;
-                          });
-                        },
-                      ),
-
-
-                      */
-
                       IconButton(
                         icon: Icon(
                           Icons.article_outlined,

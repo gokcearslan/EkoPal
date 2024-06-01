@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:ekopal/postCard.dart';  // Ensure you import the PostCard
+import 'package:ekopal/postCard.dart';
 import 'package:ekopal/services/post_model.dart';
 import 'package:ekopal/colors.dart';
 
@@ -28,12 +28,12 @@ class _UserVotesPageState extends State<UserVotesPage> {
     }
 
     QuerySnapshot snapshot = await _db.collection('posts')
-        .where('votedUsers', isNotEqualTo: {}) // Check that votedUsers map isn't empty
+        .where('votedUsers', isNotEqualTo: {})
         .get();
 
     List<Post> posts = snapshot.docs.map((doc) {
       return Post.fromFirestore(doc);
-    }).where((post) => post.votedUsers.containsKey(userId)).toList(); // Client-side filter
+    }).where((post) => post.votedUsers.containsKey(userId)).toList();
 
     if (mounted) {
       setState(() {
@@ -50,7 +50,7 @@ class _UserVotesPageState extends State<UserVotesPage> {
         itemCount: userVotedPosts.length,
         itemBuilder: (context, index) {
           Post post = userVotedPosts[index];
-          return PostCard(post: post);  // Using the PostCard widget
+          return PostCard(post: post);
         },
       ),
     );

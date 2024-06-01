@@ -34,8 +34,6 @@ class _displayAllAnswersCardState extends State<displayAllAnswersCard> {
 
   @override
   Widget build(BuildContext context) {
-    // Format the DateTime object to a readable string
-    //String formattedDate = DateFormat('MMMM d, yyyy – h:mm a').format(widget.soruCevap.postedTime);
     String formattedDate="2 days ago";
     const String defaultImageUrl = 'https://cdn-icons-png.flaticon.com/256/12989/12989000.png';
 
@@ -57,7 +55,6 @@ class _displayAllAnswersCardState extends State<displayAllAnswersCard> {
             ),
             title: Text( widget.soruCevap.createdBy,
                 style: TextStyle(fontWeight: FontWeight.bold)),
-            //subtitle: Text(formattedDate),  // Display the formatted date as subtitle
           ),
           ClipRRect(
             borderRadius: BorderRadius.vertical(top: Radius.circular(16)),

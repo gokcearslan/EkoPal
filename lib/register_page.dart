@@ -41,7 +41,7 @@ class _RegisterPageState extends State<RegisterPage> {
         name: _nameTextController.text,
         email: _emailTextController.text,
         password: _passwordTextController.text,
-        role: role, // Pass the determined role
+        role: role,
       );
 
       setState(() {
@@ -50,7 +50,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
       if (user != null) {
         await UserManager().login(user.uid);
-        // Navigate to the home page or any other page after successful registration
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
             builder: (context) => MainApp(),
@@ -74,7 +73,7 @@ class _RegisterPageState extends State<RegisterPage> {
         backgroundColor: backgroundColor,
         body:SafeArea(
         child: FutureBuilder(
-          future: Firebase.initializeApp(),  // Initialization of Firebase
+          future: Firebase.initializeApp(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               return SingleChildScrollView(
@@ -104,7 +103,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
-                        color: textColor,  // Ensure textColor is defined
+                        color: textColor,
                       ),
                     ),
                     SizedBox(height: 15.0),
@@ -188,7 +187,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                             SizedBox(height: 20.0),
                             SizedBox(
-                              width: double.infinity,  // Makes the button full width
+                              width: double.infinity,
                               child: ElevatedButton(
                                 onPressed: register,
                                 child: Text(
@@ -198,11 +197,11 @@ class _RegisterPageState extends State<RegisterPage> {
                                   ),
                                 ),
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: buttonColor,  // Use the same background color variable as in the login page
+                                  backgroundColor: buttonColor,
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),  // Consistent border radius with the login page
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
-                                  padding: EdgeInsets.symmetric(vertical: 15),  // Optional: Adjusts the vertical padding
+                                  padding: EdgeInsets.symmetric(vertical: 15),
                                 ),
                               ),
                             ),
@@ -226,7 +225,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   child: Text(
                                     'Giriş Yapın.',
                                     style: TextStyle(
-                                      color: Colors.blue,  // Replace with your preferred color, e.g., kahve if you have such a color
+                                      color: Colors.blue,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),

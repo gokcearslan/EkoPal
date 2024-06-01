@@ -23,7 +23,7 @@ import 'package:ekopal/onboarding_view.dart';
 import 'mySharingsPage.dart';
 
 class HomePage extends StatefulWidget {
-  final String? base64Image; // Define base64Image as a parameter
+  final String? base64Image;
 
   const HomePage({Key? key, this.base64Image}) : super(key: key);
 
@@ -130,30 +130,6 @@ class _HomePageState extends State<HomePage> {
       body: Stack(
         children: [
           _selectedIndex == 0 ? HomePageContent(base64Image: widget.base64Image, userName: userName) : ProfilePage(),
-          /*
-          Positioned(
-            top: 3,
-            right: 20,
-            child: FloatingActionButton(
-              onPressed: () {
-                // Navigation logic to EkoBot page
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => EkoBotPage()));
-              },
-              child: Container(
-               width: 80,  // Standard FAB size
-               height: 80,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: NetworkImage('https://i.pinimg.com/736x/48/46/2e/48462eb8ccb2d4463d2e31499abe10b7.jpg'),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              backgroundColor: Colors.grey, // Make the button blend with the icon
-            ),
-          ),
-    */
         ],
       ),
       drawer: Drawer(
@@ -251,7 +227,7 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center, // Center the button horizontally
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
                   onPressed: () async {
@@ -287,7 +263,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     backgroundColor: buttonColor,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20), // Adjusted border radius for a smaller button
+                      borderRadius: BorderRadius.circular(20),
                     ),
                     minimumSize: Size(280, 20),
                   ),
@@ -415,8 +391,8 @@ class _HomePageContentState extends State<HomePageContent> {
               }
 
               return ListView.builder(
-                shrinkWrap: true, // Important to ensure no conflicts within Column
-                physics: NeverScrollableScrollPhysics(), // to disable scrolling within the list
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
                   return PostCard(

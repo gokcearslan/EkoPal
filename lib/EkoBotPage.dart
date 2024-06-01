@@ -105,7 +105,7 @@ class _EkoBotPageState extends State<EkoBotPage> {
             ),
             SizedBox(width: 8),
             GestureDetector(
-              onTap: _sendMessage,  // Connect this to your sendMessage method
+              onTap: _sendMessage,
               child: CircleAvatar(
                 backgroundColor: appBarColor,
                 child: Icon(Icons.send, color: Colors.white),
@@ -129,12 +129,8 @@ class _EkoBotPageState extends State<EkoBotPage> {
       _messages.add('Sen: $message');
     });
 
-    // Using the updated location and agent ID
-    String url = 'https://europe-west2-dialogflow.googleapis.com/v3/projects/charged-epsilon-408415/locations/europe-west2/agents/e0940673-225b-4db6-b898-81912519be37/sessions/$_sessionId:detectIntent';
-    // print("${_sessionId}ALOOOOOOOOOOOOOOOO");
 
-    // print("Making request to URL: $url");
-    //  print("With headers: Authorization: Bearer ${_authClient?.credentials.accessToken.data}");
+    String url = 'https://europe-west2-dialogflow.googleapis.com/v3/projects/charged-epsilon-408415/locations/europe-west2/agents/e0940673-225b-4db6-b898-81912519be37/sessions/$_sessionId:detectIntent';
     try {
       var response = await _authClient!.post(
         Uri.parse(url),

@@ -78,12 +78,12 @@ class OnboardingPage extends StatefulWidget {
             itemCount: controller.items.length,
             controller: pageController,
             itemBuilder: (context, index) {
-              double imageContainerHeight = index == 0 ? 550: 300;  // Dynamic height adjustment
+              double imageContainerHeight = index == 0 ? 550: 300;
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    height: imageContainerHeight,  // Dynamic height
+                    height: imageContainerHeight,
                     width: double.infinity,
                     child: Image.asset(
                       controller.items[index].image,
@@ -134,11 +134,7 @@ class OnboardingPage extends StatefulWidget {
           child: Text("Uygulamaya Giriş Yap!",
             style:TextStyle(color:textColor),),)
     );
-
-
   }
-
-
   }
 
 

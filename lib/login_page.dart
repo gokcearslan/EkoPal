@@ -31,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
 
     if (_emailError != null || _passwordError != null) {
       setState(() => _isProcessing = false);
-      return; // Stop the login process if there are validation errors
+      return;
     }
 
     try {
@@ -42,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
       );
 
       if (userCredential.user != null) {
-        await UserManager().login(userCredential.user!.uid); // Save user ID to UserManager and SharedPreferences
+        await UserManager().login(userCredential.user!.uid);
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => MainApp()),
         );
@@ -170,7 +170,7 @@ class _LoginPageState extends State<LoginPage> {
                                 onPressed: login,
                                 child: Text('Giriş', style: TextStyle(color: Colors.white, fontSize: 22)),
                                 style: ElevatedButton.styleFrom(
-                                  padding: EdgeInsets.symmetric(horizontal: 150), // Increase vertical padding
+                                  padding: EdgeInsets.symmetric(horizontal: 150),
                                   backgroundColor: buttonColor,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),

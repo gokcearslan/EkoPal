@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:ekopal/colors.dart'; // Import your color constants
-import 'package:ekopal/validator.dart'; // Import your validator class
+import 'package:ekopal/colors.dart';
+
 
 class ChangePasswordPage extends StatefulWidget {
   @override
@@ -41,7 +41,6 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   if (value == null || value.isEmpty) {
                     return 'Mevcut şifre boş olamaz';
                   }
-                  // Add more validation logic if needed
                   return null;
                 },
                 decoration: InputDecoration(
@@ -66,7 +65,6 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   if (value == null || value.isEmpty) {
                     return 'Yeni şifre boş olamaz';
                   }
-                  // Add more validation logic if needed
                   return null;
                 },
                 decoration: InputDecoration(
@@ -90,14 +88,14 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                     ? CircularProgressIndicator(color: bej)
                     : Text('Şifreyi Değiştir'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: backgroundColor, // Use background color for the button
-                  foregroundColor: textColor, // Use text color for the button text
+                  backgroundColor: backgroundColor,
+                  foregroundColor: textColor,
                   padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
                   textStyle: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                  elevation: 10, // Add shadow depth
+                  elevation: 10,
                 ),
               ),
             ],
@@ -121,10 +119,9 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
           );
           await user.reauthenticateWithCredential(credential);
           await user.updatePassword(_newPasswordController.text);
-          Navigator.of(context).pop(); // Assume success and pop the screen
+          Navigator.of(context).pop();
         }
       } catch (e) {
-        // Handle exceptions
       } finally {
         setState(() {
           _isProcessing = false;

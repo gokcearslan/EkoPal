@@ -1,10 +1,8 @@
 import 'dart:async';
-
 import 'package:ekopal/question_answ_create_page.dart';
 import 'package:ekopal/services/firebase_service.dart';
 import 'package:flutter/material.dart';
 import 'package:ekopal/services/question_ans_model.dart';
-
 import 'SoruCevapCard.dart';
 import 'colors.dart';
 
@@ -37,21 +35,16 @@ class _DisplayQuestionsPageState extends State<DisplayQuestionsPage> {
 
   @override
   void dispose() {
-    soruCeapSubscription?.cancel();  // Cancel the stream subscription on dispose
+    soruCeapSubscription?.cancel();
     super.dispose();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-
         centerTitle: true,
-
         backgroundColor: appBarColor,
-
         title: const Text('Sor ve Cevapla',
           style: TextStyle(
             fontSize: 26,

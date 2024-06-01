@@ -9,22 +9,19 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import 'advertisements.dart';
-import 'advertisements_view_page.dart';
 import 'announcements.dart';
 import 'colors.dart';
 import 'events_page.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
 
 
 class CreatePage extends StatefulWidget {
 
   final String initialCategory;
-  CreatePage({this.initialCategory = 'İlan'}); // Default is 'İlan'
+  CreatePage({this.initialCategory = 'İlan'});
 
 
   @override
@@ -37,8 +34,6 @@ class _CreatePageState extends State<CreatePage> {
   @override
   void initState() {
     super.initState();
-    // Initialize _selectedOption to the placeholder value
-    //_selectedOption = 'İlan';
     _selectedOption = widget.initialCategory;
 
   }
@@ -140,7 +135,7 @@ class _IlanWidgetState extends State<IlanWidget> {
   TextEditingController _advertisementNameController = TextEditingController();
   TextEditingController _advertisementTypeController = TextEditingController();
   TextEditingController _advertisementDetailsController = TextEditingController();
-  String? _selectedImageUrl;  // Correctly declare the variable in the state class
+  String? _selectedImageUrl;
   String? _imageUrl;
 
 
@@ -159,7 +154,6 @@ class _IlanWidgetState extends State<IlanWidget> {
     _advertisementNameController.clear();
     _advertisementTypeController.clear();
     _advertisementDetailsController.clear();
-    // tür için clear eklenecek - altta eklendi
     setState(() {
       _selectedType = null;
     });
@@ -183,10 +177,8 @@ class _IlanWidgetState extends State<IlanWidget> {
             _uploadAdvertisementImage(ImageSource.camera).then((imageUrl) {
               if (imageUrl != null) {
                 setState(() {
-                  // Assuming you have a variable to store the image URL
                   _imageUrl = imageUrl;
                 });
-                // Optionally, update Firestore with the new image URL
               }
             });
           },
@@ -198,10 +190,8 @@ class _IlanWidgetState extends State<IlanWidget> {
             _uploadAdvertisementImage(ImageSource.gallery).then((imageUrl) {
               if (imageUrl != null) {
                 setState(() {
-                  // Assuming you have a variable to store the image URL
                   _imageUrl = imageUrl;
                 });
-                // Optionally, update Firestore with the new image URL
               }
             });
           },
@@ -233,7 +223,7 @@ class _IlanWidgetState extends State<IlanWidget> {
       try {
         TaskSnapshot snapshot = await FirebaseStorage.instance.ref(fileName).putFile(imageFile);
         String downloadUrl = await snapshot.ref.getDownloadURL();
-        print("Image URL: $downloadUrl");  // Debug: Check the URL
+        print("Image URL: $downloadUrl");
         return downloadUrl;
       } catch (e) {
         print('Error uploading image: $e');

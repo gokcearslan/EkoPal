@@ -25,7 +25,7 @@ class _AdvertisementDetailsPageState extends State<AdvertisementDetailsPage> {
   }
 
   Future<void> fetchUserDetails() async {
-    String userId = widget.ad.userId; // Ensure this key exists in your data
+    String userId = widget.ad.userId;
     Map<String, String?> userInfo = await fetchUserInfo(userId);
     setState(() {
       userName = userInfo['name'];
@@ -98,7 +98,8 @@ class _AdvertisementDetailsPageState extends State<AdvertisementDetailsPage> {
                   ),
                   Divider(),
                   Image.network(
-                    widget.ad.imageUrl ?? 'https://img3.idealista.com/blur/WEB_LISTING-M/0/id.pro.es.image.master/88/73/d4/908040653.jpg',  // Default image if no imageUrl                    height: 200.0,
+                    widget.ad.imageUrl ?? 'https://img3.idealista.com/blur/WEB_LISTING-M/0/id.pro.es.image.master/88/73/d4/908040653.jpg',
+                    height: 200.0,
                     fit: BoxFit.cover,
                   ),
                   ListTile(

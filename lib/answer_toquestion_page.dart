@@ -36,7 +36,7 @@ class _CreateAnswerPageState extends State<CreateAnswerPage> {
       Answer answer = Answer(
         answer: _answerController.text,
         createdBy: userName,
-        timestamp: DateTime.now(), // Add current timestamp
+        timestamp: DateTime.now(),
       );
 
       String? questionId = await _questionService.findQuestionId(
@@ -46,12 +46,11 @@ class _CreateAnswerPageState extends State<CreateAnswerPage> {
       );
 
       if (questionId != null) {
-        // Adding the answer to the question's subcollection
+
         await _questionService.addAnswer(questionId, answer).then((value) {
           print("Yanıt başarıyla eklendi");
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Yanıt başarıyla eklendi")));
 
-          //Navigator.of(context).pop();
           _answerController.clear();
           //display comments sayfasına git
           Navigator.push(

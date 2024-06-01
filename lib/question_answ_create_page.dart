@@ -5,8 +5,6 @@ import 'package:ekopal/services/question_ans_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-//yeni soru sorma ekranı UI - 1 mayıs bilge
-
 class AskQuestionPage extends StatefulWidget {
   @override
   _AskQuestionPageState createState() => _AskQuestionPageState();
@@ -21,7 +19,7 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
 
 
   void _submitQuestion() {
-    Navigator.of(context).pop();  // To close the screen after submitting
+    Navigator.of(context).pop();
   }
 
   @override
@@ -55,13 +53,14 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
                         return 'Bu alan boş bırakılamaz';
                       }
                       return null;
-                    },              decoration: InputDecoration(
+                    },
+                    decoration: InputDecoration(
                     labelText: 'Soru Başlığı',
                     hintText: 'Soruyu özetleyen bir başlık seçin.',
                     border: OutlineInputBorder(
                         borderSide: BorderSide(color:backgroundColor)),
                   ),
-                    maxLength: 45, //maz karakter sınırı
+                    maxLength: 45,
                     textInputAction: TextInputAction.next,
                   ),
                   SizedBox(height: 20),
@@ -72,7 +71,8 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
                         return 'Bu alan boş bırakılamaz';
                       }
                       return null;
-                    },              decoration: InputDecoration(
+                    },
+                    decoration: InputDecoration(
                     labelText: 'Soru İçeriği',
                     hintText: 'Sorunuzdan kısaca bahsedin.',
                     border: OutlineInputBorder(
@@ -97,7 +97,6 @@ class _AskQuestionPageState extends State<AskQuestionPage> {
                             print('No user logged in');
                             return;
                           }
-
                           SoruCevap soruCevap = SoruCevap(
                               soru: _soruController.text,
                               soruDetails: _soruDetailsController.text,

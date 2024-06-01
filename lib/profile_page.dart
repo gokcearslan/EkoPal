@@ -34,7 +34,7 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
   void initState() {
     super.initState();
     _currentUser = FirebaseAuth.instance.currentUser;
-    _fetchProfileImage(); // Fetch the profile image URL
+    _fetchProfileImage();
     fetchUser();
     _tabController = TabController(length: 3, vsync: this);
   }
@@ -68,17 +68,7 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
       print('Böyle bir kullanıcı bulunmamaktadır!');
     }
   }
-/*
-  Future<void> fetchImage() async {
-    String? base64Image = await _imageService.getImageFromFirestore(
-        _currentUser!.uid);
-    setState(() {
-      _base64Image = base64Image ?? '';
-    });
-  }
 
-
- */
   void _showEditImageActionSheet(BuildContext context) {
     final action = CupertinoActionSheet(
       title: Text("Fotoğraf", style: TextStyle(fontSize: 15.0, color: Color(0xFF001489))),
@@ -89,7 +79,7 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
           onPressed: () {
             Navigator.pop(context);
             _imageService.pickAndUploadImage(ImageSource.camera, 'profile_images/${FirebaseAuth.instance.currentUser?.uid}', 'users', FirebaseAuth.instance.currentUser?.uid ?? '').then((_) {
-              _fetchProfileImage(); // Refresh the image URL after uploading
+              _fetchProfileImage();
             });
           },
         ),
@@ -98,20 +88,19 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
           onPressed: () {
             Navigator.pop(context);
             _imageService.pickAndUploadImage(ImageSource.gallery, 'profile_images/${FirebaseAuth.instance.currentUser?.uid}', 'users', FirebaseAuth.instance.currentUser?.uid ?? '').then((_) {
-              _fetchProfileImage(); // Refresh the image URL after uploading
+              _fetchProfileImage();
             });
           },
         ),
       ],
       cancelButton: CupertinoActionSheetAction(
-        child: Text("Close", style: TextStyle(color: Colors.red)),
+        child: Text("Kapat", style: TextStyle(color: Colors.red)),
         isDestructiveAction: true,
         onPressed: () {
           Navigator.pop(context);
         },
       ),
     );
-
     showCupertinoModalPopup(
       context: context,
       builder: (BuildContext context) => action,
@@ -243,43 +232,6 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
                     ),
                   ),
                 ),
-                /*
-          ElevatedButton(
-            onPressed: () async {
-              setState(() {
-                _isSigningOut = true;
-              });
-              await FirebaseAuth.instance.signOut();
-              setState(() {
-                _isSigningOut = false;
-              });
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => LoginPage(),
-                ),
-              );
-            },
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text('Çıkış',
-                    style: TextStyle(color: Colors.white)),
-                SizedBox(width: 8),
-                Icon(Icons.exit_to_app, color: Colors.white),
-              ],
-            ),
-            style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 10,
-              ),
-              backgroundColor: Colors.purple,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-            ),
-          ),
-          */
               ],
             ),
 
@@ -336,7 +288,6 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
                 controller: _tabController,
                 children: [
                   MySharingsPage(showAppBar: false),
-                  //UserAnswersPage(questionId: '',),
                   UserVotesPage(),
 
                 ],
@@ -346,6 +297,4 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
       ),
     );
   }
-
-
 }

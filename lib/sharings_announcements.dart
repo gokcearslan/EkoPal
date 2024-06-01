@@ -88,7 +88,7 @@ class _SharingViewAnnouncementsState extends State<SharingViewAnnouncements> {
               ),
             ),
             title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween, // Adjust this for alignment
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Flexible(
                   child: Text(

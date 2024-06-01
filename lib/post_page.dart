@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:ekopal/postCard.dart';
 import 'package:ekopal/post_create_page.dart';
 import 'package:flutter/material.dart';

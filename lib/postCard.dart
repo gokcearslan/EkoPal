@@ -32,7 +32,6 @@ class _PostCardState extends State<PostCard> {
     userId = UserManager().userId;
     _loadProfilePicture();
 
-    // Get the user ID from UserManager
     upvotes = widget.post.upvotes;
     downvotes = widget.post.downvotes;
     votedUsers = widget.post.votedUsers;
@@ -67,7 +66,6 @@ class _PostCardState extends State<PostCard> {
 
       return print ("User not found");
     }
-    //    checkDocumentExistence(widget.post.id);
 
     print("vote id is: " + widget.post.id);
 
@@ -204,7 +202,6 @@ class _PostCardState extends State<PostCard> {
           .get();
 
       if (querySnapshot.docs.isNotEmpty) {
-
         print("-----------------");
         String docId = querySnapshot.docs.first.id;
         print('Firebase Document ID: $docId');

@@ -1,4 +1,5 @@
 import 'package:ekopal/services/event_model.dart';
+import 'package:ekopal/services/event_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ekopal/services/firebase_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -77,7 +78,6 @@ class _SharingViewEventsState extends State<SharingViewEvents> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Left Column for the Image
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
               child: Image.network(
@@ -103,9 +103,8 @@ class _SharingViewEventsState extends State<SharingViewEvents> {
                     style: theme.textTheme.titleMedium,
                   ),
                   SizedBox(height: 16),
-                  // Date Information
                   Text(
-                    event.eventDate, // Date information
+                    event.eventDate,
                     style: theme.textTheme.bodyText2,
                   ),
                   SizedBox(height: 27),
@@ -116,7 +115,6 @@ class _SharingViewEventsState extends State<SharingViewEvents> {
                       IconButton(
                         icon: Icon(
                           Icons.article_outlined,
-                          //color: colorScheme.onSurfaceVariant,
                             color: Colors.deepPurple
                         ),
                         onPressed: () {
