@@ -1,16 +1,2 @@
-# ekopal
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+About the Project
+The "EkoPal" mobile application was developed as part of our Senior Project in final year of our education, aimed at making campus life easier and more vibrant for universities while providing an experience that includes everyone within the university. It served as our graduation project.
